@@ -6,13 +6,10 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
 
-    #url(r'^accounts/',   include('accountsapp.urls')),    # For authentication
-
-    url(r'^$',   include('ideasapp.urls')),    # For ideas
-    url(r'^ideas/',   include('ideasapp.urls')),    # For ideas
+    url(r'^$',    'ideasapp.views.submit', name='submit'),    # For submitting ideas
+    url(r'^submit/',    'ideasapp.views.submit', name='submit'),    # For submitting ideas
 
 )
-
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns += staticfiles_urlpatterns()
