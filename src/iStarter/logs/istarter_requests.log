@@ -1,0 +1,109 @@
+2013-03-21 08:21:14,052 [WARNING] django.request: Not Found: /
+2013-03-21 08:21:20,610 [WARNING] django.request: Not Found: /ideas
+2013-03-21 08:21:31,057 [WARNING] django.request: Not Found: /ideas/ideas
+2013-03-21 08:21:39,690 [ERROR] django.request: Internal Server Error: /ideas/submit
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/handlers/base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/middleware/common.py", line 68, in process_request
+    urlresolvers.is_valid_path("%s/" % request.path_info, urlconf)):
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 531, in is_valid_path
+    resolve(path, urlconf)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 420, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 209, in resolve
+    return ResolverMatch(self.callback, args, kwargs, self.name)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 216, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/utils/functional.py", line 27, in wrapper
+    result = func(*args)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 92, in get_callable
+    lookup_view = getattr(import_module(mod_name), func_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/Users/brantinghamr/Documents/Code/eclipseWorkspace/iStart/src/iStarter/ideasapp/views.py", line 25, in <module>
+    from ideasapp.models import ideaModel
+ImportError: cannot import name ideaModel
+2013-03-21 08:23:07,611 [ERROR] django.request: Internal Server Error: /ideas/submit
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/handlers/base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/middleware/common.py", line 68, in process_request
+    urlresolvers.is_valid_path("%s/" % request.path_info, urlconf)):
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 531, in is_valid_path
+    resolve(path, urlconf)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 420, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 209, in resolve
+    return ResolverMatch(self.callback, args, kwargs, self.name)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 216, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/utils/functional.py", line 27, in wrapper
+    result = func(*args)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/urlresolvers.py", line 101, in get_callable
+    (lookup_view, mod_name))
+ViewDoesNotExist: Could not import ideasapp.views.submit. View does not exist in module ideasapp.views.
+2013-03-21 08:26:10,177 [ERROR] django.request: Internal Server Error: /ideas/submit/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/brantinghamr/Documents/Code/eclipseWorkspace/iStart/src/iStarter/ideasapp/views.py", line 78, in submit
+    return render_to_response("ideasapp/contact.html", c)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/shortcuts/__init__.py", line 20, in render_to_response
+    return HttpResponse(loader.render_to_string(*args, **kwargs), **httpresponse_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/template/loader.py", line 169, in render_to_string
+    t = get_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/template/loader.py", line 145, in get_template
+    template, origin = find_template(template_name)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/template/loader.py", line 138, in find_template
+    raise TemplateDoesNotExist(name)
+TemplateDoesNotExist: ideasapp/contact.html
+2013-03-21 08:30:44,490 [WARNING] django.request: Not Found: /docs/prototypes
+2013-03-21 08:30:44,700 [WARNING] django.request: Not Found: /favicon.ico
+2013-03-21 08:32:10,220 [ERROR] django.request: Internal Server Error: /ideas/submit/
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/Users/brantinghamr/Documents/Code/eclipseWorkspace/iStart/src/iStarter/ideasapp/views.py", line 52, in submit
+    user = str(request.user)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/utils/functional.py", line 184, in inner
+    self._setup()
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/utils/functional.py", line 248, in _setup
+    self._wrapped = self._setupfunc()
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/contrib/auth/middleware.py", line 16, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/contrib/auth/middleware.py", line 8, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/contrib/auth/__init__.py", line 98, in get_user
+    user_id = request.session[SESSION_KEY]
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/contrib/sessions/backends/base.py", line 39, in __getitem__
+    return self._session[key]
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/contrib/sessions/backends/base.py", line 165, in _get_session
+    self._session_cache = self.load()
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/contrib/sessions/backends/db.py", line 19, in load
+    expire_date__gt=timezone.now()
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/db/models/manager.py", line 131, in get
+    return self.get_query_set().get(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/db/models/query.py", line 361, in get
+    num = len(clone)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/db/models/query.py", line 85, in __len__
+    self._result_cache = list(self.iterator())
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/db/models/query.py", line 291, in iterator
+    for row in compiler.results_iter():
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/db/models/sql/compiler.py", line 763, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/db/models/sql/compiler.py", line 818, in execute_sql
+    cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/db/backends/util.py", line 40, in execute
+    return self.cursor.execute(sql, params)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/django/db/backends/sqlite3/base.py", line 344, in execute
+    return Database.Cursor.execute(self, query, params)
+DatabaseError: no such table: django_session
