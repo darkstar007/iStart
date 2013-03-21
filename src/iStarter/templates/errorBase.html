@@ -1,0 +1,19 @@
+{% extends "search/base.html" %}
+
+{% block head_styles %}
+
+{% endblock head_styles %}
+
+{% block header %}
+	<header id="home-main-header-mini">
+	<div class="inner-error">
+	
+		<h1 class="error-reason"> {% block reason %} {% endblock reason %} </h1>
+		<br/>
+		<h1 class="error-code">{% block code %} {% endblock code %} 
+		<br/>
+		<h1 class="error-detail">{% block detail %} {% endblock detail %} </h1>
+	</div>
+	</header>
+{% endblock header %}
+

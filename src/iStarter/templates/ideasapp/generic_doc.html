@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block classification_head %} {{ classification|upper }} {% endblock classification_head %}		
+
+{% block top_row %}
+	<div class="row-fluid">
+		<div class="span10 offset1">
+			<h1>{{ page_title }}</h1>
+		</div>
+	</div>
+
+{% endblock top_row %}
+
+{% block main_block %}
+	<div class="row-fluid">
+		<div class="span7 offset1">
+		
+			<ul class="unstyled">
+			{% for section in sections %}
+				<li>
+				<h3 style="color:purple">{{ section.section_title }}</h3>
+				{% for para in section.paras %}
+					<p>{% autoescape off %} {{ para }} {% endautoescape %}</p>
+					</br>		
+				{% endfor %}
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+{% endblock main_block %}
+
+		{% block classification_tail %} {{ classification }} {% endblock classification_tail %}

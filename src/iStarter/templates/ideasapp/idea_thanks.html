@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block classification_head %} {{ classification|upper }} {% endblock classification_head %}		
+
+{% block top_row %}
+	<div class="row-fluid">
+		<div class="span10 offset1">
+			<h1>Thanks, we'll be in contact.</h1>
+		</div>
+	</div>
+
+{% endblock top_row %}
+
+{% block main_block %}
+	<div class="row-fluid">
+		<div class="span7 offset1">
+			</br>
+			<ul class="unstyled">
+				<li>{{ title }}</li>
+				</br>
+				<li>{{ description }}</li>
+			</ul>
+		</div>
+	</div>
+
+{% endblock main_block %}

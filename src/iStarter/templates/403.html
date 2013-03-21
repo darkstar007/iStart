@@ -1,0 +1,19 @@
+{% extends "errorBase.html" %}
+
+{% block reason %}
+
+	Sorry - you can't access that page. <a href="/search">Login</a> or <a href="/search">Search</a>.
+	
+{% endblock reason %}
+
+{% block code %}
+
+	Error Code: 403
+	
+{% endblock code %}
+
+{% block detail %}
+
+	What went wrong? <a href="/feedback">Contact us</a>
+	
+{% endblock detail %}

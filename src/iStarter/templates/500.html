@@ -1,0 +1,19 @@
+{% extends "errorBase.html" %}
+
+{% block reason %}
+
+	Well, this is embarressing - that caused an error on the server. <a href="/search">Search again?</a>
+	
+{% endblock reason %}
+
+{% block code %}
+
+	Error Code: 500
+	
+{% endblock code %}
+
+{% block detail %}
+
+	<a href="/feedback">What went wrong?</a>
+	
+{% endblock detail %}

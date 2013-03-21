@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    
+    <!-- Page Metadata -->
+    <meta charset="utf-8">
+    <title>&middot; iStarter &middot; {% block title_extra %} {% endblock %}</title>
+    <!--<link href="/static/images/favicon.ico" rel="icon" type="image/x-icon" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Search capability for text documents"/>
+    <meta name="keywords" content="search, text, entities" />
+    <meta name="author" content="Dstl"/>
+
+    <!-- Styles -->
+    <link href="/static/bootstrap/css/bootstrap.css" 			rel="stylesheet"/>
+    <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
+    <link href="/static/css/extras.css" 						rel="stylesheet"/>
+
+    <!--[if IE 6]>
+    	<link href="/static/Bootstrap-IE6-master/ie6.min.css" rel="stylesheet"/>
+	<![endif]-->
+  
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+    </style>
+
+	{% block extra_styles %}
+	{% endblock %}
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/ico/apple-touch-icon-144-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/ico/apple-touch-icon-114-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/ico/apple-touch-icon-72-precomposed.png"/>
+    <link rel="apple-touch-icon-precomposed" href="/static/ico/apple-touch-icon-57-precomposed.png"/>
+    <link rel="shortcut icon" href="/static/ico/favicon.png"/>
+  
+  	<!--  Scripts  -->
+  	<script src="/static/js/jquery.js"></script>
+    
+  	{% block extra_js %}
+  	{% endblock %}
+  
+  </head>
+
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+    <div class="navbar navbar-inverse navbar-fixed-top center">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+
+		  <!-- Left Navigation bar links
+   		       ==================================  -->
+          <div class="nav-collapse collapse">
+          <ul class="nav">
+          	<li><a href="/">Home</a></li>
+          	
+          	{% block nav_items_left %}
+            {% endblock %}
+          </ul>
+
+		  <!-- Centre Nav Bar Title
+   		       ==================================  -->
+			<ul class="nav" style="margin-left:40%;">
+				<li class="nav-classification">
+					<p style="margin:0px 0px">
+					{% block classification_head %}
+						unclassified
+					{% endblock classification_head %}
+					</p>
+					
+				</li>
+			</ul>
+
+
+		  <!-- Right Navigation bar links
+   		       ==================================  -->
+          <ul class="nav pull-right">
+          
+              <li class="dropdown">
+              	<a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+					<li> <a href="/docs/prototypes">	Prototypes	</a></li>
+					<li class="divider"></li>
+					<li> <a href="/docs/sources">		Dstl		</a></li>
+                </ul>
+              </li>
+
+              {% block nav_items_right %}
+              {% endblock %}
+              
+              <li class="dropdown">
+              	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                
+					{% if nav_dropdown_right %}
+						{% block nav_dropdown_right %}
+						{% for nav in nav_dropdown_right %}
+						<li href="{{nav.link}}">{{nav.name}}</li>
+						{% endfor %}
+						<li class="divider"></li>
+						{% endblock %}
+					{% endif %}
+					
+					<li><a href="/accounts/login">Login</a></li>
+					<li><a href="/accounts/password_reset">Reset Password</a></li>
+					<li><a href="/admin">Admin</a></li>
+				  
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+    <div style="margin: 40px auto"></div>
+    
+	{% block top_row %}
+    {% endblock top_row %}
+
+	{% block main_block %}
+    {% endblock main_block %}
+
+	{% block bottom_row %}
+    {% endblock bottom_row %}
+
+    <!-- Footer
+    ================================================== -->
+        
+    <footer class="footer">
+      <div class="container">
+        <p>Built by Information Management Department <a href="/docs/dstl">&copy; Dstl</a></p>
+        <ul class="footer-links">
+          <li><a href="/docs/prototypes">About Prototypes</a></li>
+          <li class="muted">&middot;</li>
+          <li><a href="/docs/technology_credits">Technology Credits</a></li>
+          <li class="muted">&middot;</li>
+          <li><a href="/docs/features">Feedback Log</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.js"></script>
+    
+	{% block tail_js %}
+ 	
+	{% endblock %}
+	
+  </body>
+</html>

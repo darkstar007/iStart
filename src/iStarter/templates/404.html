@@ -1,0 +1,13 @@
+{% extends "errorBase.html" %}
+
+{% block reason %}
+
+	404: Nope, sorry - {{request_path}} doesn't exist. Back to <a href="/search">home</a>.
+	
+{% endblock reason %}
+
+{% block detail %}
+
+	<a href="/feedback">What went wrong?</a>
+	
+{% endblock detail %}
