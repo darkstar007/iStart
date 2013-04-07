@@ -43,13 +43,15 @@ def formatSubmitterEmail(user):
 
 #------------------------------------------------------------------------------------------
 
-def ideasCloud():
+def ideasCloud(order):
     ''' Gets all ideas from db and returns them for rendering with some measure of how to render 
     Initially this rendering will be based on classification - higher class = bigger font'''
-    #import pdb
-    #pdb.set_trace()  
-    data = ideaModel.objects.all()
-    #data here is a list of dictionaries
+    #Pardsed in var in the field to order by for changing font
+
+    #data = ideaModel.objects.order_by(order).values_list('idea_title', 'pub_date')
+    #data = ideaModel.objects.values_list('idea_title', 'pub_date')
+    data = ideaModel.objects.order_by(order).values_list('idea_title', 'pub_date')
+    
     return data
 #------------------------------------------------------------------------------------------
 def getDate():

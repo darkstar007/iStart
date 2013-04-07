@@ -20,10 +20,9 @@
 
 	<div class="row-fluid">
 		<div class="span6 offset3">
-                <table class="table table-striped">
-                    
-                </table>
-                {{ ideas }}
+                {%for text in ideas%}
+                    {{text}}
+                {%endfor%}
 		</div>
 	</div>
 

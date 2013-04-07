@@ -631,3 +631,116 @@ SyntaxError: invalid syntax
 2013-04-07 19:12:02,610 [WARNING] django.request: Not Found: /ideas/ideas_list.html
 2013-04-07 19:12:17,029 [WARNING] django.request: Not Found: /ideas/ideas_list.html
 2013-04-07 19:12:21,018 [WARNING] django.request: Not Found: /ideas/ideas_list.html
+2013-04-07 20:49:23,712 [WARNING] django.request: Not Found: /back
+2013-04-07 20:50:19,968 [WARNING] django.request: Not Found: /docs/features
+2013-04-07 20:50:22,800 [WARNING] django.request: Not Found: /docs/technology_credits
+2013-04-07 20:50:25,547 [WARNING] django.request: Not Found: /docs/prototypes
+2013-04-07 20:50:30,069 [WARNING] django.request: Not Found: /docs/dstl
+2013-04-07 20:51:03,077 [WARNING] django.request: Not Found: /back
+2013-04-07 20:51:51,676 [WARNING] django.request: Not Found: /back
+2013-04-07 20:51:56,716 [WARNING] django.request: Not Found: /back
+2013-04-07 20:53:27,375 [WARNING] django.request: Not Found: /back
+2013-04-07 20:54:48,338 [WARNING] django.request: Not Found: /back
+2013-04-07 20:55:14,160 [ERROR] django.request: Internal Server Error: /ideas/back/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/views.py", line 103, in back
+    out.save()
+  File "/var/src/Django-1.4.3/django/db/models/base.py", line 463, in save
+    self.save_base(using=using, force_insert=force_insert, force_update=force_update)
+  File "/var/src/Django-1.4.3/django/db/models/base.py", line 551, in save_base
+    result = manager._insert([self], fields=fields, return_id=update_pk, using=using, raw=raw)
+  File "/var/src/Django-1.4.3/django/db/models/manager.py", line 203, in _insert
+    return insert_query(self.model, objs, fields, **kwargs)
+  File "/var/src/Django-1.4.3/django/db/models/query.py", line 1593, in insert_query
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/var/src/Django-1.4.3/django/db/models/sql/compiler.py", line 912, in execute_sql
+    cursor.execute(sql, params)
+  File "/var/src/Django-1.4.3/django/db/backends/util.py", line 40, in execute
+    return self.cursor.execute(sql, params)
+  File "/var/src/Django-1.4.3/django/db/backends/postgresql_psycopg2/base.py", line 52, in execute
+    return self.cursor.execute(query, args)
+IntegrityError: null value in column "pub_date" violates not-null constraint
+
+2013-04-07 20:55:56,942 [WARNING] django.request: Not Found: /ideas/back&id=1
+2013-04-07 20:57:10,687 [WARNING] django.request: Not Found: /ideas/back&id=1
+2013-04-07 21:07:19,531 [ERROR] django.request: Internal Server Error: /ideas/back/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+TypeError: back() takes exactly 2 arguments (1 given)
+2013-04-07 21:08:57,488 [ERROR] django.request: Internal Server Error: /ideas/back/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 188, in get_response
+    response = middleware_method(request, response)
+  File "/var/src/Django-1.4.3/django/middleware/common.py", line 94, in process_response
+    if response.status_code == 404:
+AttributeError: 'WSGIRequest' object has no attribute 'status_code'
+2013-04-07 21:28:45,796 [ERROR] django.request: Internal Server Error: /ideas/ideas_cloud/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/views.py", line 92, in ideas_cloud
+    ideasData.sort(key=lambda r:r[1])
+AttributeError: 'ValuesListQuerySet' object has no attribute 'sort'
+2013-04-07 21:36:06,540 [ERROR] django.request: Internal Server Error: /ideas/ideas_cloud/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/views.py", line 91, in ideas_cloud
+    ideasData = ideasCloud('id')
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/code.py", line 53, in ideasCloud
+    data = ideaModel.objects.order_by(order).get()
+  File "/var/src/Django-1.4.3/django/db/models/query.py", line 368, in get
+    % (self.model._meta.object_name, num, kwargs))
+MultipleObjectsReturned: get() returned more than one idea -- it returned 7! Lookup parameters were {}
+2013-04-07 21:36:59,168 [ERROR] django.request: Internal Server Error: /ideas/ideas_cloud/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/views.py", line 91, in ideas_cloud
+    ideasData = ideasCloud('id')
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/code.py", line 53, in ideasCloud
+    data = ideaModel.objects.order_by(order).get()[:]
+  File "/var/src/Django-1.4.3/django/db/models/query.py", line 368, in get
+    % (self.model._meta.object_name, num, kwargs))
+MultipleObjectsReturned: get() returned more than one idea -- it returned 7! Lookup parameters were {}
+2013-04-07 21:37:06,623 [ERROR] django.request: Internal Server Error: /ideas/ideas_cloud/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/views.py", line 91, in ideas_cloud
+    ideasData = ideasCloud('id')
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/code.py", line 53, in ideasCloud
+    data = ideaModel.objects.order_by(order).get()[:]
+  File "/var/src/Django-1.4.3/django/db/models/query.py", line 368, in get
+    % (self.model._meta.object_name, num, kwargs))
+MultipleObjectsReturned: get() returned more than one idea -- it returned 7! Lookup parameters were {}
+2013-04-07 21:38:34,988 [ERROR] django.request: Internal Server Error: /ideas/ideas_cloud/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/views.py", line 93, in ideas_cloud
+    for i in ideasData:
+  File "/var/src/Django-1.4.3/django/db/models/query.py", line 118, in _result_iter
+    self._fill_cache()
+  File "/var/src/Django-1.4.3/django/db/models/query.py", line 892, in _fill_cache
+    self._result_cache.append(self._iter.next())
+  File "/var/src/Django-1.4.3/django/db/models/query.py", line 1081, in iterator
+    for row in self.query.get_compiler(self.db).results_iter():
+  File "/var/src/Django-1.4.3/django/db/models/sql/compiler.py", line 763, in results_iter
+    for rows in self.execute_sql(MULTI):
+  File "/var/src/Django-1.4.3/django/db/models/sql/compiler.py", line 808, in execute_sql
+    sql, params = self.as_sql()
+  File "/var/src/Django-1.4.3/django/db/models/sql/compiler.py", line 72, in as_sql
+    ordering, ordering_group_by = self.get_ordering()
+  File "/var/src/Django-1.4.3/django/db/models/sql/compiler.py", line 401, in get_ordering
+    self.query.model._meta, default_order=asc):
+  File "/var/src/Django-1.4.3/django/db/models/sql/compiler.py", line 427, in find_ordering_name
+    field, col, alias, joins, opts = self._setup_joins(pieces, opts, alias)
+  File "/var/src/Django-1.4.3/django/db/models/sql/compiler.py", line 460, in _setup_joins
+    opts, alias, False)
+  File "/var/src/Django-1.4.3/django/db/models/sql/query.py", line 1316, in setup_joins
+    "Choices are: %s" % (name, ", ".join(names)))
+FieldError: Cannot resolve keyword 'idea_test' into field. Choices are: id, idea_classification, idea_headers, idea_text, idea_title, num_backers, pub_date

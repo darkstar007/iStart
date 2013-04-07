@@ -20,12 +20,13 @@
 
 	<div class="row-fluid">
 		<div class="span6 offset3">
-                <table class="table table-striped">
+                <table class="table table-striped table-condensed text-center">
                     <thead>
                         <tr>
                             {% for heading in headings %}
                                 <th> {{heading}} </th>
                             {% endfor %}
+                                <th>Back</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,7 +35,9 @@
                                 {%for cell in row%}
                                     <td>{{cell}}</td>
                                 {% endfor %}
+                                <td><a href="/ideas/back?idea_id={{idea_id}}">{{idea_id}}Back</a>
                             </tr>   
+                                
                         {% endfor %}                         
                     </tbody>                
                 </table>

@@ -86,21 +86,41 @@ def ideas_cloud(request):
     ''' Renders a word cloud of ideas '''
     c = {"classification":"unclassified",
          "page_title":"Recent Ideas"}
-    
     c.update(csrf(request))
-    
-    ideasData = ideasCloud()
-    c['ideas']=ideasData
+    ideasData = ideasCloud('pub_date')
+    outData = []
+    for i in ideasData:
+        outData.append(str(i[0]))
+    c['ideas']=outData
     
     return render_to_response("ideasapp/ideas_cloud.html", c)
             
-#-------------------------------------------------------------------#    
+#-------------------------------------------------------------------#   
+
+def back(idea_id):
+    '''The back this idea link was clicked somewhere'''
+    return idea_id
+    #TODO: Finish off this functionality!
+
+#-------------------------------------------------------------------#  
         
 def ideas_list(request):     
     c = {"classification":"unclassified",
          "page_title":"All Ideas"}
     c.update(csrf(request))
-     
+    pData = ideaModel.objects.values_list('idea_title','idea_text','pub_date', 'num_backers')
+    c['headings']=['Idea Title','Date Published','Idea Detail','Number of Backers']
+    c['tableData'] = pData
+    
+    return render_to_response("ideasapp/ideas_list.html", c)
+            
+#-------------------------------------------------------------------#  
+def ideas_all(request):
+    #Use if all data from table is needed into a dynamic table
+    c = {"classification":"unclassified",
+         "page_title":"All Ideas"}
+    c.update(csrf(request))
+    #Use if all data from table is needed into a dynamic table
     data = ideaModel.objects.all()
     #Get the field names
     headers = data.values()[0].keys()
@@ -122,12 +142,8 @@ def ideas_list(request):
     del data
     rows.append('Back')
     c['tableData'] = rows
+
     return render_to_response("ideasapp/ideas_list.html", c)
-            
-            
-            
-            
-            
             
 #-------------------------------------------------------------------#               
             
