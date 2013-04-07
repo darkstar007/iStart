@@ -535,3 +535,99 @@ Traceback (most recent call last):
   File "/usr/lib/python2.7/bdb.py", line 67, in dispatch_line
     if self.quitting: raise BdbQuit
 BdbQuit
+2013-04-07 16:53:32,593 [WARNING] django.request: Not Found: /ideas/ideas_list.html
+2013-04-07 16:59:55,312 [ERROR] django.request: Internal Server Error: /ideas/ideas_list/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/var/src/Django-1.4.3/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/var/src/Django-1.4.3/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/var/src/Django-1.4.3/django/core/urlresolvers.py", line 209, in resolve
+    return ResolverMatch(self.callback, args, kwargs, self.name)
+  File "/var/src/Django-1.4.3/django/core/urlresolvers.py", line 216, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/var/src/Django-1.4.3/django/utils/functional.py", line 27, in wrapper
+    result = func(*args)
+  File "/var/src/Django-1.4.3/django/core/urlresolvers.py", line 92, in get_callable
+    lookup_view = getattr(import_module(mod_name), func_name)
+  File "/var/src/Django-1.4.3/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/views.py", line 104
+    c['headings']="<th>1</th><th>2</th><th>3</th>"
+    ^
+SyntaxError: invalid syntax
+2013-04-07 17:11:52,080 [ERROR] django.request: Internal Server Error: /ideas/ideas_list/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/views.py", line 107, in ideas_list
+    return render_to_response("ideasapp/ideas_list.html", c)
+  File "/var/src/Django-1.4.3/django/shortcuts/__init__.py", line 20, in render_to_response
+    return HttpResponse(loader.render_to_string(*args, **kwargs), **httpresponse_kwargs)
+  File "/var/src/Django-1.4.3/django/template/loader.py", line 169, in render_to_string
+    t = get_template(template_name)
+  File "/var/src/Django-1.4.3/django/template/loader.py", line 145, in get_template
+    template, origin = find_template(template_name)
+  File "/var/src/Django-1.4.3/django/template/loader.py", line 134, in find_template
+    source, display_name = loader(name, dirs)
+  File "/var/src/Django-1.4.3/django/template/loader.py", line 42, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "/var/src/Django-1.4.3/django/template/loader.py", line 48, in load_template
+    template = get_template_from_string(source, origin, template_name)
+  File "/var/src/Django-1.4.3/django/template/loader.py", line 156, in get_template_from_string
+    return Template(source, origin, name)
+  File "/var/src/Django-1.4.3/django/template/base.py", line 125, in __init__
+    self.nodelist = compile_string(template_string, origin)
+  File "/var/src/Django-1.4.3/django/template/base.py", line 153, in compile_string
+    return parser.parse()
+  File "/var/src/Django-1.4.3/django/template/base.py", line 267, in parse
+    compiled_result = compile_func(self, token)
+  File "/var/src/Django-1.4.3/django/template/loader_tags.py", line 214, in do_extends
+    nodelist = parser.parse()
+  File "/var/src/Django-1.4.3/django/template/base.py", line 267, in parse
+    compiled_result = compile_func(self, token)
+  File "/var/src/Django-1.4.3/django/template/loader_tags.py", line 189, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/var/src/Django-1.4.3/django/template/base.py", line 267, in parse
+    compiled_result = compile_func(self, token)
+  File "/var/src/Django-1.4.3/django/template/defaulttags.py", line 762, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/var/src/Django-1.4.3/django/template/base.py", line 267, in parse
+    compiled_result = compile_func(self, token)
+  File "/var/src/Django-1.4.3/django/template/defaulttags.py", line 762, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "/var/src/Django-1.4.3/django/template/base.py", line 265, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/var/src/Django-1.4.3/django/template/base.py", line 320, in invalid_block_tag
+    (command, get_text_list(["'%s'" % p for p in parse_until])))
+TemplateSyntaxError: Invalid block tag: 'endblock', expected 'empty' or 'endfor'
+2013-04-07 17:31:23,776 [ERROR] django.request: Internal Server Error: /ideas/ideas_cloud/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/var/src/Django-1.4.3/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/var/src/Django-1.4.3/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/var/src/Django-1.4.3/django/core/urlresolvers.py", line 209, in resolve
+    return ResolverMatch(self.callback, args, kwargs, self.name)
+  File "/var/src/Django-1.4.3/django/core/urlresolvers.py", line 216, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/var/src/Django-1.4.3/django/utils/functional.py", line 27, in wrapper
+    result = func(*args)
+  File "/var/src/Django-1.4.3/django/core/urlresolvers.py", line 92, in get_callable
+    lookup_view = getattr(import_module(mod_name), func_name)
+  File "/var/src/Django-1.4.3/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/views.py", line 26, in <module>
+    from code import formatSubmitterEmail, formatHttpHeaders, ideasCloud, getDate, saveIdea
+  File "/home/dusted/iStart/iStart/src/iStarter/ideasapp/code.py", line 68
+    for
+       ^
+SyntaxError: invalid syntax
+2013-04-07 19:12:01,187 [WARNING] django.request: Not Found: /ideas/ideas_list.html
+2013-04-07 19:12:02,610 [WARNING] django.request: Not Found: /ideas/ideas_list.html
+2013-04-07 19:12:17,029 [WARNING] django.request: Not Found: /ideas/ideas_list.html
+2013-04-07 19:12:21,018 [WARNING] django.request: Not Found: /ideas/ideas_list.html

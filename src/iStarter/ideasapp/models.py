@@ -20,5 +20,5 @@ class idea(models.Model):
     # A couple of others
     idea_classification = models.CharField(max_length=100)
     idea_headers = models.CharField(max_length=20000)
-    def __unicode__(self):
-        return self.idea_title
+    #def __unicode__(self):
+        #return self.idea_title

@@ -78,7 +78,7 @@ def submit(request):
         c.update({"form":form})
     
     return render_to_response("ideasapp/idea_submit.html", c)
-     
+#-------------------------------------------------------------------#        
 
 def ideas_cloud(request):
     #import pdb
@@ -94,16 +94,42 @@ def ideas_cloud(request):
     
     return render_to_response("ideasapp/ideas_cloud.html", c)
             
+#-------------------------------------------------------------------#    
+        
+def ideas_list(request):     
+    c = {"classification":"unclassified",
+         "page_title":"All Ideas"}
+    c.update(csrf(request))
+     
+    data = ideaModel.objects.all()
+    #Get the field names
+    headers = data.values()[0].keys()
+    #ToDO: Make them prettier
+    #headersOut = []
+    c['headings']= headers
+    #Get table data
+    row = []
+    rows = []
+    for r in data.values():
+        for field in headers:
+            #Get the user from the header as an example
+            if field == 'idea_headers':
+                row.append('header_info_tbc')
+            else: row.append(r[field])
+        rows.append(row)
+        row = []
+    del row
+    del data
+    rows.append('Back')
+    c['tableData'] = rows
+    return render_to_response("ideasapp/ideas_list.html", c)
             
             
             
             
             
             
-            
-            
-            
-            
+#-------------------------------------------------------------------#               
             
             
             

@@ -49,6 +49,7 @@ def ideasCloud():
     #import pdb
     #pdb.set_trace()  
     data = ideaModel.objects.all()
+    #data here is a list of dictionaries
     return data
 #------------------------------------------------------------------------------------------
 def getDate():
@@ -62,7 +63,9 @@ def saveIdea(ideaTitle, ideaText, ideaClassification, ideaHeaders):
     out = ideaModel(idea_title = ideaTitle, pub_date = getDate(), idea_text = ideaText, num_backers = 1, idea_classification = ideaClassification, idea_headers = ideaHeaders)
     out.save()
     return 
+#------------------------------------------------------------------------------------------
 
+        
     
 
 
