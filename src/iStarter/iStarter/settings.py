@@ -28,7 +28,7 @@ ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # You can key the configurations off of anything - I use project path.
 configs = {
     '/Users/brantinghamr/Documents/Code/eclipseWorkspace/iStart/src/iStarter'   : 'dev_rb',
-    'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dev_cn',
+    '/home/dusted/iStart/iStart/src/iStarter'                                : 'dev_cn',
     'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dev_dm',
     'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dev_mn',
 
@@ -57,11 +57,23 @@ MANAGERS = ADMINS
 # This used for TESTS
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'istarter',                      # Or path to database file if using sqlite3.
+        'USER': 'django_usr',                      # Not used with sqlite3.
+        'PASSWORD': 'django_usr',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+'''
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         
         'NAME': 'auth-auth'
     }
 }
+'''
 
 #////////////////////////////////////////////////////////////////////////////////////
 #

@@ -8,6 +8,7 @@ urlpatterns = patterns('',
 
     url(r'^$',    'ideasapp.views.submit', name='submit'),    # For submitting ideas
     url(r'^submit/',    'ideasapp.views.submit', name='submit'),    # For submitting ideas
+    url(r'^ideas_cloud/',    'ideasapp.views.ideas_cloud', name='ideas_cloud'),    # For viewing ideas cloud
 
 )
 
