@@ -744,3 +744,198 @@ Traceback (most recent call last):
   File "/var/src/Django-1.4.3/django/db/models/sql/query.py", line 1316, in setup_joins
     "Choices are: %s" % (name, ", ".join(names)))
 FieldError: Cannot resolve keyword 'idea_test' into field. Choices are: id, idea_classification, idea_headers, idea_text, idea_title, num_backers, pub_date
+2013-06-24 17:39:14,147 [ERROR] django.request: Internal Server Error: /add/debug/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 70, in debug
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,152 [ERROR] django.request: Internal Server Error: /add/info/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 78, in info
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,156 [ERROR] django.request: Internal Server Error: /add/success/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 86, in success
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,161 [ERROR] django.request: Internal Server Error: /add/warning/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 94, in warning
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,167 [ERROR] django.request: Internal Server Error: /add/error/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 102, in error
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,354 [ERROR] django.request: Internal Server Error: /add/debug/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 70, in debug
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,359 [ERROR] django.request: Internal Server Error: /add/info/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 78, in info
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,364 [ERROR] django.request: Internal Server Error: /add/success/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 86, in success
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,370 [ERROR] django.request: Internal Server Error: /add/warning/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 94, in warning
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,374 [ERROR] django.request: Internal Server Error: /add/error/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 102, in error
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,588 [ERROR] django.request: Internal Server Error: /add/debug/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 70, in debug
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,592 [ERROR] django.request: Internal Server Error: /add/info/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 78, in info
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,596 [ERROR] django.request: Internal Server Error: /add/success/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 86, in success
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,600 [ERROR] django.request: Internal Server Error: /add/warning/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 94, in warning
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-24 17:39:14,604 [ERROR] django.request: Internal Server Error: /add/error/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/usr/lib/python2.7/site-packages/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 102, in error
+    fail_silently=fail_silently)
+  File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware

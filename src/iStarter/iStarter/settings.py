@@ -28,7 +28,7 @@ ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # You can key the configurations off of anything - I use project path.
 configs = {
     '/Users/brantinghamr/Documents/Code/eclipseWorkspace/iStart/src/iStarter'   : 'dev_rb',
-    '/home/dusted/iStart/iStart/src/iStarter'                                : 'dev_cn',
+    '/home/dusted/git/iStart/src/iStarter'                                : 'dev_cn',
     'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dev_dm',
     'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dev_mn',
 
@@ -55,6 +55,7 @@ MANAGERS = ADMINS
 
 
 # This used for TESTS
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -73,7 +74,7 @@ DATABASES = {
         'NAME': 'auth-auth'
     }
 }
-'''
+
 
 #////////////////////////////////////////////////////////////////////////////////////
 #
