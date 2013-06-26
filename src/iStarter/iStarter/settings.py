@@ -70,8 +70,8 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        
-        'NAME': 'auth-auth'
+    
+        'NAME': '/home/dusted/istarter.sqlite3'
     }
 }
 
@@ -240,5 +240,4 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'iStarter.urls'
-
 
