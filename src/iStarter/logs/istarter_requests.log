@@ -744,3 +744,10 @@ Traceback (most recent call last):
   File "/var/src/Django-1.4.3/django/db/models/sql/query.py", line 1316, in setup_joins
     "Choices are: %s" % (name, ", ".join(names)))
 FieldError: Cannot resolve keyword 'idea_test' into field. Choices are: id, idea_classification, idea_headers, idea_text, idea_title, num_backers, pub_date
+2013-06-25 22:18:29,566 [WARNING] django.request: Not Found: /admin/
+2013-06-26 07:32:29,580 [WARNING] django.request: Not Found: /docs/dstl
+2013-06-26 07:32:29,624 [WARNING] django.request: Not Found: /favicon.ico
+2013-06-26 07:32:41,452 [WARNING] django.request: Not Found: /docs/prototypes
+2013-06-26 07:32:43,486 [WARNING] django.request: Not Found: /docs/technology_credits
+2013-06-26 07:32:45,722 [WARNING] django.request: Not Found: /docs/features
+2013-06-26 07:33:18,797 [WARNING] django.request: Not Found: /docs/sources

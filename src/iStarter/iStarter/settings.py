@@ -29,7 +29,7 @@ ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 configs = {
     '/Users/brantinghamr/Documents/Code/eclipseWorkspace/iStart/src/iStarter'   : 'dev_rb',
     '/home/dusted/iStart/iStart/src/iStarter'                                : 'dev_cn',
-    'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dev_dm',
+    '/Users/darren/Development/iStart/src/iStarter'                                : 'dev_dm',
     'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dev_mn',
 
     'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dotcloud',
@@ -58,11 +58,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'istarter',                      # Or path to database file if using sqlite3.
-        'USER': 'django_usr',                      # Not used with sqlite3.
-        'PASSWORD': 'django_usr',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'istarter',                                 # Or path to database file if using sqlite3.
+        'USER': 'django_usr',                               # Not used with sqlite3.
+        'PASSWORD': 'django_usr',                           # Not used with sqlite3.
+        'HOST': 'localhost',                                # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                                         # Set to empty string for default. Not used with sqlite3.
     }
 }
 '''
