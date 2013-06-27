@@ -3133,3 +3133,24 @@ Traceback (most recent call last):
   File "/usr/lib/python2.7/site-packages/django/contrib/messages/api.py", line 22, in add_message
     raise MessageFailure('You cannot add messages without installing '
 MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-06-27 23:01:20,422 [ERROR] django.request: Internal Server Error: /ideas/back/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 188, in get_response
+    response = middleware_method(request, response)
+  File "/usr/lib/python2.7/site-packages/django/middleware/common.py", line 94, in process_response
+    if response.status_code == 404:
+AttributeError: 'WSGIRequest' object has no attribute 'status_code'
+2013-06-27 23:01:20,596 [ERROR] django.request: Internal Server Error: /ideas/back/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 188, in get_response
+    response = middleware_method(request, response)
+  File "/usr/lib/python2.7/site-packages/django/middleware/common.py", line 94, in process_response
+    if response.status_code == 404:
+AttributeError: 'WSGIRequest' object has no attribute 'status_code'
+2013-06-27 23:01:31,277 [ERROR] django.request: Internal Server Error: /ideas/back/ideas_list
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 188, in get_response
+    response = middleware_method(request, response)
+  File "/usr/lib/python2.7/site-packages/django/middleware/common.py", line 94, in process_response
+    if response.status_code == 404:
+AttributeError: 'WSGIRequest' object has no attribute 'status_code'
