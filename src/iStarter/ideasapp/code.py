@@ -64,12 +64,32 @@ def saveIdea(ideaTitle, ideaText, ideaClassification, ideaHeaders):
     #pdb.set_trace()    
     out = ideaModel(idea_title = ideaTitle, pub_date = getDate(), idea_text = ideaText, num_backers = 1, idea_classification = ideaClassification, idea_headers = ideaHeaders)
     out.save()
-    return 
+    return
 #------------------------------------------------------------------------------------------
-
+def loadTestData():
+    #Loads test data for this app
+    print 'Loading test data'
+    '''    
+    fh = open(settings.nounspth+'/'+settings.nounsfile,'r')
+    words = []
+    #Load into a list
+    
+    while fh.readline():
+        words.append(fh.readline().rstrip('\r\n'))
+    
+    #Work through the fields, get type etc and poulate
+    for field in ideaModel.objects.all():
+        print field
+    
+    fields = ideaModel.objects.all()
+    print fields
+    for field in fields:
+        print field
+        #print field.get_internal_type(), field.max_length()
         
     
-
+    fh.close()
+    '''
 
 
 

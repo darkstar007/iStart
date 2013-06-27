@@ -7,3 +7,19 @@ ADMINS = (
      ('Rich Brantingham', 'brantinr@ptn.dstl.uk.vl'),
 )
 
+#Paths for where the nouns file and header data file is stored
+testDataPath = r'/home/dusted/git/iStart/src/iStarter/config'
+nounsfile = 'nouns.txt'
+headersfile = 'example_headers.txt'
+
+#Apps that have models for loading of data
+testDataAppsList = ['ideasapp']
+#Number of rows to add
+testDataNumRows = 100
+#Path to where fixutres file will be saved - this should be accessible really
+#as its always in the fixtures directory under app
+fixtureOutPath = r'/home/dusted/git/iStart/src/iStarter/'
+fixtureDateFname = 'initial_data.json'
+
+
+
