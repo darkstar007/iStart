@@ -15,7 +15,7 @@ headersfile = 'example_headers.txt'
 #Apps that have models for loading of data
 testDataAppsList = ['ideasapp']
 #Number of rows to add
-testDataNumRows = 100
+testDataNumRows = 500
 #Path to where fixutres file will be saved - this should be accessible really
 #as its always in the fixtures directory under app
 fixtureOutPath = r'/home/dusted/git/iStart/src/iStarter/'

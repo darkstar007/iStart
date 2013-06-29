@@ -49,9 +49,9 @@ class testData():
     def randomText(self,chars):
         #Makes random text - chars is the number of characters allow max
         #Can be used for titles or body text etc
-        #Make the title from words
+        #Make the title from words - randomise the amoutn we return up to max words
         title = ''
-        while len(title) < chars:
+        while len(title) < randint(1,chars):
             title = title+' '+choice(self.words)
         #Clean it up a little
         title.strip()
@@ -107,7 +107,10 @@ class testData():
                         jsonfields[field.name]=self.randomEmail()
                     else:
                         continue
-                jsonout.append({'model':appname+'.'+cls[0], 'pk':i, 'fields':jsonfields})
+                #copy the dict
+                #jsonfields_ = jsonfields.copy()
+                jsonout.append({'model':appname+'.'+cls[0], 'pk':i, 'fields':jsonfields.copy()})
+                
             #print jsonout
             self.saveJson(jsonout, appname)
         return   
