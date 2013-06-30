@@ -7,6 +7,8 @@ ADMINS = (
      ('Rich Brantingham', 'brantinr@ptn.dstl.uk.vl'),
 )
 
+#Set this to true to load data - false to not
+testDataChk = True
 #Paths for where the nouns file and header data file is stored
 testDataPath = r'/home/dusted/git/iStart/src/iStarter/config'
 nounsfile = 'nouns.txt'
