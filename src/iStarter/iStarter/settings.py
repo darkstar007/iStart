@@ -30,7 +30,7 @@ configs = {
     '/Users/brantinghamr/Documents/Code/eclipseWorkspace/iStart/src/iStarter'   : 'dev_rb',
     '/Users/darren/Development/iStart/src/iStarter'                                : 'dev_dm',
     '/home/dusted/git/iStart/src/iStarter'                                : 'dev_cn',
-    'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dev_mn',
+    '/home/matt/iStart/src/iStarter'                                : 'dev_mn',
 
     'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dotcloud',
     'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'silver',
