@@ -9,11 +9,12 @@ if __name__ == "__main__":
     
     #If its a syncdb then first we create some JSON and save it to the initial_data.json
     #in the fixtures folder under each app
+    from config.dev_cn import testDataChk
     #...so it loads this data in as part of the syncdb
-    from config.dev_cn import testDataChk, testDataAppsList, testDataNumRows, testDataPath, nounsfile, headersfile, fixtureOutPath, fixtureDateFname
-    from ideasapp.tests import testData  
-    from ideasapp.settings import CLASSIFICATIONS
     if sys.argv == ['manage.py','syncdb'] and testDataChk==True:
+        from config.dev_cn import testDataAppsList, testDataNumRows, testDataPath, nounsfile, headersfile, fixtureOutPath, fixtureDateFname
+        from ideasapp.tests import testData  
+        from ideasapp.settings import CLASSIFICATIONS        
         #Make the fixutres data file based on models in our appslist
         try:
             r = testData(testDataPath, nounsfile, headersfile, CLASSIFICATIONS, fixtureOutPath, fixtureDateFname)
