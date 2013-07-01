@@ -54,17 +54,17 @@ def submit(request):
             # Form content extracted            
             cleanForm = form.cleaned_data
             '''
-            idea.idea_title = cleanForm['title']
-            idea.idea_text  = cleanForm['description']
-            idea.idea_classification = cleanForm['cls']
+            idea.title = cleanForm['title']
+            idea.desciption  = cleanForm['description']
+            idea.classification = cleanForm['cls']
             '''
             idea_headers = formatHttpHeaders(headers)
             res = saveIdea(cleanForm['title'],cleanForm['description'],cleanForm['cls'], idea_headers)
             #idea.email_starter = formatSubmitterEmail(user)
             # For the output page
-            c['title'] = idea.idea_title
-            c["description"] = idea.idea_text
-            c['classification'] = idea.idea_classification
+            c['title'] = idea.title
+            c["description"] = idea.description
+            c['classification'] = idea.classification
                 
             return render_to_response('ideasapp/idea_thanks.html', c)
     
@@ -108,7 +108,7 @@ def ideas_list(request):
     c = {"classification":"unclassified",
          "page_title":"All Ideas"}
     c.update(csrf(request))
-    pData = ideaModel.objects.values_list('idea_title','idea_text','pub_date', 'num_backers')
+    pData = ideaModel.objects.values_list('title','description','pub_date', 'num_backers')
     c['headings']=['Idea Title','Date Published','Idea Detail','Number of Backers']
     c['tableData'] = pData
     
@@ -133,7 +133,7 @@ def ideas_all(request):
     for r in data.values():
         for field in headers:
             #Get the user from the header as an example
-            if field == 'idea_headers':
+            if field == 'headers':
                 row.append('header_info_tbc')
             else: row.append(r[field])
         rows.append(row)
