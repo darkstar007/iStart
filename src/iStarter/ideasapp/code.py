@@ -62,7 +62,8 @@ def saveIdea(ideaTitle, ideaText, ideaClassification, ideaHeaders):
     ''' Processes idea form data and saves data '''
     #import pdb
     #pdb.set_trace()    
-    out = ideaModel(idea_title = ideaTitle, pub_date = getDate(), idea_text = ideaText, num_backers = 1, idea_classification = ideaClassification, idea_headers = ideaHeaders)
+    out = ideaModel(title = ideaTitle, pub_date = getDate(), description = ideaText, num_backers = 1,
+                    classification = ideaClassification, headers = ideaHeaders)
     out.save()
     return
 #------------------------------------------------------------------------------------------

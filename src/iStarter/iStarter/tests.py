@@ -12,6 +12,7 @@ from random import randint, choice
 import importlib
 import inspect
 import sys
+import os
 import json
 #Uncmment this when deplpoyed with django
 #import ideasapp.settings as dataloadsettings
@@ -123,6 +124,9 @@ class testData():
         
     def saveJson(self, jsonout, appname):
        #Dump json out to a file for initial data to import on syncdb
+       if not os.path.exists(self.fixtureOutPath+'/'+appname+'/fixtures'):
+           os.mkdir(self.fixtureOutPath+'/'+appname+'/'+'fixtures')
+
        with open(self.fixtureOutPath+'/'+appname+'/'+'fixtures/'+self.fixtureDateFname, 'w') as outfile:
            json.dump(jsonout, outfile)
            outfile.close()

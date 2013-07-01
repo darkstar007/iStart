@@ -16,7 +16,7 @@ nounsfile = 'nouns.txt'
 headersfile = 'example_headers.txt'
 
 #Apps that have models for loading of data
-testDataAppsList = ['ideasapp'] #, 'projectsapp']
+testDataAppsList = ['ideasapp', 'projectsapp']
 #Number of rows to add
 testDataNumRows = 500
 #Path to where fixutres file will be saved - this should be accessible really

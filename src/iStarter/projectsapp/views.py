@@ -21,6 +21,8 @@ for root, subFolders, files in os.walk(appRoot):
 #============================================================================================
 
 from projectsapp.models import project as projectModel
+from projectsapp.forms import projectForm
+from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
 
 
 def submit(request):
@@ -29,5 +31,44 @@ def submit(request):
     c = {"classification":"unclassified",
          "page_title":"My Glorious Project"}
     c.update(csrf(request))
-    print c
+    # Has the form been submitted?
+    if request.method == 'POST':
+        
+        form = projectForm(request.POST)
+        
+        if form.is_valid():
+
+            # Instantiate an idea
+            project = projectModel()
+
+            # Proper Header and django-based user
+            headers = request.META
+            #user = str(request.user)
+            
+            # Form content extracted            
+            cleanForm = form.cleaned_data
+            '''
+            idea.title = cleanForm['title']
+            idea.desciption  = cleanForm['description']
+            idea.classification = cleanForm['cls']
+            '''
+            project_headers = formatHttpHeaders(headers)
+            res = saveProject(cleanForm['title'], cleanForm['description'], cleanForm['cls'], project_headers)
+            #idea.email_starter = formatSubmitterEmail(user)
+            # For the output page
+            c['title'] = project.title
+            c["description"] = project.description
+            c['classification'] = project.classification
+                
+            return render_to_response('projectsapp/project_thanks.html', c)
+    
+        else:
+            logging.error("User failed to enter valid content into form.")
+            c['form'] = form
+            return render_to_response("projectsapp/project_submit.html", c)
+        
+    else:
+        form = projectForm()
+        c.update({"form":form})
+
     return render_to_response('projectsapp/project_submit.html', c)

@@ -26,8 +26,8 @@ if __name__ == "__main__":
             try:
                 out = r.buildInitalData(app, config_module.testDataNumRows)
                 print 'Wrote inital_data.json for {0}'.format(app)
-            except:
-                print 'Failed to write initial_data.json for {0}'.format(app)
+            except Exception, e:
+                print 'Failed to write initial_data.json for {0}'.format(app), e
         #Now fire the command line 
         execute_from_command_line(sys.argv)
     else:

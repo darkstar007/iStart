@@ -23,6 +23,5 @@ class idea(models.Model):
     classification = models.CharField(max_length=100) 
     headers = models.CharField(max_length=20000)
 
-    used_in_projects = models.ManyToManyField('projectsapp.project')
     #def __unicode__(self):
         #return self.idea_title
