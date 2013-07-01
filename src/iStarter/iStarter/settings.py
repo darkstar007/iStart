@@ -27,7 +27,7 @@ ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # You can key the configurations off of anything - I use project path.
 configs = {
-    '/Users/brantinghamr/Documents/Code/eclipseWorkspace/iStart/src/iStarter'   : 'dev_rb',
+    '/Users/robrant/eclipseCode/istarter/iStart/src/iStarter'   : 'dev_rb',
     '/Users/darren/Development/iStart/src/iStarter'                                : 'dev_dm',
     '/home/dusted/git/iStart/src/iStarter'                                : 'dev_cn',
     '/home/matt/iStart/src/iStarter'                                : 'dev_mn',

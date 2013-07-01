@@ -3164,3 +3164,4 @@ Traceback (most recent call last):
     if response.status_code == 404:
 AttributeError: 'WSGIRequest' object has no attribute 'status_code'
 >>>>>>> dev-branch-kris
+2013-07-01 11:56:26,528 [WARNING] django.request: Not Found: /ideas_list
