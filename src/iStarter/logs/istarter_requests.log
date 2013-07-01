@@ -3164,3 +3164,200 @@ Traceback (most recent call last):
     if response.status_code == 404:
 AttributeError: 'WSGIRequest' object has no attribute 'status_code'
 >>>>>>> dev-branch-kris
+2013-07-01 10:12:04,268 [ERROR] django.request: Internal Server Error: /add/debug/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 70, in debug
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,272 [ERROR] django.request: Internal Server Error: /add/info/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 78, in info
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,274 [ERROR] django.request: Internal Server Error: /add/success/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 86, in success
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,276 [ERROR] django.request: Internal Server Error: /add/warning/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 94, in warning
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,278 [ERROR] django.request: Internal Server Error: /add/error/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 102, in error
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,416 [ERROR] django.request: Internal Server Error: /add/debug/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 70, in debug
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,419 [ERROR] django.request: Internal Server Error: /add/info/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 78, in info
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,421 [ERROR] django.request: Internal Server Error: /add/success/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 86, in success
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,423 [ERROR] django.request: Internal Server Error: /add/warning/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 94, in warning
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,425 [ERROR] django.request: Internal Server Error: /add/error/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 102, in error
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,563 [ERROR] django.request: Internal Server Error: /add/debug/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 70, in debug
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,565 [ERROR] django.request: Internal Server Error: /add/info/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 78, in info
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,568 [ERROR] django.request: Internal Server Error: /add/success/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 86, in success
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,570 [ERROR] django.request: Internal Server Error: /add/warning/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 94, in warning
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:12:04,573 [ERROR] django.request: Internal Server Error: /add/error/
+Traceback (most recent call last):
+  File "/var/src/Django-1.4.3/django/core/handlers/base.py", line 111, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/var/src/Django-1.4.3/django/views/decorators/cache.py", line 89, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/var/src/Django-1.4.3/django/contrib/messages/tests/urls.py", line 30, in add
+    getattr(messages, message_type)(request, msg)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 102, in error
+    fail_silently=fail_silently)
+  File "/var/src/Django-1.4.3/django/contrib/messages/api.py", line 22, in add_message
+    raise MessageFailure('You cannot add messages without installing '
+MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
+2013-07-01 10:25:46,637 [WARNING] django.request: Not Found: /favicon.ico
+2013-07-01 10:25:46,644 [WARNING] django.request: Not Found: /favicon.ico

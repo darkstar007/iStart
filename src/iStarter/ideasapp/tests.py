@@ -6,6 +6,7 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+'''
 #from ideasapp.models import idea as ideaModel
 from datetime import datetime
 from random import randint, choice
@@ -15,6 +16,7 @@ import sys
 import json
 #Uncmment this when deplpoyed with django
 #import ideasapp.settings as dataloadsettings
+'''
 
 class SimpleTest(TestCase):
     def test_basic_addition(self):
@@ -22,7 +24,7 @@ class SimpleTest(TestCase):
         Tests that 1 + 1 always equals 2.
         """
         self.assertEqual(1 + 1, 2)
-
+'''
 
 class testData():
     def __init__(self, testDataPath, nounsfile, headersfile,
@@ -121,6 +123,6 @@ class testData():
            json.dump(jsonout, outfile)
            outfile.close()
        return
- 
+'''
         
         
