@@ -33,3 +33,10 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+#  Hide Finder details on OSX
+.DS_Store
+
+# Django application logs
+*.gitignore.log
+

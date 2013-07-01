@@ -27,10 +27,10 @@ ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # You can key the configurations off of anything - I use project path.
 configs = {
-    '/Users/brantinghamr/Documents/Code/eclipseWorkspace/iStart/src/iStarter'   : 'dev_rb',
+    '/Users/robrant/eclipseCode/istarter/iStart/src/iStarter'   : 'dev_rb',
     '/Users/darren/Development/iStart/src/iStarter'                                : 'dev_dm',
     '/home/dusted/git/iStart/src/iStarter'                                : 'dev_cn',
-    'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dev_mn',
+    '/home/matt/iStart/src/iStarter'                                : 'dev_mn',
 
     'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'dotcloud',
     'PREPEND YOUR PATH HERE/iStart/src/iStarter'                                : 'silver',
@@ -54,7 +54,7 @@ MANAGERS = ADMINS
 #////////////////////////////////////////////////////////////////////////////////////
 
 
-# This used for TESTS
+# This now in personal config files
 '''
 DATABASES = {
     'default': {
@@ -67,13 +67,6 @@ DATABASES = {
     }
 }
 '''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-    
-        'NAME': '/home/dusted/istarter.sqlite3'
-    }
-}
 
 
 #////////////////////////////////////////////////////////////////////////////////////
@@ -104,8 +97,8 @@ CLASSIFICATION_RANK = ['unknown',
 LOG_SEARCHES = True
 
 # Additional locations of static files
-logFile        = "istarter_error.log"
-requestLogFile = "istarter_requests.log"
+logFile        = "istarter_error.gitignore.log"
+requestLogFile = "istarter_requests.gitignore.log"
 
 LOG_PATH = os.path.join(ROOT_PATH, 'logs')
 
@@ -171,6 +164,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ideasapp',
+    'projectsapp',
     #'accountsapp',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
