@@ -3189,3 +3189,95 @@ Traceback (most recent call last):
   File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 101, in get_callable
     (lookup_view, mod_name))
 ViewDoesNotExist: Could not import projectsapp.views.submit. View does not exist in module projectsapp.views.
+2013-07-01 11:15:46,194 [ERROR] django.request: Internal Server Error: /projects/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 209, in resolve
+    return ResolverMatch(self.callback, args, kwargs, self.name)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 216, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/usr/lib/python2.7/dist-packages/django/utils/functional.py", line 27, in wrapper
+    result = func(*args)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 92, in get_callable
+    lookup_view = getattr(import_module(mod_name), func_name)
+  File "/usr/lib/python2.7/dist-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/home/matt/iStart/src/iStarter/projectsapp/views.py", line 23, in <module>
+    from projectsapp.models import  dsaproject as projectModel
+  File "/home/matt/iStart/src/iStarter/projectsapp/models.py", line 4, in <module>
+    from ideasapp.model import idea
+ImportError: No module named model
+2013-07-01 11:16:01,213 [ERROR] django.request: Internal Server Error: /projects/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 209, in resolve
+    return ResolverMatch(self.callback, args, kwargs, self.name)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 216, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/usr/lib/python2.7/dist-packages/django/utils/functional.py", line 27, in wrapper
+    result = func(*args)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 92, in get_callable
+    lookup_view = getattr(import_module(mod_name), func_name)
+  File "/usr/lib/python2.7/dist-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/home/matt/iStart/src/iStarter/projectsapp/views.py", line 23, in <module>
+    from projectsapp.models import project as projectModel
+  File "/home/matt/iStart/src/iStarter/projectsapp/models.py", line 4, in <module>
+    from ideasapp.model import idea
+ImportError: No module named model
+2013-07-01 11:28:45,083 [ERROR] django.request: Internal Server Error: /projects/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 209, in resolve
+    return ResolverMatch(self.callback, args, kwargs, self.name)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 216, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/usr/lib/python2.7/dist-packages/django/utils/functional.py", line 27, in wrapper
+    result = func(*args)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 92, in get_callable
+    lookup_view = getattr(import_module(mod_name), func_name)
+  File "/usr/lib/python2.7/dist-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/home/matt/iStart/src/iStarter/projectsapp/views.py", line 23, in <module>
+    from projectsapp.models import project as projectModel
+  File "/home/matt/iStart/src/iStarter/projectsapp/models.py", line 7, in <module>
+    from ideasapp.model import idea
+ImportError: No module named model
+2013-07-01 11:48:42,616 [ERROR] django.request: Internal Server Error: /projects/
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/django/core/handlers/base.py", line 101, in get_response
+    request.path_info)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 209, in resolve
+    return ResolverMatch(self.callback, args, kwargs, self.name)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 216, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/usr/lib/python2.7/dist-packages/django/utils/functional.py", line 27, in wrapper
+    result = func(*args)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 92, in get_callable
+    lookup_view = getattr(import_module(mod_name), func_name)
+  File "/usr/lib/python2.7/dist-packages/django/utils/importlib.py", line 35, in import_module
+    __import__(name)
+  File "/home/matt/iStart/src/iStarter/projectsapp/views.py", line 23, in <module>
+    from projectsapp.models import project as projectModel
+  File "/home/matt/iStart/src/iStarter/projectsapp/models.py", line 7, in <module>
+    from ideasapp.model import idea
+ImportError: No module named model

@@ -20,6 +20,8 @@ for root, subFolders, files in os.walk(appRoot):
 
 #============================================================================================
 
+from projectsapp.models import project as projectModel
+
 
 def submit(request):
     ''' Pulling together ideas into a glorious project. '''
