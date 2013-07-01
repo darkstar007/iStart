@@ -7,7 +7,6 @@ if __name__ == "__main__":
 
     from django.core.management import execute_from_command_line
     from iStarter.settings import config_module
-    print config_module.testDataChk
     #If its a syncdb then first we create some JSON and save it to the initial_data.json
     #in the fixtures folder under each app
     #...so it loads this data in as part of the syncdb
