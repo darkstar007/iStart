@@ -42,4 +42,4 @@ nosetests.xml
 
 # ignore project specific files
 src/iStarter/ideasapp/fixtures/initial_data.json
-.log
+*.log
