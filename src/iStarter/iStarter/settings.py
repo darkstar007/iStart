@@ -54,10 +54,6 @@ MANAGERS = ADMINS
 #////////////////////////////////////////////////////////////////////////////////////
 
 
-<<<<<<< HEAD
-# This used for TESTS
-
-=======
 # This now in personal config files
 '''
 DATABASES = {

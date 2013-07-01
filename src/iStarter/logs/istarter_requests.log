@@ -3166,3 +3166,26 @@ AttributeError: 'WSGIRequest' object has no attribute 'status_code'
 2013-06-30 21:31:22,491 [WARNING] django.request: Not Found: /docs/prototypes
 2013-07-01 07:27:29,042 [WARNING] django.request: Not Found: /ideas_all
 2013-07-01 07:27:37,547 [WARNING] django.request: Not Found: /ideas/ideas_all
+2013-07-01 10:26:44,139 [ERROR] django.request: Internal Server Error: /projects
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/django/core/handlers/base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "/usr/lib/python2.7/dist-packages/django/middleware/common.py", line 68, in process_request
+    urlresolvers.is_valid_path("%s/" % request.path_info, urlconf)):
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 531, in is_valid_path
+    resolve(path, urlconf)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 420, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 300, in resolve
+    sub_match = pattern.resolve(new_path)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 209, in resolve
+    return ResolverMatch(self.callback, args, kwargs, self.name)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 216, in callback
+    self._callback = get_callable(self._callback_str)
+  File "/usr/lib/python2.7/dist-packages/django/utils/functional.py", line 27, in wrapper
+    result = func(*args)
+  File "/usr/lib/python2.7/dist-packages/django/core/urlresolvers.py", line 101, in get_callable
+    (lookup_view, mod_name))
+ViewDoesNotExist: Could not import projectsapp.views.submit. View does not exist in module projectsapp.views.
