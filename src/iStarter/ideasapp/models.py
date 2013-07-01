@@ -1,4 +1,6 @@
 from django.db import models
+import sys
+sys.path.append('..')
 
 
 # Create your models here.
@@ -20,5 +22,7 @@ class idea(models.Model):
     # A couple of others
     classification = models.CharField(max_length=100) 
     headers = models.CharField(max_length=20000)
+
+    used_in_projects = models.ManyToManyField('projectsapp.project')
     #def __unicode__(self):
         #return self.idea_title

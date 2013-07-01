@@ -43,3 +43,5 @@ nosetests.xml
 
 # We don't want to track log file
 *.log
+
+*.json

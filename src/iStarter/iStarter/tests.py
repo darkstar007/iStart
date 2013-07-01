@@ -83,6 +83,7 @@ class testData():
             fields = model._meta.fields
             jsonfields = {}
             for field in fields:
+                #print field, field.get_internal_type()
                 #Make blank json dict
                 if field.get_internal_type() != 'AutoField':
                     jsonfields[field.name]=''
@@ -95,6 +96,8 @@ class testData():
                         jsonfields[field.name]=choice(self.classifications)[0]
                     elif field.get_internal_type() == 'CharField' and field.name.find('header') != -1:                  
                         jsonfields[field.name]=self.headers
+                    #elif field.get_internal_type() == 'OneToOneField':
+                    #    jsonfields[field.name] = randint(0,rows-1)
                     #All other Char fields
                     #TODO: Add more options for different char field types
                     elif field.get_internal_type() == 'CharField':

@@ -4,8 +4,9 @@ from django.db import models
 
 import sys
 sys.path.append('..')
-from ideasapp.models import idea
+from ideasapp.models import idea as ideaModel
 
-class project(idea):
-    ideas_derived_from = models.CharField(max_length=4096)
+class project(ideaModel):
+    
+    ideas_derived_from = models.ManyToManyField(ideaModel, related_name='title+')
 
