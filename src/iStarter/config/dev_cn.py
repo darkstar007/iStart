@@ -7,6 +7,14 @@ ADMINS = (
      ('Rich Brantingham', 'brantinr@ptn.dstl.uk.vl'),
 )
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+    
+        'NAME': '/home/dusted/istarter.sqlite3'
+    }
+}
+
 #Paths for where the nouns file and header data file is stored
 testDataPath = r'/home/dusted/git/iStart/src/iStarter/config'
 nounsfile = 'nouns.txt'

@@ -54,7 +54,7 @@ MANAGERS = ADMINS
 #////////////////////////////////////////////////////////////////////////////////////
 
 
-# This used for TESTS
+# This now in personal config files
 '''
 DATABASES = {
     'default': {
@@ -67,13 +67,6 @@ DATABASES = {
     }
 }
 '''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-    
-        'NAME': '/home/dusted/istarter.sqlite3'
-    }
-}
 
 
 #////////////////////////////////////////////////////////////////////////////////////
