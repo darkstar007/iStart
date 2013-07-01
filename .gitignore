@@ -37,3 +37,9 @@ nosetests.xml
 #  Hide Finder details on OSX
 .DS_Store
 
+
+# Hide xemacs backup files
+*~
+
+# We don't want to track log file
+*.log
