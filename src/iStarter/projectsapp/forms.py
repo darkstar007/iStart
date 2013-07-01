@@ -11,7 +11,9 @@ def get_idea_choices():
 class projectForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(projectForm, self).__init__(*args, **kwargs)
-        self.fields['ideas'] = forms.MultipleChoiceField( choices=get_idea_choices() )
+        self.fields['ideas'] = forms.MultipleChoiceField( choices=get_idea_choices(),
+                                                          widget = forms.SelectMultiple(attrs={'class': 'span12',  # Make it same with as textare
+                                                                                               'size': '12'} )) # make it 12 rows high
 
  
     title  = forms.CharField(widget=forms.TextInput(attrs={'placeholder':"Title?",'class':'span12'}))
