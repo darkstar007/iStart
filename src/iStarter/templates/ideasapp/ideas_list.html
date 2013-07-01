@@ -33,7 +33,9 @@
                         {%for row in tableData%}
                             <tr> 
                                 {%for cell in row%}
-                                    <td>{{cell}}</td>
+                                    <td><button type="button" class="btn btn-small" data-toggle="collapse" data-target={{cell}}
+                                        </button>                                    
+                                    </td>
                                 {% endfor %}
                                 <td><a href="/ideas/back?idea_id={{idea_id}}">{{idea_id}}Back</a>
                             </tr>   

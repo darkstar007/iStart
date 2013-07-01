@@ -3361,3 +3361,4 @@ Traceback (most recent call last):
 MessageFailure: You cannot add messages without installing django.contrib.messages.middleware.MessageMiddleware
 2013-07-01 10:25:46,637 [WARNING] django.request: Not Found: /favicon.ico
 2013-07-01 10:25:46,644 [WARNING] django.request: Not Found: /favicon.ico
+2013-07-01 12:12:54,491 [WARNING] django.request: Not Found: /ideas/_ideas_list
