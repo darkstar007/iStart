@@ -97,8 +97,8 @@ CLASSIFICATION_RANK = ['unknown',
 LOG_SEARCHES = True
 
 # Additional locations of static files
-logFile        = "istarter_error.log"
-requestLogFile = "istarter_requests.log"
+logFile        = "istarter_error.gitignore.log"
+requestLogFile = "istarter_requests.gitignore.log"
 
 LOG_PATH = os.path.join(ROOT_PATH, 'logs')
 
@@ -164,6 +164,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ideasapp',
+    'projectsapp',
     #'accountsapp',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
