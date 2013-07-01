@@ -89,7 +89,7 @@ class testData():
                 if field.get_internal_type() != 'AutoField':
                     jsonfields[field.name]=''
             jsonout = []
-            for i in range(0,rows):
+            for i in range(1,rows):
                 #Iterate for number of rows we want loaded in
                 #Iterate over fields 
                 for field in fields:
