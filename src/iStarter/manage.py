@@ -11,7 +11,7 @@ if __name__ == "__main__":
     #in the fixtures folder under each app
     #...so it loads this data in as part of the syncdb
     if sys.argv == ['manage.py','syncdb'] and config_module.testDataChk==True:
-        #from ideasapp.tests import testData  
+        
         from iStarter.tests import testData
         from ideasapp.settings import CLASSIFICATIONS        
         #Make the fixutres data file based on models in our appslist
