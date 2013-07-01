@@ -31,7 +31,7 @@
                     {%for row in tableData %}
                         <tr>
                           {%for cell in row%}    
-                            <td>{% if cell.field = "Idea Detail" %}
+                            <td>{% if cell.field = "Idea Description" %}
                             <button type="button" class="btn btn-mini" data-toggle="collapse" data-target=#{{cell.id}}>Show Details...</button>
                             <div id="{{cell.id}}" class="collapse"> {{cell.full}} </div>                 
                             {% else %}

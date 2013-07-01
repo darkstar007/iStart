@@ -109,12 +109,12 @@ def ideas_list(request):
          "page_title":"All Ideas"}
     c.update(csrf(request))
     #Template for model outputs
-    template_headings = [{'db':'idea_title', 'pretty':'Idea Title'}, 
+    template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
-                        {'db':'idea_text', 'pretty':'Idea Detail'},
+                        {'db':'description', 'pretty':'Idea Description'},
                         {'db':'num_backers', 'pretty':'Number of Backers'}]
     #get the values form db - this could be user requested - e.g. based on pub date
-    pData = ideaModel.objects.values_list('idea_title','pub_date','idea_text', 'num_backers')
+    pData = ideaModel.objects.values_list('title','pub_date','description', 'num_backers')
     #Make the pretty headings
     #c['headings']=['Idea Title','Date Published','Idea Detail','Number of Backers']
     #Instantiate our out vars
