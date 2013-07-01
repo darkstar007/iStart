@@ -37,3 +37,5 @@ nosetests.xml
 #  Hide Finder details on OSX
 .DS_Store
 
+# ignore project specific files
+src/iStarter/ideasapp/fixtures/initial_data.json
