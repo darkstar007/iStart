@@ -24,24 +24,26 @@
                     <thead>
                         <tr>
                             {% for heading in headings %}
-                                <th> {{heading}} </th>
+                                <th> {{ heading.pretty }} </th>
                             {% endfor %}
-                                <th>Back</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {%for row in tableData%}
-                            <tr> 
-                                {%for cell in row%}
-                                    <td><button type="button" class="btn btn-small" data-toggle="collapse" data-target={{cell}}
-                                        </button>                                    
-                                    </td>
-                                {% endfor %}
-                                <td><a href="/ideas/back?idea_id={{idea_id}}">{{idea_id}}Back</a>
-                            </tr>   
-                                
-                        {% endfor %}                         
-                    </tbody>                
+                    {%for row in tableData %}
+                        <tr>
+                          {%for cell in row%}    
+                            <td>{% if cell.field = "Idea Detail" %}
+                            <button type="button" class="btn btn-mini" data-toggle="collapse" data-target=#{{cell.id}}>Show Details...</button>
+                            <div id="{{cell.id}}" class="collapse"> {{cell.full}} </div>                 
+                            {% else %}
+                            {{cell.full}}                            
+                            {% endif %} 
+                            </td>                                                                          
+                        {% endfor %}
+                        </tr>
+
+                    {% endfor %}
+
+                                                 
                 </table>
 		</div>
 	</div>

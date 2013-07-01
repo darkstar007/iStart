@@ -103,18 +103,59 @@ def back(idea_id):
     #TODO: Finish off this functionality!
 
 #-------------------------------------------------------------------#  
+''' 
+def ideas_list(request):     
+    c = {"classification":"unclassified",
+         "page_title":"All Ideas"}
+    c.update(csrf(request))
+    pData = ideaModel.objects.values_list('idea_title','pub_date','idea_text', 'num_backers')
+    c['headings']=['Idea Title','Date Published','Idea Detail','Number of Backers']
+    c['tableData'] = pData
+    
+    return render_to_response("ideasapp/ideas_list.html", c)
+'''            
+#-------------------------------------------------------------------#  
         
 def ideas_list(request):     
     c = {"classification":"unclassified",
          "page_title":"All Ideas"}
     c.update(csrf(request))
-    pData = ideaModel.objects.values_list('idea_title','idea_text','pub_date', 'num_backers')
-    c['headings']=['Idea Title','Date Published','Idea Detail','Number of Backers']
-    c['tableData'] = pData
+    #Template for model outputs
+    template_headings = [{'db':'idea_title', 'pretty':'Idea Title'}, 
+                         {'db':'pub_date', 'pretty':'Date Published'},
+                        {'db':'idea_text', 'pretty':'Idea Detail'},
+                        {'db':'num_backers', 'pretty':'Number of Backers'}]
+    #get the values form db - this could be user requested - e.g. based on pub date
+    pData = ideaModel.objects.values_list('idea_title','pub_date','idea_text', 'num_backers')
+    #Make the pretty headings
+    #c['headings']=['Idea Title','Date Published','Idea Detail','Number of Backers']
+    #Instantiate our out vars
+    out = []
+    outrow = []
+    rowdict = {'field':'','full':'','short':'','id':''}
+    for pDataidx, row in enumerate(pData):
+        for headingidx, heading in enumerate(template_headings):
+            rowdict['field']=heading['pretty']
+            '''
+            #TODO: alter this to search for specific data types
+            if heading['db']=='idea_text' and ideaModel._meta.get_field(heading['db']).get_internal_type() == 'CharField' and len(row[headingidx])>200:
+                rowdict['short']=row[headingidx][:200]
+                rowdict['full']=row[headingidx][200:]
+            else: 
+                rowdict['short']=''
+            '''
+            rowdict['full']=row[headingidx]
+            rowdict['id']='ideas'+str(pDataidx)+str(headingidx)
+            outrow.append(rowdict.copy())
+        out.append(outrow)
+        outrow = []
+    c['headings'] = template_headings      
+    c['tableData'] = out
     
     return render_to_response("ideasapp/ideas_list.html", c)
             
 #-------------------------------------------------------------------#  
+
 def ideas_all(request):
     #Use if all data from table is needed into a dynamic table
     c = {"classification":"unclassified",
