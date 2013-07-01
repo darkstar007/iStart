@@ -8,3 +8,4 @@ from ideasapp.models import idea
 
 class project(idea):
     ideas_derived_from = models.CharField(max_length=4096)
+
