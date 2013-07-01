@@ -54,8 +54,12 @@ MANAGERS = ADMINS
 #////////////////////////////////////////////////////////////////////////////////////
 
 
+<<<<<<< HEAD
 # This used for TESTS
 
+=======
+# This now in personal config files
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -67,14 +71,7 @@ DATABASES = {
     }
 }
 '''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-    
-        'NAME': '/home/dusted/istarter.sqlite3'
-    }
-}
-'''
+
 
 #////////////////////////////////////////////////////////////////////////////////////
 #
