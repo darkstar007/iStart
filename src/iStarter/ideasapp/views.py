@@ -23,7 +23,7 @@ for root, subFolders, files in os.walk(appRoot):
 #FOSS
 from ideasapp.forms import ideaForm
 from ideasapp.models import idea as ideaModel
-from code import formatSubmitterEmail, formatHttpHeaders, ideasCloud, getDate, saveIdea
+from code import formatSubmitterEmail, formatHttpHeaders, ideasCloud, getDate, saveIdea, saveTags
 
 logging.getLogger(__name__)
 
@@ -59,7 +59,11 @@ def submit(request):
             idea.idea_classification = cleanForm['cls']
             '''
             idea_headers = formatHttpHeaders(headers)
-            res = saveIdea(cleanForm['title'],cleanForm['description'],cleanForm['cls'], idea_headers)
+            savedIdea = saveIdea(cleanForm['title'],cleanForm['description'],cleanForm['cls'], idea_headers)
+            
+            # We can only add tags to a saved object
+            res = saveTags(savedIdea, cleanForm['tags'])
+            
             #idea.email_starter = formatSubmitterEmail(user)
             # For the output page
             c['title'] = idea.idea_title

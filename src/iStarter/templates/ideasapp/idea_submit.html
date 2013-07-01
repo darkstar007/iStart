@@ -19,7 +19,7 @@
 {% block main_block %}
 
 	<div class="row-fluid">
-		<div class="span6 offset3">
+		<div class="span5 offset3">
 
 			<form action="." method="POST">{% csrf_token %}
 			        <div>
@@ -38,6 +38,12 @@
 					
 			</form>
 		</div>
+		<div class="span2">
+			<div>
+		        {{ form.tags.errors }}
+		        {{ form.tags }}
+			</div>
+		</div>		
 	</div>
 
 {% endblock main_block %}

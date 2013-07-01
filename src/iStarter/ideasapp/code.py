@@ -62,9 +62,26 @@ def saveIdea(ideaTitle, ideaText, ideaClassification, ideaHeaders):
     ''' Processes idea form data and saves data '''
     #import pdb
     #pdb.set_trace()    
-    out = ideaModel(idea_title = ideaTitle, pub_date = getDate(), idea_text = ideaText, num_backers = 1, idea_classification = ideaClassification, idea_headers = ideaHeaders)
+    
+    out = ideaModel(idea_title = ideaTitle,
+                    pub_date = getDate(),
+                    idea_text = ideaText,
+                    num_backers = 1,
+                    idea_classification = ideaClassification,
+                    idea_headers = ideaHeaders)
+    
     out.save()
-    return
+    return out
+
+#------------------------------------------------------------------------------------------
+def saveTags(target, tags):
+    '''Saves the tags to the idea'''
+    
+    for t in tags:
+        target.tags.add(t)
+    target.save()
+    return target
+    
 #------------------------------------------------------------------------------------------
 def loadTestData():
     #Loads test data for this app

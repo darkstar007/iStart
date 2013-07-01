@@ -11,7 +11,7 @@ ADMINS = (
 
 
 #Set this to true to load data - false to not
-testDataChk = True
+testDataChk = False
 #Paths for where the nouns file and header data file is stored
 testDataPath = r'/Users/robrant/eclipseCode/istarter/iStart/src/iStarter/config'
 nounsfile = 'nouns.txt'

@@ -1,5 +1,6 @@
 from django import forms
 import ideasapp.settings as settings
+from taggit.forms import TagField
 
 class ideaForm(forms.Form):
     
@@ -10,3 +11,4 @@ class ideaForm(forms.Form):
     
     cls     = forms.ChoiceField(settings.CLASSIFICATIONS, required=True)
     
+    tags = TagField(widget=forms.TextInput(attrs={'placeholder':"Other tags?",'class':'span12'}))

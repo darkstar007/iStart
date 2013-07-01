@@ -1,5 +1,6 @@
 from django.db import models
 
+from taggit.managers import TaggableManager
 
 # Create your models here.
 
@@ -22,3 +23,5 @@ class idea(models.Model):
     idea_headers = models.CharField(max_length=20000)
     #def __unicode__(self):
         #return self.idea_title
+
+    tags = TaggableManager()

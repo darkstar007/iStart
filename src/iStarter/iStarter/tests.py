@@ -72,25 +72,30 @@ class testData():
         #TODO: Try/excepts
         #TODO: more data types
         #Get all models in the app model module
+        print '*'*50
         i = importlib.import_module(appname+'.models')
         #find all classes - i.e. models
         #TODO: Put extra check here to make sure its a model... and not some other class in the model module
         clsmembers = inspect.getmembers(sys.modules[appname+'.models'], inspect.isclass)
         #Iterate over models
         for cls in clsmembers:
+            
             i = importlib.import_module(appname+'.models', cls[0])
             model = getattr(i, cls[0]) 
             fields = model._meta.fields
+            
             jsonfields = {}
             for field in fields:
                 #Make blank json dict
                 if field.get_internal_type() != 'AutoField':
                     jsonfields[field.name]=''
             jsonout = []
+            
             for i in range(0,rows):
                 #Iterate for number of rows we want loaded in
                 #Iterate over fields 
                 for field in fields:
+                    print field.name, field.get_internal_type
                     if field.get_internal_type() == 'CharField' and field.name.find('classification') != -1:
                         jsonfields[field.name]=choice(self.classifications)[0]
                     elif field.get_internal_type() == 'CharField' and field.name.find('header') != -1:                  
