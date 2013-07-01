@@ -24,7 +24,6 @@ from projectsapp.models import project as projectModel
 from projectsapp.forms import projectForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
 
-
 def submit(request):
     ''' Pulling together ideas into a glorious project. '''
 
@@ -47,13 +46,10 @@ def submit(request):
             
             # Form content extracted            
             cleanForm = form.cleaned_data
-            '''
-            idea.title = cleanForm['title']
-            idea.desciption  = cleanForm['description']
-            idea.classification = cleanForm['cls']
-            '''
+
             project_headers = formatHttpHeaders(headers)
-            res = saveProject(cleanForm['title'], cleanForm['description'], cleanForm['cls'], project_headers)
+
+            res = saveProject(cleanForm['title'], cleanForm['description'], cleanForm['cls'], cleanForm['ideas'], project_headers)
             #idea.email_starter = formatSubmitterEmail(user)
             # For the output page
             c['title'] = project.title
@@ -69,6 +65,17 @@ def submit(request):
         
     else:
         form = projectForm()
-        c.update({"form":form})
+        c.update({"form": form})
 
     return render_to_response('projectsapp/project_submit.html', c)
+
+def project_list(request):     
+    c = {"classification":"unclassified",
+         "page_title":"All Ideas"}
+    c.update(csrf(request))
+    pData = projectModel.objects.values_list('title','description','pub_date', 'num_backers')
+    c['headings']=['Project Title','Project Description', 'Date Published', 'Number of Backers']
+    c['tableData'] = pData
+    
+    return render_to_response("projectsapp/project_list.html", c)
+            

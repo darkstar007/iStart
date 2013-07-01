@@ -7,7 +7,7 @@ sys.path.append('..')
 
 class idea(models.Model):
     
-    title = models.CharField(max_length=200)  # The title
+    title = models.CharField(max_length=200, unique = True)  # The title
     pub_date = models.DateTimeField('date_published')
     description = models.CharField(max_length=2000) # The main text
     #idea_id = models.CharField(max_length=100)

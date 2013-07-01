@@ -109,7 +109,7 @@ def ideas_list(request):
          "page_title":"All Ideas"}
     c.update(csrf(request))
     pData = ideaModel.objects.values_list('title','description','pub_date', 'num_backers')
-    c['headings']=['Idea Title','Date Published','Idea Detail','Number of Backers']
+    c['headings']=['Idea Title', 'Idea Detail', 'Date Published', 'Number of Backers']
     c['tableData'] = pData
     
     return render_to_response("ideasapp/ideas_list.html", c)
