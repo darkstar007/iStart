@@ -744,7 +744,6 @@ Traceback (most recent call last):
   File "/var/src/Django-1.4.3/django/db/models/sql/query.py", line 1316, in setup_joins
     "Choices are: %s" % (name, ", ".join(names)))
 FieldError: Cannot resolve keyword 'idea_test' into field. Choices are: id, idea_classification, idea_headers, idea_text, idea_title, num_backers, pub_date
-<<<<<<< HEAD
 2013-06-25 22:18:29,566 [WARNING] django.request: Not Found: /admin/
 2013-06-26 07:32:29,580 [WARNING] django.request: Not Found: /docs/dstl
 2013-06-26 07:32:29,624 [WARNING] django.request: Not Found: /favicon.ico
@@ -752,7 +751,6 @@ FieldError: Cannot resolve keyword 'idea_test' into field. Choices are: id, idea
 2013-06-26 07:32:43,486 [WARNING] django.request: Not Found: /docs/technology_credits
 2013-06-26 07:32:45,722 [WARNING] django.request: Not Found: /docs/features
 2013-06-26 07:33:18,797 [WARNING] django.request: Not Found: /docs/sources
-=======
 2013-06-24 17:39:14,147 [ERROR] django.request: Internal Server Error: /add/debug/
 Traceback (most recent call last):
   File "/usr/lib/python2.7/site-packages/django/core/handlers/base.py", line 111, in get_response
@@ -3163,4 +3161,8 @@ Traceback (most recent call last):
   File "/usr/lib/python2.7/site-packages/django/middleware/common.py", line 94, in process_response
     if response.status_code == 404:
 AttributeError: 'WSGIRequest' object has no attribute 'status_code'
->>>>>>> dev-branch-kris
+2013-06-30 21:14:52,262 [WARNING] django.request: Not Found: /favicon.ico
+2013-06-30 21:14:52,275 [WARNING] django.request: Not Found: /favicon.ico
+2013-06-30 21:31:22,491 [WARNING] django.request: Not Found: /docs/prototypes
+2013-07-01 07:27:29,042 [WARNING] django.request: Not Found: /ideas_all
+2013-07-01 07:27:37,547 [WARNING] django.request: Not Found: /ideas/ideas_all
