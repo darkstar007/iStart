@@ -14,10 +14,9 @@ class idea(models.Model):
     #names_backers = models.CharField(max_length=20000)
     #name_starter = models.CharField(max_length=100)
     #email_starter = models.CharField(max_length=100)
-    #verified = models.BooleanField()
+    verified = models.BooleanField()
     #date_verified = models.DateTimeField('date_verified')
     #verified_by = models.CharField(max_length=100)
-    
     # A couple of others
     idea_classification = models.CharField(max_length=100)
     idea_headers = models.CharField(max_length=20000)
