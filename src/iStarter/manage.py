@@ -23,6 +23,11 @@ if __name__ == "__main__":
             print 'Failed to initialise all test data - check paths in your config', sys.exc_info()[0]
             sys.exit()
         for app in config_module.testDataAppsList:
+            #Firstly clean old data file if it exists
+            try:
+                os.remove(config_module.fixtureOutPath+'/'+app+'/'+'fixtures/'+config_module.fixtureDateFname)
+            except OSError:
+                pass            
             try:
                 out = r.buildInitalData(app, config_module.testDataNumRows)
                 print 'Wrote inital_data.json for {0}'.format(app)
@@ -30,6 +35,7 @@ if __name__ == "__main__":
                 print 'Failed to write initial_data.json for {0}'.format(app)
         #Now fire the command line 
         execute_from_command_line(sys.argv)
+
     else:
         #Just fire the command line 
         execute_from_command_line(sys.argv)
