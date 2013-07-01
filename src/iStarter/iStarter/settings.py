@@ -27,7 +27,7 @@ ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # You can key the configurations off of anything - I use project path.
 configs = {
-    '/Users/brantinghamr/Documents/Code/eclipseWorkspace/iStart/src/iStarter'   : 'dev_rb',
+    '/Users/robrant/eclipseCode/istarter/iStart/src/iStarter'   : 'dev_rb',
     '/Users/darren/Development/iStart/src/iStarter'                                : 'dev_dm',
     '/home/dusted/git/iStart/src/iStarter'                                : 'dev_cn',
     '/home/matt/iStart/src/iStarter'                                : 'dev_mn',
@@ -97,8 +97,8 @@ CLASSIFICATION_RANK = ['unknown',
 LOG_SEARCHES = True
 
 # Additional locations of static files
-logFile        = "istarter_error.log"
-requestLogFile = "istarter_requests.log"
+logFile        = "istarter_error.gitignore.log"
+requestLogFile = "istarter_requests.gitignore.log"
 
 LOG_PATH = os.path.join(ROOT_PATH, 'logs')
 
