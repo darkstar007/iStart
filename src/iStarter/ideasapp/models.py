@@ -6,6 +6,8 @@ from taggit.managers import TaggableManager
 
 class idea(models.Model):
     
+        
+    
     idea_title = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date_published')
     idea_text = models.CharField(max_length=2000)
@@ -24,4 +26,9 @@ class idea(models.Model):
     #def __unicode__(self):
         #return self.idea_title
 
+    # This stores the tags provided in the text input box and those
+    # that a user has clicked from the pre-existing list.
     tags = TaggableManager()
+        
+        
+    
