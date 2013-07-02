@@ -56,7 +56,7 @@ def submit(request):
             c['title'] = project.title
             c["description"] = project.description
             c['classification'] = project.classification
-                
+            
             return render_to_response('projectsapp/project_thanks.html', c)
     
         else:
