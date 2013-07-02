@@ -16,14 +16,13 @@ nounsfile = 'nouns.txt'
 headersfile = 'example_headers.txt'
 
 #Apps that have models for loading of data
-testDataAppsList = ['ideasapp']
+testDataAppsList = ['ideasapp', 'projectsapp']
 #Number of rows to add
-testDataNumRows = 500
+testDataNumRows = 50
 #Path to where fixutres file will be saved - this should be accessible really
 #as its always in the fixtures directory under app
 fixtureOutPath = r'/home/matt/iStart/src/iStarter/'
 fixtureDateFname = 'initial_data.json'
-
 
 DATABASES = {
     'default': {

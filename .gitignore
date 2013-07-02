@@ -37,8 +37,13 @@ nosetests.xml
 #  Hide Finder details on OSX
 .DS_Store
 
+# Hide xemacs backup files
+*~
+
 # Django application logs
 *.gitignore.log
 
 # ignore project specific files
 src/iStarter/ideasapp/fixtures/initial_data.json
+*.log
+

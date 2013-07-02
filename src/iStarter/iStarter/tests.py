@@ -12,6 +12,7 @@ from random import randint, choice
 import importlib
 import inspect
 import sys
+import os
 import json
 #Uncmment this when deplpoyed with django
 #import ideasapp.settings as dataloadsettings
@@ -86,12 +87,13 @@ class testData():
             
             jsonfields = {}
             for field in fields:
+                #print field, field.get_internal_type()
                 #Make blank json dict
                 if field.get_internal_type() != 'AutoField':
                     jsonfields[field.name]=''
             jsonout = []
-            
-            for i in range(0,rows):
+
+            for i in range(1,rows):
                 #Iterate for number of rows we want loaded in
                 #Iterate over fields 
                 for field in fields:
@@ -100,6 +102,8 @@ class testData():
                         jsonfields[field.name]=choice(self.classifications)[0]
                     elif field.get_internal_type() == 'CharField' and field.name.find('header') != -1:                  
                         jsonfields[field.name]=self.headers
+                    #elif field.get_internal_type() == 'OneToOneField':
+                    #    jsonfields[field.name] = randint(0,rows-1)
                     #All other Char fields
                     #TODO: Add more options for different char field types
                     elif field.get_internal_type() == 'CharField':
@@ -125,6 +129,9 @@ class testData():
         
     def saveJson(self, jsonout, appname):
        #Dump json out to a file for initial data to import on syncdb
+       if not os.path.exists(self.fixtureOutPath+'/'+appname+'/fixtures'):
+           os.mkdir(self.fixtureOutPath+'/'+appname+'/'+'fixtures')
+
        with open(self.fixtureOutPath+'/'+appname+'/'+'fixtures/'+self.fixtureDateFname, 'w') as outfile:
            json.dump(jsonout, outfile)
            outfile.close()

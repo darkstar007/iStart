@@ -10,6 +10,7 @@ urlpatterns = patterns('',
 
     url(r'^$',   include('ideasapp.urls')),    # For ideas
     url(r'^ideas/',   include('ideasapp.urls')),    # For ideas
+    url(r'^projects/',   include('projectsapp.urls')),    # For ideas
 
 )
 
