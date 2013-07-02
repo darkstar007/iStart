@@ -75,7 +75,7 @@ def project_list(request):
          "page_title":"All Projects"}
     c.update(csrf(request))
 
-    pData = projectModel.objects.annotate(weight = Sum('pvote__weight')).values_list('title','description','pub_date', 'weight')
+    pData = projectModel.objects.annotate(weight = Sum('pvote__weight')).order_by('weight').values_list('title','description','pub_date', 'weight')
 
     c['headings']=['Project Title','Project Description', 'Date Published', 'Weight of Backers']
     c['tableData'] = pData
