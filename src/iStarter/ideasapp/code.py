@@ -55,7 +55,7 @@ def ideasCloud(order):
     return data
 #------------------------------------------------------------------------------------------
 def getDate():
-    return datetime.now()
+    return datetime.utcnow()
 
 #------------------------------------------------------------------------------------------
 def saveIdea(ideaTitle, ideaText, ideaClassification, ideaHeaders):
@@ -81,7 +81,7 @@ def saveTags(target, tags):
         target.tags.add(t)
     target.save()
     return target
-    
+
 #------------------------------------------------------------------------------------------
 def loadTestData():
     #Loads test data for this app
