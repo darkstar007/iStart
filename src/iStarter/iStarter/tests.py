@@ -7,7 +7,7 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 #from ideasapp.models import idea as ideaModel
-from datetime import datetime
+from datetime import datetime, timedelta
 from random import randint, choice
 import importlib
 import inspect
@@ -44,7 +44,7 @@ class testData():
     
     def randomDate(self):
         #Makes Random date
-        dtg = datetime(randint(2012,2015),randint(1,12),randint(1,28),randint(0,23),randint(0,59),randint(0,59))
+        dtg = datetime.now() - timedelta(days = randint(0,365*5), seconds = randint(0, 86399), microseconds = randint(0, 999999))
         return dtg.isoformat()
     
     def randomText(self,chars):
