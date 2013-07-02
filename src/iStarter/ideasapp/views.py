@@ -23,7 +23,8 @@ for root, subFolders, files in os.walk(appRoot):
 #FOSS
 from ideasapp.forms import ideaForm
 from ideasapp.models import idea as ideaModel
-from code import formatSubmitterEmail, formatHttpHeaders, ideasCloud, getDate, saveIdea, saveTags
+from code import formatSubmitterEmail, formatHttpHeaders, ideasCloud, getDate, saveIdea
+from code import saveTags, distinctTagsSortedAlpha
 
 logging.getLogger(__name__)
 
@@ -37,6 +38,9 @@ def submit(request):
     
     c.update(csrf(request))
 
+    # Create the tag list for selecting by user
+    c['known_tags'] = distinctTagsSortedAlpha()
+    
     # Has the form been submitted?
     if request.method == 'POST':
         
@@ -61,8 +65,11 @@ def submit(request):
             idea_headers = formatHttpHeaders(headers)
             savedIdea = saveIdea(cleanForm['title'],cleanForm['description'],cleanForm['cls'], idea_headers)
             
-            # We can only add tags to a saved object
-            res = saveTags(savedIdea, cleanForm['tags'])
+            # We can only add tags to a saved object - this saves the structured ones
+            res = saveTags(savedIdea, cleanForm['new_tags'])
+            
+            # This saves the unstructured ones
+            res = saveTags(savedIdea, cleanForm['existing_tags'])
             
             #idea.email_starter = formatSubmitterEmail(user)
             # For the output page
@@ -78,6 +85,7 @@ def submit(request):
             return render_to_response("ideasapp/idea_submit.html", c)
         
     else:
+        
         form = ideaForm()
         c.update({"form":form})
     
