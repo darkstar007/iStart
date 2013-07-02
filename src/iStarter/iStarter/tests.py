@@ -78,7 +78,9 @@ class testData():
         #TODO: Put extra check here to make sure its a model... and not some other class in the model module
         clsmembers = inspect.getmembers(sys.modules[appname+'.models'], inspect.isclass)
         #Iterate over models
+        jsonout = []
         for cls in clsmembers:
+            print cls
             i = importlib.import_module(appname+'.models', cls[0])
             model = getattr(i, cls[0]) 
             fields = model._meta.fields
@@ -88,17 +90,18 @@ class testData():
                 #Make blank json dict
                 if field.get_internal_type() != 'AutoField':
                     jsonfields[field.name]=''
-            jsonout = []
-            for i in range(1,rows):
+            for i in xrange(rows):
                 #Iterate for number of rows we want loaded in
                 #Iterate over fields 
                 for field in fields:
+                    print field, field.get_internal_type()
                     if field.get_internal_type() == 'CharField' and field.name.find('classification') != -1:
                         jsonfields[field.name]=choice(self.classifications)[0]
                     elif field.get_internal_type() == 'CharField' and field.name.find('header') != -1:                  
                         jsonfields[field.name]=self.headers
-                    #elif field.get_internal_type() == 'OneToOneField':
-                    #    jsonfields[field.name] = randint(0,rows-1)
+
+                    elif field.get_internal_type() == 'ForeignKey':
+                        jsonfields[field.name] = randint(0,rows-1)
                     #All other Char fields
                     #TODO: Add more options for different char field types
                     elif field.get_internal_type() == 'CharField':
@@ -119,7 +122,7 @@ class testData():
                 
                 
             #print jsonout
-            self.saveJson(jsonout, appname)
+        self.saveJson(jsonout, appname)
         return   
         
     def saveJson(self, jsonout, appname):
