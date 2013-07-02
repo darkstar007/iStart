@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
+from django.db.models import Count, Min, Sum, Max, Avg
 
 import os
 import sys
@@ -73,13 +74,9 @@ def project_list(request):
     c = {"classification":"unclassified",
          "page_title":"All Projects"}
     c.update(csrf(request))
-    # There has to be a better way of doing this! But this will do for now.
-    
-    rData = projectModel.objects.raw('SELECT projectsapp_project.id,title, description,pub_date, SUM(weight) as tweight FROM projectsapp_project, projectsapp_pvote WHERE projectsapp_project.id = projectsapp_pvote.project_id GROUP BY projectsapp_project.id,title, description,pub_date ORDER by tweight DESC') #projectModel.objects.values_list('title','description','pub_date', 'num_backers')
-    pData = []
-    for x in rData:
-        #pData.append({'title':x.title, 'description': x.description, 'pub_date': x.pub_date, 'weight': x.tweight})
-        pData.append([x.title, x.description, x.pub_date, x.tweight])
+
+    pData = projectModel.objects.annotate(weight = Sum('pvote__weight')).values_list('title','description','pub_date', 'weight')
+
     c['headings']=['Project Title','Project Description', 'Date Published', 'Weight of Backers']
     c['tableData'] = pData
     
