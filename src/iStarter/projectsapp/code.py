@@ -1,6 +1,11 @@
 import re
 import ideasapp.settings as settings
 from projectsapp.models import project as projectModel
+
+import sys
+sys.path.append('..')
+from ideasapp.models import idea as ideaModel
+
 from datetime import datetime
 
 def formatHttpHeaders(headers):
@@ -64,9 +69,12 @@ def saveProject(title, description, classification, ideas, headers):
     #import pdb
     #pdb.set_trace()    
     out = projectModel(title = title, pub_date = getDate(), description = description,
-                       num_backers = 1, classification = classification,
-                       ideas_derived_from = ';'.join(ideas), headers = headers)
+                       classification = classification, headers = headers)
     out.save()
+    for idea in ideas:
+        idObj = ideaModel.objects.get(id=idea)
+        out.ideas_derived_from.add(idObj)
+        
     return
 
 

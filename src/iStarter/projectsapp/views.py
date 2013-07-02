@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
+from django.db.models import Count, Min, Sum, Max, Avg
 
 import os
 import sys
@@ -55,7 +56,7 @@ def submit(request):
             c['title'] = project.title
             c["description"] = project.description
             c['classification'] = project.classification
-                
+            
             return render_to_response('projectsapp/project_thanks.html', c)
     
         else:
@@ -71,10 +72,12 @@ def submit(request):
 
 def project_list(request):     
     c = {"classification":"unclassified",
-         "page_title":"All Ideas"}
+         "page_title":"All Projects"}
     c.update(csrf(request))
-    pData = projectModel.objects.values_list('title','description','pub_date', 'num_backers')
-    c['headings']=['Project Title','Project Description', 'Date Published', 'Number of Backers']
+
+    pData = projectModel.objects.annotate(weight = Sum('pvote__weight')).order_by('weight').values_list('title','description','pub_date', 'weight')
+
+    c['headings']=['Project Title','Project Description', 'Date Published', 'Weight of Backers']
     c['tableData'] = pData
     
     return render_to_response("projectsapp/project_list.html", c)
