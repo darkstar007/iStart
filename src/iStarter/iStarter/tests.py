@@ -94,7 +94,6 @@ class testData():
                 #Iterate for number of rows we want loaded in
                 #Iterate over fields 
                 for field in fields:
-                    print field, field.get_internal_type()
                     if field.get_internal_type() == 'CharField' and field.name.find('classification') != -1:
                         jsonfields[field.name]=choice(self.classifications)[0]
                     elif field.get_internal_type() == 'CharField' and field.name.find('header') != -1:                  
