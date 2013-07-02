@@ -75,6 +75,10 @@ class testData():
         email = choice(names)+'@'+choice(self.words)+'.com'
         return str(email)
    
+    def randomTags(self):
+        ''' Adds a randomly selected bunch of tags to the object'''
+
+   
     def buildInitalData(self, appname, rows):
         #Gets all info on fields within all models under supplied appname
         #Then builds the initial_data.json file from JSON created here
@@ -89,28 +93,29 @@ class testData():
         #TODO: Put extra check here to make sure its a model... and not some other class in the model module
         clsmembers = inspect.getmembers(sys.modules[appname+'.models'], inspect.isclass)
         
-        #Iterate over models
         jsonout = []
+        #Iterate over models
         for cls in clsmembers:
-<<<<<<< HEAD
-            
-=======
-            print cls
->>>>>>> dev-branch-matt
+
             i = importlib.import_module(appname+'.models', cls[0])
             model = getattr(i, cls[0])
-            fields = model._meta.fields
+
+            #RB: Catch to ignore for model managers
+            try:
+                fields = model._meta.fields
+            except:
+                continue
             
             jsonfields = {}
             for field in fields:
+                
                 #print field, field.get_internal_type()
                 #Make blank json dict
                 if field.get_internal_type() != 'AutoField':
                     jsonfields[field.name]=''
 
-            jsonout = []
-
             for i in xrange(rows):
+                
                 #Iterate for number of rows we want loaded in
                 #Iterate over fields 
                 for field in fields:
@@ -155,3 +160,54 @@ class testData():
            outfile.close()
        return
 
+
+def addTagsPerRow(testDataPath, appName):
+    ''' Adds a series of tags per row '''
+    
+    
+    f = open(os.path.join(testDataPath, 'nouns.txt'), 'r')
+    words = [line.replace('\r\n', '') for line in f.readlines()]
+    f.close()
+    
+    # Get the correct model to work with
+    importlib.import_module(appName+'.models')
+    clsMembers = inspect.getmembers(sys.modules[appName+'.models'], inspect.isclass)
+    
+    for cls in clsMembers:
+        
+        i = importlib.import_module(appName+'.models', cls[0])
+        model = getattr(i, cls[0])
+
+        #RB: Catch to ignore for model managers
+        try:    fields = model._meta.fields
+        except: continue
+
+        # Get all of the rows
+        targetRows = model.objects.all()
+        
+        # Check that the object has a field called tags. If not, move on.
+        try:
+            tags = targetRows[0].tags.all()
+        except:
+            continue
+        
+        print "%s:\t Adding random tag data for each row/object." %appName,
+        
+        # For each row, chuck in between 20 and 50 random tags.
+        for row in targetRows:
+            for i in range(randint(1, 10)):
+                word = words[randint(0,len(words)-1)]
+                row.tags.add(word)
+                row.save()
+            row.tags.add('xxx_test_tag')
+            row.save()
+            
+        # Make sure they're definitely in there.
+        res = model.objects.filter(tags__name__in=["xxx_test_tag"])
+        if len(res) > 0:
+            print ": success."
+        else:
+            print ": fail."
+
+
+    
