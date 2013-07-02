@@ -22,11 +22,12 @@ class idea(models.Model):
     # A couple of others
     classification = models.CharField(max_length=100) 
     headers = models.CharField(max_length=20000)
-
-    #def __unicode__(self):
-        #return self.idea_title
-
-    # This stores the tags provided in the text input box and those
-    # that a user has clicked from the pre-existing list.
     tags = TaggableManager()
+
+class ideaLikes(models.Model):
+    title = models.ForeignKey(idea)
+    vote_date = models.DateTimeField('voted_in_date')
+    likes = models.IntegerField()
+    dislikes = models.IntegerField()
     
+   
