@@ -37,6 +37,12 @@ if __name__ == "__main__":
         #Now fire the command line 
         execute_from_command_line(sys.argv)
 
+        #RB: kludge to add tags to objects/rows
+        from iStarter.tests import addTagsPerRow
+        for app in config_module.testDataAppsList:
+            addTagsPerRow(config_module.testDataPath, app)
+
+
     else:
         #Just fire the command line 
         execute_from_command_line(sys.argv)
