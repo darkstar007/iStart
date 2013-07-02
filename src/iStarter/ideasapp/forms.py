@@ -12,7 +12,7 @@ class ideaForm(forms.Form):
     cls     = forms.ChoiceField(settings.CLASSIFICATIONS, required=True)
     
     #  These are the tags that a user entered manually
-    new_tags = TagField(widget=forms.TextInput(attrs={'placeholder':"Add your own tags",'class':'span12'}))
+    new_tags = TagField(required=False, widget=forms.TextInput(attrs={'placeholder':"Add your own tags",'class':'span12'}))
     
     # These are the tags we presented to them and they clicked on
     existing_tags = forms.CharField(required=False, widget=forms.HiddenInput)
