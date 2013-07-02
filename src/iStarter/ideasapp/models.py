@@ -29,3 +29,4 @@ class idea(models.Model):
     # This stores the tags provided in the text input box and those
     # that a user has clicked from the pre-existing list.
     tags = TaggableManager()
+    
