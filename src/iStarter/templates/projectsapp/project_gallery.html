@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block classification_head %} {{ classification|upper }} {% endblock classification_head %}		
+
+{% block extra_js %}
+
+{% endblock extra_js %} 
+
+{% block top_row %}
+	<div class="row-fluid">
+		<div class="span6 offset3">
+			<h1>{{ page_title }}</h1>
+			</br></br>
+		</div>
+	</div>
+
+{% endblock top_row %}
+
+{% block main_block %}
+
+	<div class="row-fluid">
+		<div class="span6 offset3">
+                <table class="table table-striped table-condensed text-center">
+                    <thead>
+                        <tr>
+                            {% for heading in headings %}
+                                <th> {{heading}} </th>
+                            {% endfor %}
+                                <th>Back</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for row in tableData%}
+                            <tr> 
+                                {%for cell in row%}
+                                    <td>{{cell}}</td>
+                                {% endfor %}
+                                <td><a href="/ideas/back?idea_id={{idea_id}}">{{idea_id}}Back</a>
+                            </tr>   
+                                
+                        {% endfor %}                         
+                    </tbody>                
+                </table>
+
+				<ul class="thumbnails">
+				  <li class="span4">
+				    <div class="thumbnail">
+				      <img data-src="holder.js/300x200" alt="">
+				      <h3>The First IS Project</h3>
+				      <p>This crazee project will take eat the world</p>
+				    </div>
+				  </li>
+				  <li class="span4">
+				  	<div class="thumbnail">
+				      <img data-src="holder.js/300x200" alt="">
+				      <h3>Second IS Project</h3>
+				      <p>A way to grow shoes...</p>
+				    </div>
+				  </li>
+				<li class="span4">
+				  	<div class="thumbnail">
+				      <img data-src="holder.js/300x200" alt="">
+				      <h3>A Fish that flies!</h3>
+				      <p>watch out ...</p>
+				    </div>
+				  </li>
+				<li class="span4">
+				  	<div class="thumbnail">
+				      <img data-src="holder.js/300x200" alt="">
+				      <h3>A Bird that swims</h3>
+				      <p>watch out (again) ...</p>
+				    </div>
+				  </li>
+				</ul>
+		</div>
+	</div>
+
+{% endblock main_block %}
+
+{% block classification_tail %} {{ classification }} {% endblock classification_tail %}

@@ -78,4 +78,12 @@ def project_list(request):
     c['tableData'] = pData
     
     return render_to_response("projectsapp/project_list.html", c)
-            
+            	
+def project_gallery(request):
+	''' Display all the projects as table list of icons'''
+	c = {"classification":"unclassified","page_title":"Project Gallery"}
+	c.update(csrf(request))
+
+	c['headings']=['Idea Title','Date Published','Idea Detail','Number of Backers']
+
+	return render_to_response("projectsapp/project_gallery.html", c)	
