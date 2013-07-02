@@ -108,6 +108,7 @@ def ideas_list(request):
     c = {"classification":"unclassified",
          "page_title":"All Ideas"}
     c.update(csrf(request))
+
     #Template for model outputs
     template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},

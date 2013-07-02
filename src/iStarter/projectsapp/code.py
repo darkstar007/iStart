@@ -59,12 +59,13 @@ def getDate():
     return datetime.now()
 
 #------------------------------------------------------------------------------------------
-def saveProject(title, description, classification, headers):
+def saveProject(title, description, classification, ideas, headers):
     ''' Processes idea form data and saves data '''
     #import pdb
     #pdb.set_trace()    
     out = projectModel(title = title, pub_date = getDate(), description = description,
-                       num_backers = 1, classification = classification, headers = headers)
+                       num_backers = 1, classification = classification,
+                       ideas_derived_from = ';'.join(ideas), headers = headers)
     out.save()
     return
 
