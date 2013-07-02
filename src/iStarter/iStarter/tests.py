@@ -35,12 +35,22 @@ class testData():
         while fh.readline():
             self.words.append(fh.readline().rstrip('\r\n'))
         fh.close()
+        print 'Got test words'
+        
         fh = open(testDataPath+'/'+headersfile,'r')
         self.headers = fh.read()
         fh.close()
+        print 'Got test headers'
+        
         self.classifications = classifications
+        print 'got classification'
+        
         self.fixtureOutPath = fixtureOutPath
+        print 'Got fixture out path'
+        
         self.fixtureDateFname = fixtureDateFname
+        print 'Got fixture data fname'
+        
     
     def randomDate(self):
         #Makes Random date
@@ -64,7 +74,11 @@ class testData():
         names = ['rich','bob','dave','ted','pete','phil','wendy','giles','mortimer']
         email = choice(names)+'@'+choice(self.words)+'.com'
         return str(email)
+   
+    def randomTags(self):
+        ''' Adds a randomly selected bunch of tags to the object'''
 
+   
 
     ## MRN - I've had to put some model specific bits of code in here, which has made me
     ##       quite, quite sad. I think the best way around this would be for each app to
@@ -80,17 +94,25 @@ class testData():
         #TODO: Try/excepts
         #TODO: more data types
         #Get all models in the app model module
+        print '*'*50
         i = importlib.import_module(appname+'.models')
         #find all classes - i.e. models
         #TODO: Put extra check here to make sure its a model... and not some other class in the model module
         clsmembers = inspect.getmembers(sys.modules[appname+'.models'], inspect.isclass)
-        #Iterate over models
+        
         jsonout = []
+        #Iterate over models
         for cls in clsmembers:
             if cls[0] != 'ideaModel' or appname != 'projectsapp':
                 print cls
                 i = importlib.import_module(appname+'.models', cls[0])
                 model = getattr(i, cls[0]) 
+                #RB: Catch to ignore for model managers
+                try:
+                    fields = model._meta.fields
+                except:
+                    continue
+
                 fields = model._meta.fields
                 jsonfields = {}
                 for field in fields:
@@ -106,7 +128,6 @@ class testData():
                             jsonfields[field.name]=choice(self.classifications)[0]
                         elif field.get_internal_type() == 'CharField' and field.name.find('header') != -1:                  
                             jsonfields[field.name]=self.headers
-
                         elif field.get_internal_type() == 'ForeignKey':
                             jsonfields[field.name] = randint(0,rows-1)
                         #All other Char fields2.
@@ -146,3 +167,54 @@ class testData():
            outfile.close()
        return
 
+
+def addTagsPerRow(testDataPath, appName):
+    ''' Adds a series of tags per row '''
+    
+    
+    f = open(os.path.join(testDataPath, 'nouns.txt'), 'r')
+    words = [line.replace('\r\n', '') for line in f.readlines()]
+    f.close()
+    
+    # Get the correct model to work with
+    importlib.import_module(appName+'.models')
+    clsMembers = inspect.getmembers(sys.modules[appName+'.models'], inspect.isclass)
+    
+    for cls in clsMembers:
+        
+        i = importlib.import_module(appName+'.models', cls[0])
+        model = getattr(i, cls[0])
+
+        #RB: Catch to ignore for model managers
+        try:    fields = model._meta.fields
+        except: continue
+
+        # Get all of the rows
+        targetRows = model.objects.all()
+        
+        # Check that the object has a field called tags. If not, move on.
+        try:
+            tags = targetRows[0].tags.all()
+        except:
+            continue
+        
+        print "%s:\t Adding random tag data for each row/object." %appName,
+        
+        # For each row, chuck in between 20 and 50 random tags.
+        for row in targetRows:
+            for i in range(randint(1, 10)):
+                word = words[randint(0,len(words)-1)]
+                row.tags.add(word)
+                row.save()
+            row.tags.add('xxx_test_tag')
+            row.save()
+            
+        # Make sure they're definitely in there.
+        res = model.objects.filter(tags__name__in=["xxx_test_tag"])
+        if len(res) > 0:
+            print ": success."
+        else:
+            print ": fail."
+
+
+    

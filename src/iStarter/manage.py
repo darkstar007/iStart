@@ -22,6 +22,7 @@ if __name__ == "__main__":
         except:
             print 'Failed to initialise all test data - check paths in your config', sys.exc_info()[0]
             sys.exit()
+            
         for app in config_module.testDataAppsList:
             #Firstly clean old data file if it exists
             try:
@@ -35,6 +36,12 @@ if __name__ == "__main__":
                 print 'Failed to write initial_data.json for {0}'.format(app), e
         #Now fire the command line 
         execute_from_command_line(sys.argv)
+
+        #RB: kludge to add tags to objects/rows
+        from iStarter.tests import addTagsPerRow
+        for app in config_module.testDataAppsList:
+            addTagsPerRow(config_module.testDataPath, app)
+
 
     else:
         #Just fire the command line 

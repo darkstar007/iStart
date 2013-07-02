@@ -1,4 +1,5 @@
 from django.db import models
+from taggit.managers import TaggableManager
 
 import sys
 sys.path.append('..')
@@ -27,6 +28,9 @@ class project(models.Model):
     #def __unicode__(self):
         #return self.idea_title
     
+    # This stores the tags provided in the text input box and those
+    # that a user has clicked from the pre-existing list.
+    tags = TaggableManager()
 
 class pvote(models.Model):
     project = models.ForeignKey(project)
