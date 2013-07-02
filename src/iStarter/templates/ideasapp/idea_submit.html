@@ -4,6 +4,46 @@
 
 {% block extra_js %}
 
+  	<script>
+  	
+  		
+  		// Adds tags to an array for form population
+  		var inputTags = new Array();
+  		
+  		function modifyTagsArray(e) {
+  			
+  			idx = inputTags.indexOf(e.id);
+  			//alert(idx);
+  			if (idx < 0) {
+  				addToTagsArray(e.id);
+  				document.getElementById(e.id).className = "btn btn-mini btn-success";
+  				}
+  			else {
+  				removeFromArray(e.id);
+  				document.getElementById(e.id).className = "btn btn-mini";
+  				}
+  			//alert(inputTags);
+  		}
+  		
+  		// Add an element to the array
+  		function addToTagsArray(value) {
+  			inputTags.push(value);
+  		}
+  	  	
+  		// remove an element from the array
+  		function removeFromArray(value) {
+  			idx = inputTags.indexOf(value);
+  			inputTags.splice( idx, 5 );
+  		}
+  		
+  		// Assign the hidden tags field to the tags array
+  		function setTagsList() {
+  			document.getElementById("id_existing_tags").value = inputTags;
+  		}
+
+  		
+  	</script>
+
 {% endblock extra_js %} 
 
 {% block top_row %}
@@ -18,28 +58,50 @@
 
 {% block main_block %}
 
-	<div class="row-fluid">
-		<div class="span6 offset3">
+	<form action="." method="POST">{% csrf_token %}
 
-			<form action="." method="POST">{% csrf_token %}
-			        <div>
-				        {{ form.title.errors }}
-				        {{ form.title }}
-					</div>
-					<div>
-				        {{ form.description.errors }}
-				        {{ form.description }}
-					</div>
-					<div>
-				        {{ form.cls.errors }}
-				        {{ form.cls }}
-						<input style="float:right; padding:0px auto; margin:0px auto;" type="submit" value="Send"/>
-					</div>
-					
-			</form>
+		<div class="row-fluid">
+			<div class="span4 offset3">
+		        <div>
+			        {{ form.title.errors }}
+			        {{ form.title }}
+				</div>
+				<div>
+			        {{ form.description.errors }}
+			        {{ form.description }}
+				</div>
+			</div>
+		
+			<div class="span2">
+				
+				<div style="margin:5px 0px; overflow: auto; max-height: 200px;">
+				{% for known_tag in known_tags %}
+					<button id="{{ known_tag }}" style="margin:0px auto 4px auto;" class="btn btn-mini" onclick="modifyTagsArray(this)" type="button">{{ known_tag }}</button>
+				{% endfor %}
+				<!-- Hidden -->	
+		        {{ form.existing_tags }}
+				 </div>
+				 
+				{% for word in words %}
+					<button id="{{ word }}" class="btn" onclick="addToTagsArray(this)" type="button">{{ word }}</button>
+				{% endfor %}
+				
+				<div>
+		        	{{ form.new_tags.errors }}
+		        	{{ form.new_tags }}
+				</div>
+			</div>		
 		</div>
-	</div>
-
+		<div class="row-fluid">
+			<div class="span6 offset3">
+			<div>
+		        {{ form.cls.errors }}
+		        {{ form.cls }}
+		        <input onclick="setTagList()" class="btn btn-primary" style="float:right; padding:0px auto; margin:0px auto;" type="submit" value="Send"/>
+			</div>
+		</div>
+	</form>
+	
 {% endblock main_block %}
 
 {% block classification_tail %} {{ classification }} {% endblock classification_tail %}
