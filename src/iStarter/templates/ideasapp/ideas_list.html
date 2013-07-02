@@ -66,7 +66,7 @@ else
                             {% if forloop.last %}
                                 </td>
                                 <td><span><button id="like_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;">Like</button>
-                                <button id="dislike_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc('dislike',this.id);this.disabled=true;">Dislike</button>
+                                <button id="dislike_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;">Dislike</button>
                                 </span></td>
                             {% else %}
                                 </td>   
