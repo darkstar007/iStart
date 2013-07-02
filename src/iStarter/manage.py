@@ -22,6 +22,7 @@ if __name__ == "__main__":
         except:
             print 'Failed to initialise all test data - check paths in your config', sys.exc_info()[0]
             sys.exit()
+            
         for app in config_module.testDataAppsList:
             #Firstly clean old data file if it exists
             try:
