@@ -56,7 +56,7 @@ def submit(request):
             c['title'] = project.title
             c["description"] = project.description
             c['classification'] = project.classification
-                
+            
             return render_to_response('projectsapp/project_thanks.html', c)
     
         else:
@@ -75,7 +75,7 @@ def project_list(request):
          "page_title":"All Projects"}
     c.update(csrf(request))
 
-    pData = projectModel.objects.annotate(weight = Sum('pvote__weight')).order_by('weight').values_list('title','description','pub_date', 'weight')
+    pData = projectModel.objects.annotate(weight = Sum('pvote__weight')).order_by('-weight').values_list('title','description','pub_date', 'weight')
 
     c['headings']=['Project Title','Project Description', 'Date Published', 'Weight of Backers']
     c['tableData'] = pData

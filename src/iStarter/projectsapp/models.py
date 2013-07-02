@@ -1,6 +1,10 @@
 from django.db import models
 from taggit.managers import TaggableManager
 
+import sys
+sys.path.append('..')
+from ideasapp.models import idea as ideaModel
+
 # Create your models here.
 
 class project(models.Model):
@@ -19,7 +23,7 @@ class project(models.Model):
     classification = models.CharField(max_length=100) 
     headers = models.CharField(max_length=20000)
 
-    ideas_derived_from = models.CharField(max_length=20000) #models.ManyToManyField(ideaModel, related_name='title+')
+    ideas_derived_from = models.ManyToManyField(ideaModel, related_name='title+')
 
     #def __unicode__(self):
         #return self.idea_title

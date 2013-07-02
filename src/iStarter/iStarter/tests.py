@@ -7,7 +7,7 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 #from ideasapp.models import idea as ideaModel
-from datetime import datetime
+from datetime import datetime, timedelta
 from random import randint, choice
 import importlib
 import inspect
@@ -54,7 +54,7 @@ class testData():
     
     def randomDate(self):
         #Makes Random date
-        dtg = datetime(randint(2012,2015),randint(1,12),randint(1,28),randint(0,23),randint(0,59),randint(0,59))
+        dtg = datetime.now() - timedelta(days = randint(0,365*5), seconds = randint(0, 86399), microseconds = randint(0, 999999))
         return dtg.isoformat()
     
     def randomText(self,chars):
@@ -79,6 +79,13 @@ class testData():
         ''' Adds a randomly selected bunch of tags to the object'''
 
    
+
+    ## MRN - I've had to put some model specific bits of code in here, which has made me
+    ##       quite, quite sad. I think the best way around this would be for each app to
+    ##       define a class which inherits this class, and just tweeks the following
+    ##       function appropriately. I don't think this would be hard to do, but its a
+    ##       low priority at the moment - but might have paybacks over the years as it
+    ##       will be able to be reused in all future django apps.
     def buildInitalData(self, appname, rows):
         #Gets all info on fields within all models under supplied appname
         #Then builds the initial_data.json file from JSON created here
@@ -96,55 +103,55 @@ class testData():
         jsonout = []
         #Iterate over models
         for cls in clsmembers:
+            if cls[0] != 'ideaModel' or appname != 'projectsapp':
+                print cls
+                i = importlib.import_module(appname+'.models', cls[0])
+                model = getattr(i, cls[0]) 
+                #RB: Catch to ignore for model managers
+                try:
+                    fields = model._meta.fields
+                except:
+                    continue
 
-            i = importlib.import_module(appname+'.models', cls[0])
-            model = getattr(i, cls[0])
-
-            #RB: Catch to ignore for model managers
-            try:
                 fields = model._meta.fields
-            except:
-                continue
-            
-            jsonfields = {}
-            for field in fields:
-                
-                #print field, field.get_internal_type()
-                #Make blank json dict
-                if field.get_internal_type() != 'AutoField':
-                    jsonfields[field.name]=''
-
-            for i in xrange(rows):
-                
-                #Iterate for number of rows we want loaded in
-                #Iterate over fields 
+                jsonfields = {}
                 for field in fields:
-                    #print field.name, field.get_internal_type
-                    if field.get_internal_type() == 'CharField' and field.name.find('classification') != -1:
-                        jsonfields[field.name]=choice(self.classifications)[0]
-                    elif field.get_internal_type() == 'CharField' and field.name.find('header') != -1:                  
-                        jsonfields[field.name]=self.headers
+                    #print field, field.get_internal_type()
+                    #Make blank json dict
+                    if field.get_internal_type() != 'AutoField':
+                        jsonfields[field.name]=''
+                for i in xrange(rows):
+                    #Iterate for number of rows we want loaded in
+                    #Iterate over fields 
+                    for field in fields:
+                        if field.get_internal_type() == 'CharField' and field.name.find('classification') != -1:
+                            jsonfields[field.name]=choice(self.classifications)[0]
+                        elif field.get_internal_type() == 'CharField' and field.name.find('header') != -1:                  
+                            jsonfields[field.name]=self.headers
+                        elif field.get_internal_type() == 'ForeignKey':
+                            jsonfields[field.name] = randint(0,rows-1)
+                        #All other Char fields2.
+                        #TODO: Add more options for different char field types
+                        elif field.get_internal_type() == 'CharField':
+                            jsonfields[field.name]=self.randomText(field.max_length)                        
+                        elif field.get_internal_type() == 'IntegerField':                   
+                            jsonfields[field.name]=randint(0,5000)
+                        elif field.get_internal_type() == 'DateTimeField':                    
+                            jsonfields[field.name]=self.randomDate()
+                        elif field.get_internal_type() == 'EmailField':
+                            jsonfields[field.name]=self.randomEmail()
+                        elif field.get_internal_type() == 'BooleanField':
+                            jsonfields[field.name]='True'
+                        else:
+                            continue
+                    if cls[0] == 'project' and appname == 'projectsapp':
+                        jsonfields['ideas_derived_from'] = []
+                        for ids in xrange(randint(1,10)):
+                            jsonfields['ideas_derived_from'].append(randint(0,rows-1))                      
 
-                    elif field.get_internal_type() == 'ForeignKey':
-                        jsonfields[field.name] = randint(0,rows-1)
-                    #All other Char fields
-                    #TODO: Add more options for different char field types
-                    elif field.get_internal_type() == 'CharField':
-                        jsonfields[field.name]=self.randomText(field.max_length)                        
-                    elif field.get_internal_type() == 'IntegerField':                   
-                        jsonfields[field.name]=randint(0,5000)
-                    elif field.get_internal_type() == 'DateTimeField':                    
-                        jsonfields[field.name]=self.randomDate()
-                    elif field.get_internal_type() == 'EmailField':
-                        jsonfields[field.name]=self.randomEmail()
-                    elif field.get_internal_type() == 'BooleanField':
-                        jsonfields[field.name]='True'
-                    else:
-                        continue
-                #copy the dict
-                #jsonfields_ = jsonfields.copy()
-                jsonout.append({'model':appname+'.'+cls[0], 'pk':i, 'fields':jsonfields.copy()})
-                
+                    #copy the dict
+                    #jsonfields_ = jsonfields.copy()
+                    jsonout.append({'model':appname+'.'+cls[0], 'pk':i, 'fields':jsonfields.copy()})
                 
             #print jsonout
         self.saveJson(jsonout, appname)
