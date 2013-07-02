@@ -163,31 +163,23 @@ def like(request,ideaid):
         #dislike_ideas183
         #Strip the choice
         titlehsh = ideaid[ideaid.find('_')+1:]
-        print titlehsh
         choice = ideaid[:ideaid.find('_')]
-        print choice
         #Now record this in the db
         pData = ideaModel.objects.values_list('title','pk')
         for row in pData:
             if titlehsh == base64.b64encode(hashlib.sha256(row[0]).digest(), altchars="ZZ")[:32]:
-                print 'found'+str(row[1])
                 #make the db cahnges for this title
                 out = likesModel.objects.get(pk=row[1])
-                print out
                 if choice == 'like':
-                    print 'like here'
                     out.title=ideaModel.objects.get(pk=row[1])
                     out.vote_date=datetime.now()
                     out.likes=(out.likes+1)
                     out.save()
-                    print 'saved like'
                 elif choice == 'dislike':
-                    print 'dislike here'
                     out.title=ideaModel.objects.get(pk=row[1])
                     out.vote_date=datetime.now()
                     out.likes=out.likes-1
                     out.save()
-                    print 'saved dislike'
                 break
             else:
                 pass
