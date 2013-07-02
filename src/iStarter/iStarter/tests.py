@@ -64,7 +64,14 @@ class testData():
         names = ['rich','bob','dave','ted','pete','phil','wendy','giles','mortimer']
         email = choice(names)+'@'+choice(self.words)+'.com'
         return str(email)
-   
+
+
+    ## MRN - I've had to put some model specific bits of code in here, which has made me
+    ##       quite, quite sad. I think the best way around this would be for each app to
+    ##       define a class which inherits this class, and just tweeks the following
+    ##       function appropriately. I don't think this would be hard to do, but its a
+    ##       low priority at the moment - but might have paybacks over the years as it
+    ##       will be able to be reused in all future django apps.
     def buildInitalData(self, appname, rows):
         #Gets all info on fields within all models under supplied appname
         #Then builds the initial_data.json file from JSON created here
