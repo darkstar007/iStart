@@ -23,3 +23,9 @@ class idea(models.Model):
 
     #def __unicode__(self):
         #return self.idea_title
+
+#class ivote(models.Model):
+#    idea = models.ForeignKey(idea)
+#    vote_date = models.DateTimeField('voted_in_date')
+#    username = models.CharField(max_length=128)
+    
