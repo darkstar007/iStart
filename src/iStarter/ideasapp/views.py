@@ -1,9 +1,11 @@
 from django.shortcuts import render_to_response
+from django.http import HttpResponse
 from django.core.context_processors import csrf
 
 import os
 import sys
 import logging
+import hashlib
 #============================================================================================
 # TO ENSURE ALL OF THE FILES CAN SEE ONE ANOTHER.
 
@@ -132,11 +134,11 @@ def ideas_list(request):
     #c['headings']=['Idea Title','Date Published','Idea Detail','Number of Backers']
     #Instantiate our out vars
     out = []
-    outrow = []
-    rowdict = {'field':'','full':'','short':'','id':''}
+    outrow = {'uid':'','cells':[]}
+    celldict = {'field':'','full':'','short':'','id':''}
     for pDataidx, row in enumerate(pData):
         for headingidx, heading in enumerate(template_headings):
-            rowdict['field']=heading['pretty']
+            celldict['field']=heading['pretty']
             '''
             #TODO: alter this to search for specific data types
             if heading['db']=='idea_text' and ideaModel._meta.get_field(heading['db']).get_internal_type() == 'CharField' and len(row[headingidx])>200:
@@ -145,51 +147,31 @@ def ideas_list(request):
             else: 
                 rowdict['short']=''
             '''
-            rowdict['full']=row[headingidx]
-            rowdict['id']='ideas'+str(pDataidx)+str(headingidx)
-            outrow.append(rowdict.copy())
-        out.append(outrow)
-        outrow = []
+            celldict['full']=row[headingidx]
+            celldict['id']='idea'+str(pDataidx)+str(headingidx)
+            outrow['cells'].append(celldict.copy())
+        #Do a hash of the title to store as uid
+        uid = hashlib.sha1(row[0]).digest()
+        outrow['uid']=uid
+        out.append(outrow.copy())
+        outrow = {'uid':'','cells':[]}
     c['headings'] = template_headings      
     c['tableData'] = out
     
     return render_to_response("ideasapp/ideas_list.html", c)
             
-#-------------------------------------------------------------------#  
-
-def ideas_all(request):
-    #Use if all data from table is needed into a dynamic table
-    c = {"classification":"unclassified",
-         "page_title":"All Ideas"}
-    c.update(csrf(request))
-    #Use if all data from table is needed into a dynamic table
-    data = ideaModel.objects.all()
-    #Get the field names
-    headers = data.values()[0].keys()
-    #ToDO: Make them prettier
-    #headersOut = []
-    c['headings']= headers
-    #Get table data
-    row = []
-    rows = []
-    for r in data.values():
-        for field in headers:
-            #Get the user from the header as an example
-            if field == 'headers':
-                row.append('header_info_tbc')
-            else: row.append(r[field])
-        rows.append(row)
-        row = []
-    del row
-    del data
-    rows.append('Back')
-    c['tableData'] = rows
-
-    return render_to_response("ideasapp/ideas_list.html", c)
-            
 #-------------------------------------------------------------------#               
             
-            
+def like(request,ideaid):
+    ''' Liking and disliking. '''
+    
+    #Databases clicks of the like and dislike buttons
+    # Has the form been submitted?
+    if request.method == 'GET': 
+        #dislike_ideas183
+        #Strip the choice
+        print ideaid
+        return HttpResponse(str(ideaid))
             
             
             
