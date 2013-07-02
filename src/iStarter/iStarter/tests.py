@@ -35,12 +35,22 @@ class testData():
         while fh.readline():
             self.words.append(fh.readline().rstrip('\r\n'))
         fh.close()
+        print 'Got test words'
+        
         fh = open(testDataPath+'/'+headersfile,'r')
         self.headers = fh.read()
         fh.close()
+        print 'Got test headers'
+        
         self.classifications = classifications
+        print 'got classification'
+        
         self.fixtureOutPath = fixtureOutPath
+        print 'Got fixture out path'
+        
         self.fixtureDateFname = fixtureDateFname
+        print 'Got fixture data fname'
+        
     
     def randomDate(self):
         #Makes Random date
@@ -78,11 +88,12 @@ class testData():
         #find all classes - i.e. models
         #TODO: Put extra check here to make sure its a model... and not some other class in the model module
         clsmembers = inspect.getmembers(sys.modules[appname+'.models'], inspect.isclass)
+        
         #Iterate over models
         for cls in clsmembers:
             
             i = importlib.import_module(appname+'.models', cls[0])
-            model = getattr(i, cls[0]) 
+            model = getattr(i, cls[0])
             fields = model._meta.fields
             
             jsonfields = {}
@@ -97,7 +108,7 @@ class testData():
                 #Iterate for number of rows we want loaded in
                 #Iterate over fields 
                 for field in fields:
-                    print field.name, field.get_internal_type
+                    #print field.name, field.get_internal_type
                     if field.get_internal_type() == 'CharField' and field.name.find('classification') != -1:
                         jsonfields[field.name]=choice(self.classifications)[0]
                     elif field.get_internal_type() == 'CharField' and field.name.find('header') != -1:                  
