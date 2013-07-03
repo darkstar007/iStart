@@ -24,12 +24,12 @@ xmlDoc = xmlhttp.responseXML;
 
 if (typestr=="Like")
   {
-  document.getElementById(idstr).innerHTML="Liked";
+//  document.getElementById(idstr).innerHTML="Liked";
   document.getElementById('dis'+idstr).disabled = true;
   }
 else if (typestr=="Dislike")
   {
-  document.getElementById(idstr).innerHTML="Disliked";
+//  document.getElementById(idstr).innerHTML="Disliked";
   document.getElementById(idstr.slice(3,idstr.length)).disabled = true;
   }
 else
@@ -82,12 +82,12 @@ if (ele) {
 		<TD><div id="cellback_{{row.id}}">{{row.num_backers|rjust:"8"}}</div></TD>
 		<td>
 		  <span>
-		    <button id="like_{{row.id}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Liked'">Like</button>
-		    <button id="dislike_{{row.id}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Disliked'">Dislike</button>
+		    <button id="like_{{row.id}}" type="button" class="btn btn-small" onclick="loadXMLDoc('Like',this.id);this.disabled=true;"><i class="icon-arrow-up"></i></button>
+		    <button id="dislike_{{row.id}}" type="button" class="btn btn-small" onclick="loadXMLDoc('Dislike',this.id);this.disabled=true;"><i class="icon-arrow-down"></i></button>
 		  </span>
 		</td>
 		<td><button id="back_{{row.id}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Backed'">Back</button></td>
-
+		
 	      </tr>   
 	      
 	      {% endfor %}                         
