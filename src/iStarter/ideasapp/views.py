@@ -208,7 +208,6 @@ def like(request,ideaid):
                 pass  
         
         return HttpResponse(xml, content_type="text/xml")
-
             
 #-------------------------------------------------------------------#              
             

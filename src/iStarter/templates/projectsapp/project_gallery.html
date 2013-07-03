@@ -64,7 +64,7 @@
 					{% endif %}
 					<h2>{{ cell.title }}</h2>
 					<p> {{ cell.description }} </p>
-					<p><a class="btn" href="#">View details &raquo;</a></p>
+					<p><a class="btn" href="/projects/project_detail/{{ cell.id }}">View details &raquo;</a></p>
 				</div>
 			{% endfor %}
 			{% if forloop.counter|divisibleby:"3" %}			

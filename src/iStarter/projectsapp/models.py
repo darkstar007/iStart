@@ -13,7 +13,6 @@ class project(models.Model):
     description = models.CharField(max_length=2000) # The main text
 
     '''Ommitted these to make life easier at the start...'''
-
     #name_starter = models.CharField(max_length=100)
     #email_starter = models.CharField(max_length=100)
     verified = models.BooleanField()
