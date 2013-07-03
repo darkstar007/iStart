@@ -65,18 +65,20 @@ def getDate():
     return datetime.now()
 
 #------------------------------------------------------------------------------------------
-def saveProject(title, description, classification, ideas, headers):
+def saveProject(title, description, classification, ideas, headers, importance_level, effort_level, resource_level):
     ''' Processes idea form data and saves data '''
     #import pdb
     #pdb.set_trace()    
     out = projectModel(title = title, pub_date = getDate(), description = description,
-                       classification = classification, headers = headers)
+                       classification = classification, headers = headers, 
+                       num_backers=1, num_likes=1, num_dislikes=0,
+                       importance=importance_level, effort=effort_level, resource=resource_level)
     out.save()
     for idea in ideas:
         idObj = ideaModel.objects.get(id=idea)
         out.ideas_derived_from.add(idObj)
         
-    return
+    return out
 
 #------------------------------------------------------------------------------------------
 def saveTags(target, tags):
