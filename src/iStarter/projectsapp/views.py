@@ -154,24 +154,28 @@ def like(request, projectid):
         return HttpResponse(xml, content_type="text/xml")
     
 def project_gallery(request):
-	''' Display all the projects as table list of icons'''
-	c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
-	c.update(csrf(request))
-	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk')
-	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','id':''}
+    ''' Display all the projects as table list of icons'''
+    c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
+    c.update(csrf(request))
+    
+    # Create the tag list for selecting by user
+    c['known_tags'] = distinctTagsSortedAlpha()
+    
+    pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk')
+    rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','id':''}
 
- 	#Template for model outputs
- 	template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
+    #Template for model outputs
+    template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
                         {'db':'description', 'pretty':'Idea Description'},
                         {'db':'num_backers', 'pretty':'Number of Backers'},
                         {'db':'pk','pretty':'Project Id'}]
-	
-	# First find maximum backers todate
-	maxbackers= -1
-	backers=0
-	for pDataidx, row in enumerate(pData):
-		for headingidx, heading in enumerate(template_headings):
+    
+    # First find maximum backers todate
+    maxbackers= -1
+    backers=0
+    for pDataidx, row in enumerate(pData):
+        for headingidx, heading in enumerate(template_headings):
 			if heading['db']=='num_backers' :
 				backers=row[headingidx]
 			if backers > maxbackers :
