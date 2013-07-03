@@ -94,41 +94,38 @@ def like(request, projectid):
     
     #Databases clicks of the like and dislike buttons
     # Has the form been submitted?
-    print 'HERE!!'
+
     if request.method == 'GET': 
-        #dislike_ideas183
-        #Strip the choice
+        
+        # Parse the projectid
         splt = projectid.split('_')
+        
         prjid = splt[1]
-        print prjid
         choice = splt[0]
-        print choice
+ 
         if choice in ['like', 'dislike', 'back']:
-            print 'Got a vlid choice'
+ 
             #Now record this in the db
             pData = projectModel.objects.filter(id=prjid)[0]
-            print pData
             newLike = projectVoteModel(project=pData, vote_date=datetime.now(), vote_type = choice)
-#            newLike.project.add(pData)
 
             if choice == 'like':
                 pData.num_likes += 1
+                newVal = pData.num_likes
                 
             elif choice == 'dislike':
                 pData.num_dislikes += 1
+                newVal = pData.num_dislikes
                 
             elif choice == 'back':
                 pData.num_backers +=1
-
-            xml = '<data><iddata>'+str(prjid)+'</iddata><valdata>cell'+str(choice)+'_'+prjid+'</validate></data>'
+                newVal = pData.num_backers
+                
+            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>cell'+str(choice)+'_'+prjid+'</valdata></data></xml>'
             pData.save()
             newLike.save()
 
-#                    xml = '<data><iddata>'+str(numlikes)+'</iddata><valdata>'+'celllike_'+titlehsh+'</valdata></data>'
-        print xml
-        #not working yet
-        #return HttpResponse(xml, mimetype="text/xml")
-        return HttpResponse()
+        return HttpResponse(xml, content_type="text/xml")
     
 def project_gallery(request):
 	''' Display all the projects as table list of icons'''

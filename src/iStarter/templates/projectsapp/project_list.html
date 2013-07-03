@@ -19,14 +19,27 @@ else
   }
 xmlhttp.open("GET","/projects/like/"+idstr,false);
 xmlhttp.send();
+xmlDoc = xmlhttp.responseXML;
+
 if (typestr=="Like")
   {
   document.getElementById(idstr).innerHTML="Liked";
   }
-else
+else if (typestr=="Like")
   {
   document.getElementById(idstr).innerHTML="Disliked";
   }
+else
+{
+  document.getElementById(idstr).innerHTML="Backed";
+}
+
+ele = document.getElementById(xmlDoc.getElementsByTagName("valdata")[0].childNodes[0].nodeValue);
+
+if (ele) {
+   ele.innerHTML = xmlDoc.getElementsByTagName("iddata")[0].childNodes[0].nodeValue;
+}
+
 }
 </script>
 
