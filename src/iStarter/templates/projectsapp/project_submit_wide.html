@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block classification_head %} {{ classification|upper }} {% endblock classification_head %}		
+
+{% block extra_js %}
+
+  	<script>
+  	
+  		
+  		// Adds tags to an array for form population
+  		var inputTags = new Array();
+  		
+  		function modifyTagsArray(e) {
+  			
+  			idx = inputTags.indexOf(e.id);
+  			//alert(idx);
+  			if (idx < 0) {
+  				addToTagsArray(e.id);
+  				document.getElementById(e.id).className = "btn btn-mini btn-success";
+  				}
+  			else {
+  				removeFromArray(e.id);
+  				document.getElementById(e.id).className = "btn btn-mini";
+  				}
+  			//alert(inputTags);
+  		}
+  		
+  		// Add an element to the array
+  		function addToTagsArray(value) {
+  			inputTags.push(value);
+  		}
+  	  	
+  		// remove an element from the array
+  		function removeFromArray(value) {
+  			idx = inputTags.indexOf(value);
+  			inputTags.splice( idx, 5 );
+  		}
+  		
+  		// Assign the hidden tags field to the tags array
+  		function setTagsList() {
+  			document.getElementById("id_existing_tags").value = inputTags;
+  		}
+
+  		
+  	</script>
+
+{% endblock extra_js %} 
+
+{% block top_row %}
+	<div class="row-fluid">
+		<div class="span12 offset1">
+			<h1>{{ page_title }}</h1>
+			</br></br>
+		</div>
+	</div>
+
+{% endblock top_row %}
+
+{% block main_block %}
+
+	<form action="." method="POST">{% csrf_token %}
+
+							
+		<div class="row-fluid">
+			<div class="span3 offset1">
+				<h4>Ideas</h4>
+			</div>
+			<div class="span4">
+			</div>
+			<div class="span3">
+				<h4>Tags</h4>
+			</div>
+			
+		</div>
+				
+		<div class="row-fluid">
+			<div class="span3 offset1">
+				{{ form.ideas.errors }}
+				{{ form.ideas }}
+			</div>
+		
+			<div class="span4">
+		        <div>
+			        {{ form.title.errors }}
+			        {{ form.title }}
+				</div>
+				<div>
+			        {{ form.description.errors }}
+			        {{ form.description }}
+				</div>
+				
+			</div>
+			
+			<div class="span3">
+				<div class="span12" style="-moz-border-radius: 3px; border-radius: 3px; padding: 2px 2px; border:1px solid #BCC6CC; background-color:white; margin:0px auto 10px auto; overflow: auto; max-height: 220px;">
+					{% for known_tag in known_tags %}
+						<button id="{{ known_tag }}" style="margin:0px auto 4px auto;" class="btn btn-mini" onclick="modifyTagsArray(this)" type="button">{{ known_tag }}</button>
+					{% endfor %}
+					<!-- Hidden -->	
+			        {{ form.existing_tags }}
+			        <!-- Hidden -->
+				 </div>
+				 
+				<div>
+		        	{{ form.new_tags.errors }}
+		        	{{ form.new_tags }}
+				</div>
+			</div>		
+			
+		</div>
+		<div class="row-fluid">
+			<div class="span4 offset4">
+			<div>
+		        {{ form.cls.errors }}
+		        {{ form.cls }}
+		        <input onclick="setTagList()" class="btn btn-primary" style="float:right; padding:0px auto; margin:0px auto;" type="submit" value="Send"/>
+			</div>
+		</div>
+	</form>
+	
+{% endblock main_block %}
+
+{% block classification_tail %} {{ classification }} {% endblock classification_tail %}
