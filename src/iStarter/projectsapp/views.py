@@ -89,14 +89,15 @@ def project_gallery(request):
 	''' Display all the projects as table list of icons'''
 	c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
 	c.update(csrf(request))
-	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers')
+	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk')
 	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','id':''}
 
  	#Template for model outputs
  	template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
                         {'db':'description', 'pretty':'Idea Description'},
-                        {'db':'num_backers', 'pretty':'Number of Backers'}]
+                        {'db':'num_backers', 'pretty':'Number of Backers'},
+                        {'db':'pk','pretty':'Project Id'}]
 	
 	# First find maximum backers todate
 	maxbackers= -1
@@ -122,8 +123,10 @@ def project_gallery(request):
 				rowdict['description'] = row[headingidx][:200]
 			if heading['db']=='num_backers' :
 				rowdict['backPercentage'] = 100 * row[headingidx] / maxbackers
-			if heading['db']=='id' :
-				rowdict['id']='project'+str(pDataidx)+str(headingidx)
+			#if heading['db']=='id' :
+				#rowdict['id']='project'+str(pDataidx)+str(headingidx)
+                if heading['db']=='pk':
+                    rowdict['id']=row[headingidx]
         	outrow.append(rowdict.copy())
 		out.append(outrow)
 		outrow = []
