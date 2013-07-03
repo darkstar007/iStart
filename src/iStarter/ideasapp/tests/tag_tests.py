@@ -19,12 +19,14 @@ class TestTagModel(TestCase):
         ''' Build the necessary data'''
 
         # Instantiate idea
-        self.idea = ideaModel(idea_title="great idea",
+        self.idea = ideaModel(title="great idea",
                          pub_date=datetime.datetime.utcnow(),
-                         idea_text="here's a great idea",
+                         description="here's a great idea",
                          num_backers=1,
-                         idea_classification="unclassified",
-                         idea_headers="headers here;and here")
+                         likes=1,
+                         dislikes=0,
+                         classification="unclassified",
+                         headers="headers here;and here")
         self.idea.save()
         
         # Get hold of some test words
@@ -67,16 +69,17 @@ class TestTagModel(TestCase):
         """
         Test function to produce list of count, then alphabetically sorted tags 
         """
-        
-        # Create another idea to assign tags to
-        idea = ideaModel(idea_title="great idea 2",
+        # Instantiate idea
+        idea = ideaModel(title="great idea 2",
                          pub_date=datetime.datetime.utcnow(),
-                         idea_text="here's another great idea",
+                         description="here's a great idea 2",
                          num_backers=1,
-                         idea_classification="unclassified",
-                         idea_headers="headers here;and here")
+                         likes=1,
+                         dislikes=0,
+                         classification="unclassified",
+                         headers="headers here;and here")
         idea.save()
-
+        
         # Create a list that contains all of the ordered words and their initial count        
         counts = [[wd, 1] for wd in self.orderedWords]
         

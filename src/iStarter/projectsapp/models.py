@@ -36,6 +36,11 @@ class project(models.Model):
     # that a user has clicked from the pre-existing list.
     tags = TaggableManager()
 
+    # Creator assigned scores
+    importance = models.IntegerField() 
+    effort = models.IntegerField()
+    resource = models.IntegerField()
+
 class pvote(models.Model):
     project = models.ForeignKey(project)
     vote_date = models.DateTimeField('voted_on_date')
