@@ -9,6 +9,10 @@ import logging
 from datetime import datetime
 import collections
 
+from random import randint
+import hashlib
+import base64
+
 #============================================================================================
 # TO ENSURE ALL OF THE FILES CAN SEE ONE ANOTHER.
 
@@ -27,6 +31,8 @@ for root, subFolders, files in os.walk(appRoot):
 
 from projectsapp.models import project as projectModel
 from projectsapp.models import pvote as projectVoteModel
+
+from ideasapp.models import idea as ideaModel
 
 from projectsapp.forms import projectForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
@@ -86,7 +92,7 @@ def project_list(request):
                                                                'num_likes', 'num_dislikes', 'num_backers')
     c['headings']=['Project Title','Project Description', 'Date Published', 'Likes', 'Dislikes', 'Backers', 'Vote', 'Back']
     c['tableData'] = pData
-    print pData
+
     return render_to_response("projectsapp/project_list.html", c)
             	
 def like(request, projectid):
@@ -244,3 +250,4 @@ def project_detail(request,projid):
     print out
 
     return render_to_response("projectsapp/project_detail.html", c)
+
