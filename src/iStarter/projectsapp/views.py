@@ -157,15 +157,21 @@ def project_gallery(request):
 	''' Display all the projects as table list of icons'''
 	c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
 	c.update(csrf(request))
-	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk')
-	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','id':''}
+	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'projActive', 'num_likes', 'num_dislikes')
+	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','id':'', 'importance':'', 'effort':'', 'resource':'', 'projActive':'', 'num_likes':'', 'num_dislikes':''}
 
  	#Template for model outputs
  	template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
                         {'db':'description', 'pretty':'Idea Description'},
                         {'db':'num_backers', 'pretty':'Number of Backers'},
-                        {'db':'pk','pretty':'Project Id'}]
+                        {'db':'pk','pretty':'Project Id'},
+						{'db':'importance','pretty':'Importance of task'},
+                        {'db':'effort','pretty':'Level of Effort required'},
+                        {'db':'resource','pretty':'Resources required'},
+                        {'db':'projActive','pretty':'Project is Active'},
+                        {'db':'num_likes','pretty':'Number of Likes'},
+                        {'db':'num_dislikes','pretty':'Number of Dislikes'}]
 	
 	# First find maximum backers todate
 	maxbackers= -1
@@ -195,10 +201,23 @@ def project_gallery(request):
 				rowdict['description'] = row[headingidx][:200]
 			if heading['db']=='num_backers' :
 				rowdict['backPercentage'] = 100 * row[headingidx] / maxbackers
-			#if heading['db']=='id' :
-				#rowdict['id']='project'+str(pDataidx)+str(headingidx)
-                if heading['db']=='pk':
-                    rowdict['id']=row[headingidx]
+			if heading['db']=='pk':
+				rowdict['id']=row[headingidx]
+			if heading['db']=='importance' :
+				rowdict['importance']=row[headingidx]
+			if heading['db']=='effort' :
+				rowdict['effort']=row[headingidx]
+			if heading['db']=='resource' :
+				rowdict['resource']=row[headingidx]
+			if heading['db']=='projActive' :
+				if pDataidx == 2 or pDataidx==4 :
+					rowdict['projActive']= 1 # row[headingidx]
+				else:
+					rowdict['projActive']= 0 # row[headingidx]
+			if heading['db']=='num_likes' :
+				rowdict['num_likes']=int(row[headingidx])
+			if heading['db']=='num_dislikes' :
+				rowdict['num_dislikes']=int(row[headingidx])				
         	outrow.append(rowdict.copy())
 		out.append(outrow)
 		outrow = []
