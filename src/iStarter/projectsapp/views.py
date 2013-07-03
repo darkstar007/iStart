@@ -159,7 +159,7 @@ def project_gallery(request):
 	c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
 	c.update(csrf(request))
 	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'projActive', 'num_likes', 'num_dislikes')
-	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','id':'', 'importance':'', 'effort':'', 'resource':'', 'projActive':'', 'num_likes':'', 'num_dislikes':''}
+	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'projActive':'','num_likes':'','num_dislikes':''}
 
  	#Template for model outputs
  	template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
@@ -191,8 +191,25 @@ def project_gallery(request):
 	# Prepare the data to pass to the HTML
 	outrow = []
 	out = []
-
+	
 	for pDataidx, row in enumerate(pData):
+		for headingidx, heading in enumerate(template_headings):
+			if heading['db']=='num_backers' :
+				num_backers = row[headingidx]
+			if heading['db']=='importance' :
+				imp=row[headingidx]
+			if heading['db']=='effort' :
+				eff=row[headingidx]	
+			if heading['db']=='resource' :
+				res=row[headingidx]	
+				
+		print 'imp is ',imp,' eff is ',eff,' res is ',res
+		backersRequired = eff * ((6-imp)**2) * (res**3)
+		backPercentage  = 100 * num_backers / backersRequired	
+		rowdict['backPercentage'] = int(backPercentage)
+		rowdict['backersRequired'] = backersRequired
+		print 'backersrequired is ',backersRequired,' backpercentage is ',backPercentage
+		
 		for headingidx, heading in enumerate(template_headings):
 			if heading['db']=='title' :
 				rowdict['title'] = row[headingidx][:20]
@@ -201,16 +218,11 @@ def project_gallery(request):
 			if heading['db']=='description' :
 				rowdict['description'] = row[headingidx][:200]
 			if heading['db']=='num_backers' :
-				rowdict['backPercentage'] = 100 * row[headingidx] / maxbackers
+				num_backers = row[headingidx]
 			if heading['db']=='pk':
 				rowdict['id']=row[headingidx]
-			if heading['db']=='importance' :
-				rowdict['importance']=row[headingidx]
-			if heading['db']=='effort' :
-				rowdict['effort']=row[headingidx]
-			if heading['db']=='resource' :
-				rowdict['resource']=row[headingidx]
 			if heading['db']=='projActive' :
+				# assign a couple of projects a sbeing active to test its all working
 				if pDataidx == 2 or pDataidx==4 :
 					rowdict['projActive']= 1 # row[headingidx]
 				else:
@@ -223,7 +235,7 @@ def project_gallery(request):
 		out.append(outrow)
 		outrow = []
 	c['tableData'] = out
-	c['headings'] = template_headings
+	#c['headings'] = template_headings
 	
 	return render_to_response("projectsapp/project_gallery.html", c)	
  

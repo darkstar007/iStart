@@ -135,7 +135,7 @@ class testData():
                         elif field.get_internal_type() == 'CharField':
                             jsonfields[field.name]=self.randomText(field.max_length)                        
                         elif field.get_internal_type() == 'IntegerField':                   
-                            jsonfields[field.name]=randint(0,5000)
+                            jsonfields[field.name]=randint(1,5)
                         elif field.get_internal_type() == 'DateTimeField':                    
                             jsonfields[field.name]=self.randomDate()
                         elif field.get_internal_type() == 'EmailField':
