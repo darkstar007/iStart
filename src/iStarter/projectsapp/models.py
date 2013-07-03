@@ -40,6 +40,8 @@ class project(models.Model):
     importance = models.IntegerField() 
     effort = models.IntegerField()
     resource = models.IntegerField()
+    # Is the project active?
+    proj_active = models.BooleanField()
 
 class pvote(models.Model):
     project = models.ForeignKey(project)
