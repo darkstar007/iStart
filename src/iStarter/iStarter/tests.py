@@ -8,7 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 #from ideasapp.models import idea as ideaModel
 from datetime import datetime, timedelta
-from random import randint, choice
+from random import randint, choice, uniform
 import importlib
 import inspect
 import sys
@@ -143,7 +143,7 @@ class testData():
                         elif field.get_internal_type() == 'BooleanField':
                             jsonfields[field.name]='True'
                         elif field.get_internal_type() == 'FloatField':
-                            jsonfields[field.name]=1
+                            jsonfields[field.name]=uniform(1.0,100.0)
                         else:
                             continue
                     if cls[0] == 'project' and appname == 'projectsapp':

@@ -264,7 +264,6 @@ def project_detail(request,projid):
         outrow = {'uid':'','cells':[]}
     c['headings_ideas'] = template_headings_ideas      
     c['tableData_ideas'] = out
-    print out
 
     return render_to_response("projectsapp/project_detail.html", c)
 
@@ -312,7 +311,7 @@ def back(request, projid):
                 #c["description"] = outBack.description
                 c['classification'] = outBack.classification
                 
-                return render_to_response('projectsapp/project_thanks.html', c)
+                return render_to_response('projectsapp/back_thanks.html', c)
                 
             else:
                 logging.error("User tried to back a project that didnt exist")
