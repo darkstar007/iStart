@@ -109,6 +109,10 @@ def project_gallery(request):
 			if backers > maxbackers :
 				maxbackers=backers
 
+	# Sometime need to do it this way instead of the loop
+	# dont know how yet though
+	# maxbackers = projectModel.objects.annotate(likes = Max('num_backers'))
+
 	# Prepare the data to pass to the HTML
 	outrow = []
 	out = []

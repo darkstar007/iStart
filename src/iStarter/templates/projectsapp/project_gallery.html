@@ -19,7 +19,7 @@
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
+              <li><a href="/projects">List all projects</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
@@ -35,7 +35,7 @@
         <div class="span9">
           <div class="hero-unit">
             <h1>{{ page_title }}</h1>
-            <p>Its your turn to drive. Only those projects with the most backers will be developed</p>
+            <p>Its your turn to drive.</p>
             <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
           </div>
 	
@@ -62,7 +62,7 @@
 							<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
 						</div>
 					{% endif %}
-					<h2>{{ cell.title }}</h2>
+					<h4>{{ cell.title }}</h4>
 					<p> {{ cell.description }} </p>
 					<p><a class="btn" href="/projects/project_detail/{{ cell.id }}">View details &raquo;</a></p>
 				</div>
