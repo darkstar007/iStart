@@ -205,7 +205,7 @@ def addTagsPerRow(testDataPath, appName):
         # For each row, chuck in between 20 and 50 random tags.
         for row in targetRows:
             for i in range(randint(1, 5)):
-                row.tags.add(choice(words))
+                row.tags.add(choice(words[0:50]))
             row.tags.add('xxx_test_tag')
             row.save()
             
