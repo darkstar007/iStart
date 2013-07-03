@@ -189,6 +189,8 @@ class TestsCustomFilters(TestCase):
     def testfilteredRetrieval_tagFilteredOnly(self):
         ''' Tests being able to retrieve the right combination of results '''
 
+
+
     def testfilteredRetrieval_exactFilteredOnly(self):
         ''' Tests being able to retrieve the right combination of results '''
 
