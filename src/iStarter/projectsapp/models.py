@@ -13,7 +13,8 @@ class project(models.Model):
     description = models.CharField(max_length=2000) # The main text
     #idea_id = models.CharField(max_length=100)
     num_backers = models.IntegerField()
-    '''Ommitted these to make life easier at the start...'''
+    num_likes = models.FloatField()
+    num_dislikes = models.FloatField()
 
     #name_starter = models.CharField(max_length=100)
     #email_starter = models.CharField(max_length=100)
@@ -32,6 +33,11 @@ class project(models.Model):
     # This stores the tags provided in the text input box and those
     # that a user has clicked from the pre-existing list.
     tags = TaggableManager()
+
+    # Creator assigned scores
+    importance = models.IntegerField() 
+    effort = models.IntegerField()
+    resource = models.IntegerField()
 
 class pvote(models.Model):
     project = models.ForeignKey(project)
