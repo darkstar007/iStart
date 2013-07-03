@@ -72,9 +72,9 @@
                                             {% endif %}
                                             {% if forloop.last %}
                                                 </td>
-                                                <td><span><button id="like_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Liked'">Like</button>
-                                                <button id="dislike_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Disliked'">Dislike</button>
-                                                </span></td>
+                                <td><span><button id="like_{{row.uid}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id);this.disabled=true;"><i class="icon-arrow-up"></i></button>
+                                <button id="dislike_{{row.uid}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Dislike', 'ideas',this.id);this.disabled=true;"><i class="icon-arrow-down"></i></button>
+                                </span></td>
                                             {% else %}
                                                 </td>   
                                             {% endif %}                                                                       

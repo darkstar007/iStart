@@ -42,6 +42,41 @@
   
   	<!--  Scripts  -->
   	<script src="/static/js/jquery.js"></script>
+<script>
+
+function loadFeedbackXMLDoc(typestr, model, idstr)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.open("GET","/"+model+"/like/"+idstr,false);
+xmlhttp.send();
+xmlDoc = xmlhttp.responseXML;
+
+
+if (typestr=="Like")
+  {
+  document.getElementById('dis'+idstr).disabled = true;
+  }
+else if (typestr=="Dislike")
+  {
+  document.getElementById(idstr.slice(3,idstr.length)).disabled = true;
+  }
+
+ele = document.getElementById(xmlDoc.getElementsByTagName("valdata")[0].childNodes[0].nodeValue);
+
+if (ele) {
+   ele.innerHTML = xmlDoc.getElementsByTagName("iddata")[0].childNodes[0].nodeValue;
+}
+
+}
+</script>
     
   	{% block extra_js %}
   	{% endblock %}

@@ -3,38 +3,6 @@
 {% block classification_head %} {{ classification|upper }} {% endblock classification_head %}		
 
 {% block extra_js %}
-<script>
-function loadXMLDoc(typestr,idstr)
-{
-var xmlhttp;
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.open("GET","/ideas/like/"+idstr,false);
-xmlhttp.send();
-if (typestr=="Like")
-  {
-  document.getElementById(idstr).innerHTML="Liked";
-  }
-else
-  {
-  document.getElementById(idstr).innerHTML="Disliked";
-  }
-
-xmlDoc = xmlhttp.responseXML;
-ele = document.getElementById(xmlDoc.getElementsByTagName("valdata")[0].childNodes[0].nodeValue);
-
-if (ele) {
-   ele.innerHTML = xmlDoc.getElementsByTagName("iddata")[0].childNodes[0].nodeValue;
-}
-
-}
-</script>
 
 {% endblock extra_js %} 
 
@@ -76,8 +44,8 @@ if (ele) {
                             {% endif %}
                             {% if forloop.last %}
                                 </td>
-                                <td><span><button id="like_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Liked'">Like</button>
-                                <button id="dislike_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Disliked'">Dislike</button>
+                                <td><span><button id="like_{{row.uid}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id);this.disabled=true;"><i class="icon-arrow-up"></i></button>
+                                <button id="dislike_{{row.uid}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Dislike', 'ideas',this.id);this.disabled=true;"><i class="icon-arrow-down"></i></button>
                                 </span></td>
                             {% else %}
                                 </td>   
