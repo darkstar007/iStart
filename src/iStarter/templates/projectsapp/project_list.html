@@ -21,13 +21,16 @@ xmlhttp.open("GET","/projects/like/"+idstr,false);
 xmlhttp.send();
 xmlDoc = xmlhttp.responseXML;
 
+
 if (typestr=="Like")
   {
   document.getElementById(idstr).innerHTML="Liked";
+  document.getElementById('dis'+idstr).disabled = true;
   }
-else if (typestr=="Like")
+else if (typestr=="Dislike")
   {
   document.getElementById(idstr).innerHTML="Disliked";
+  document.getElementById(idstr.slice(3,idstr.length)).disabled = true;
   }
 else
 {
