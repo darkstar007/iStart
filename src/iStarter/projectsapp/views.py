@@ -26,13 +26,18 @@ from projectsapp.models import project as projectModel
 
 from projectsapp.forms import projectForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
+from code import saveTags, distinctTagsSortedAlpha
 
 def submit(request):
     ''' Pulling together ideas into a glorious project. '''
 
     c = {"classification":"unclassified",
-         "page_title":"My Glorious Project"}
+         "page_title":"Submit a Project"}
     c.update(csrf(request))
+    
+    # Create the tag list for selecting by user
+    c['known_tags'] = distinctTagsSortedAlpha()
+    
     # Has the form been submitted?
     if request.method == 'POST':
         
@@ -52,7 +57,14 @@ def submit(request):
 
             project_headers = formatHttpHeaders(headers)
 
-            res = saveProject(cleanForm['title'], cleanForm['description'], cleanForm['cls'], cleanForm['ideas'], project_headers)
+            savedProject = saveProject(cleanForm['title'], cleanForm['description'], cleanForm['cls'], cleanForm['ideas'], project_headers)
+                                    
+            # We can only add tags to a saved object - this saves the structured ones
+            res = saveTags(savedProject, cleanForm['new_tags'])
+            
+            # This saves the unstructured ones
+            res = saveTags(savedProject, cleanForm['existing_tags'])
+
             #idea.email_starter = formatSubmitterEmail(user)
             # For the output page
             c['title'] = project.title
@@ -64,13 +76,13 @@ def submit(request):
         else:
             logging.error("User failed to enter valid content into form.")
             c['form'] = form
-            return render_to_response("projectsapp/project_submit.html", c)
+            return render_to_response("projectsapp/project_submit_original.html", c)
         
     else:
         form = projectForm()
         c.update({"form": form})
 
-    return render_to_response('projectsapp/project_submit.html', c)
+    return render_to_response('projectsapp/project_submit_original.html', c)
 
 def project_list(request):     
     c = {"classification":"unclassified",

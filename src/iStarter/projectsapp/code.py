@@ -1,4 +1,5 @@
 import re
+import operator
 import ideasapp.settings as settings
 from projectsapp.models import project as projectModel
 
@@ -77,7 +78,49 @@ def saveProject(title, description, classification, ideas, headers):
         
     return
 
+#------------------------------------------------------------------------------------------
+def saveTags(target, tags):
+    '''Saves the tags to the idea'''
+    
+    for t in tags:
+        target.tags.add(t)
+    target.save()
+    return target
 
+#------------------------------------------------------------------------
 
+def distinctTagsSortedAlpha():
+    ''' Get a distinct list of tags from the db '''
+    
+    tags = projectModel.tags.all().distinct()
+    outTags = [str(t) for t in tags]
+    outTags.sort()
+    
+    return outTags
+
+#------------------------------------------------------------------------
+
+def distinctTagsSortedCount(reverse=True):
+    ''' Get a list of tags sorted by frequency and by alphabetical order. '''
+    
+    outTagsDict = {}
+    
+    res = projectModel.objects.all()
+    for row in res:
+        tags = row.tags.values()
+        for tag in tags:
+            try:
+                outTagsDict[tag['name']] += 1
+            except:
+                outTagsDict[tag['name']] = 1
+    
+    outTagsList = [[key, val] for key, val in outTagsDict.iteritems()]
+    # First up, sort by the SECONDARY KEY
+    outTagsList.sort(key=operator.itemgetter(0))
+    # Now sort by the PRIMARY KEY, which is count
+    outTagsList.sort(key=operator.itemgetter(1), reverse=reverse)
+    
+    return outTagsList
+    
 
 
