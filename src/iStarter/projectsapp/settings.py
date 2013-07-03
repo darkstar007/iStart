@@ -11,3 +11,42 @@ CLASSIFICATIONS = ([
 # Can modify this to change the range of options available for the project rating levels (importance, resource, effort)
 # Start of range is hard coded at 1 in forms.py
 PROJECT_RATING_LEVELS = 6 
+
+#RB: No longer being used by custom retrieval code
+VALUES_FIELD = ['title','pub_date','description', 'num_backers', 'pk', 'classification']
+
+#Template for model outputs
+TEMPLATE_HEADINGS = [{'db':'title', 'pretty':'Idea Title'}, 
+                     {'db':'pub_date', 'pretty':'Date Published'},
+                    {'db':'description', 'pretty':'Idea Description'},
+                    {'db':'num_backers', 'pretty':'Number of Backers'},
+                    {'db':'pk','pretty':'Project Id'}]
+
+SORT_URL_KEY_NAME = 'sort'
+TAG_URL_KEY_NAME = 'tags'
+
+# These are the valid sort fields and their pretty names - typically continuous values
+VALID_SORT_FIELDS = {'pub_date'         : 'Published Date',
+                     'title'            : 'Title',
+                     'classification'   : 'Classification',
+                     'num_likes'        : 'Likes',
+                     'num_dislikes'     : 'Dislikes',
+                     'mean_likes'       : 'Average Like/Dislike',
+                     'num_backers'      : 'Backers',
+                     'importance'       : 'Importance', 
+                     'effort'           : 'Effort',
+                     'resource'         : 'Resource'}
+
+# These are the fields you might want to filter on - typically more discrete values               
+VALID_FILTERS =      {'classification' : [i[0] for i in CLASSIFICATIONS],
+                      'importance'     : [str(r) for r in range(1, PROJECT_RATING_LEVELS)],  # Keeps it inline with our rating scale
+                      'resource'       : [str(r) for r in range(1, PROJECT_RATING_LEVELS)],  # Keeps it inline with our rating scale
+                      'effort'         : [str(r) for r in range(1, PROJECT_RATING_LEVELS)],  # Keeps it inline with our rating scale
+                      'proj_active'    : ['1', '0'],
+                      'verified'       : ['1', '0']}
+
+# All together now - keeping these separate allows us to check against them in different ways
+VALID_FILTER_PARAMS = {SORT_URL_KEY_NAME : VALID_SORT_FIELDS,
+                       'direction'       : [-1, 1],
+                       TAG_URL_KEY_NAME  : None}
+VALID_FILTER_PARAMS.update(VALID_FILTERS)

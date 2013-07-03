@@ -13,6 +13,9 @@ from random import randint
 import hashlib
 import base64
 
+import projectsapp.settings as settings
+from projectsapp.code import getMaxClassification
+
 #============================================================================================
 # TO ENSURE ALL OF THE FILES CAN SEE ONE ANOTHER.
 
@@ -37,6 +40,7 @@ from ideasapp.models import idea as ideaModel
 from projectsapp.forms import projectForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
 from code import saveTags, distinctTagsSortedAlpha
+from customObjectQueries import filteredRetrieval, validateQueryParams
 
 def submit(request):
     ''' Pulling together ideas into a glorious project. '''
@@ -155,6 +159,7 @@ def like(request, projectid):
     
 def project_gallery(request):
     ''' Display all the projects as table list of icons'''
+    
     c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
     c.update(csrf(request))
     
@@ -206,7 +211,37 @@ def project_gallery(request):
 	c['headings'] = template_headings
 	
 	return render_to_response("projectsapp/project_gallery.html", c)	
- 
+
+
+
+def project_gallery_filtered(request):
+    ''' Display some of the projects, depending on filter parameters'''
+    
+    #TODO: Update this classification dynamically based on highest value in data
+    c = {"page_title":"iSTARter Project Gallery"}
+    
+    # Get the request parameters from the url - into a dictionary
+    params = request.GET.dict()
+    safeParams = validateQueryParams(params)
+
+    # Create the tag list for selecting by user
+    c['known_tags'] = distinctTagsSortedAlpha()
+
+    # Get the data, subject to filtering and sorting
+    resultSet = filteredRetrieval(safeParams)
+
+    # Get the project max classification
+    c['classification'] = getMaxClassification(resultSet) or 'unclassified'
+
+    
+    
+    
+    c['tableData'] = out
+    c['headings'] = settings.TEMPLATE_HEADINGS
+    
+    return render_to_response("projectsapp/project_gallery.html", c)    
+
+
 def project_detail(request,projid):
     ''' Display detail on a project '''
     
