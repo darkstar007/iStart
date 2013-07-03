@@ -30,6 +30,7 @@ from ideasapp.models import idea as ideaModel
 from ideasapp.models import ideaLikes as likesModel
 from code import formatSubmitterEmail, formatHttpHeaders, ideasCloud, getDate, saveIdea
 from code import saveTags, distinctTagsSortedAlpha
+from django.db.models import Avg, Max
 
 logging.getLogger(__name__)
 
@@ -210,7 +211,62 @@ def like(request,ideaid):
         return HttpResponse(xml, content_type="text/xml")
             
 #-------------------------------------------------------------------#              
-            
+
+def ideas_gallery(request):
+    ''' Display all the projects as table list of icons'''
+    c = {"classification":"unclassified","page_title":"iStarter Ideas Gallery"}
+    c.update(csrf(request))
+    pData = ideaModel.objects.values_list('title','pub_date','description', 'pk', 'likes', 'dislikes')
+    '''
+    #Get the average for likes and dislikes
+    avg_likes = ideaModel.objects.all().aggregate(Avg('likes'))
+    print avg_likes
+    avg_dislikes = ideaModel.objects.all().aggregate(Avg('dislikes'))
+    print avg_dislikes
+    '''
+    max_likes = ideaModel.objects.all().aggregate(Max('likes'))
+    print max_likes
+    max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
+    print max_dislikes
+    rowdict = {'title':'','pub_date':'','description':'','id':'','likes':'','dislikes': ''}
+
+    #Template for model outputs
+    template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
+                         {'db':'pub_date', 'pretty':'Date Published'},
+                        {'db':'description', 'pretty':'Idea Description'},
+                        {'db':'pk','pretty':'Project Id'},
+                        {'db':'likes', 'pretty':'Likes'},
+                        {'db':'dislikes', 'pretty':'Disikes'},
+                        ]
+
+    # Prepare the data to pass to the HTML
+    #outrow = []
+    out = []
+    outrow = {'uid':'','perc_likes':'','perc_dislikes':'','cells':[]}
+    for pDataidx, row in enumerate(pData):
+        for headingidx, heading in enumerate(template_headings):
+            if heading['db']=='title' :
+                rowdict['title'] = row[headingidx][:20]
+            if heading['db']=='pub_date' :
+                rowdict['pub_date'] = row[headingidx]
+            if heading['db']=='description' :
+                rowdict['description'] = row[headingidx][:100]
+            if heading['db']=='pk':
+                rowdict['id']=row[headingidx]
+            if heading['db']=='likes':
+                rowdict['likes']=int(row[headingidx])
+            if heading['db']=='dislikes':
+                rowdict['dislikes']=int(row[headingidx])
+        outrow['cells'].append(rowdict.copy())
+        outrow['perc_likes']=100*rowdict['likes']/max_likes['likes__max']
+        outrow['perc_dislikes']=100*rowdict['dislikes']/max_dislikes['dislikes__max']
+        outrow['uid']=str(rowdict['id'])
+        out.append(outrow.copy())
+        outrow = {'average_likes':'','average_dislikes':'','cells':[]}
+    c['tableData'] = out
+    c['headings'] = template_headings
+	
+    return render_to_response("ideasapp/ideas_gallery.html", c)	          
             
             
             
