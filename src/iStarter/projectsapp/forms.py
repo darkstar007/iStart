@@ -30,7 +30,6 @@ class projectForm(forms.Form):
                                                                'rows': '20'}))
     
     cls     = forms.ChoiceField(settings.CLASSIFICATIONS, required=True)
-
     #  These are the tags that a user entered manually
     new_tags = TagField(required=False, widget=forms.TextInput(attrs={'placeholder':"Add your own tags",'class':'span12', 'style':'margin:10px auto 10px auto;'}))
     
@@ -42,3 +41,21 @@ class projectForm(forms.Form):
                                                               choices=get_rating_levels()), required=True)
     effort_level     = forms.IntegerField(widget=forms.Select(choices=get_rating_levels()), required=True)
     resource_level   = forms.IntegerField(widget=forms.Select(choices=get_rating_levels()), required=True)
+
+
+
+class backForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(backForm, self).__init__(*args, **kwargs)
+        #self.fields['ideas'] = forms.MultipleChoiceField( choices=get_idea_choices(),
+                                                          #widget = forms.SelectMultiple(attrs={'class': 'span12',  # Make it same with as textare
+
+                                                               
+    support = forms.CharField(required=False, max_length=200,
+                              widget=forms.Textarea(attrs={'placeholder': "What additional support will you provide?",
+                                                           'class': 'span12'}))
+    
+    cls     = forms.ChoiceField(settings.CLASSIFICATIONS, required=True)
+
+
+

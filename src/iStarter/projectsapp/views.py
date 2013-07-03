@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.db.models import Count, Min, Sum, Max, Avg
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 import os
 import sys
@@ -35,6 +35,7 @@ from projectsapp.models import pvote as projectVoteModel
 from ideasapp.models import idea as ideaModel
 
 from projectsapp.forms import projectForm
+from projectsapp.forms import backForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
 from code import saveTags, distinctTagsSortedAlpha
 
@@ -244,7 +245,7 @@ def project_detail(request,projid):
     rowdict['pub_date'] = outData.pub_date
     rowdict['description'] = outData.description
     rowdict['num_backers'] = outData.num_backers
-    rowdict['id']='project_'+str(outData.pk)
+    rowdict['id']=projid
     maxbackers= -1
     backers = outData.num_backers
     if backers > maxbackers:
@@ -270,7 +271,7 @@ def project_detail(request,projid):
     celldict = {'field':'','full':'','short':'','id':''}
     for pDataidx, row in enumerate(pideaData):
         for headingidx, heading in enumerate(template_headings_ideas):
-            print row[headingidx]
+            #print row[headingidx]
             celldict['field']=heading['pretty']
             if heading['db']=='likes' or heading['db']=='dislikes':
                 celldict['full']=int(row[headingidx])
@@ -289,4 +290,75 @@ def project_detail(request,projid):
     print out
 
     return render_to_response("projectsapp/project_detail.html", c)
+
+
+def back(request, projid):
+    ''' Backing a project '''
+
+    c = {"classification":"unclassified",
+         "page_title":"Back Project:"}
+    c.update(csrf(request))
+    # Has the form been submitted?
+    if request.method == 'POST':
+        
+        form = backForm(request.POST)
+        
+        if form.is_valid():
+
+            # Proper Header and django-based user
+            headers = request.META
+            #user = str(request.user)
+            
+            # Form content extracted            
+            cleanForm = form.cleaned_data
+            #project_headers = formatHttpHeaders(headers)
+
+            #res = saveProject(cleanForm['title'], cleanForm['description'], cleanForm['cls'], cleanForm['ideas'], project_headers)
+            #idea.email_starter = formatSubmitterEmail(user)
+            if projectModel.objects.filter(pk=projid).count() != 0:
+                outBack = projectModel.objects.get(pk=projid)
+                outBack.num_backers=outBack.num_backers+1
+                outBack.save()
+                outPvote = projectVoteModel()
+                outPvote.project_id=projid
+                outPvote.vote_date =datetime.now()
+                outPvote.vote_type='back'
+                outPvote.support_type=cleanForm['support']
+                outPvote.classification=cleanForm['cls']
+                outPvote.save()
+                #outPvote = projectVoteModel(project=projid,vote_date=datetime.now(),vote_type='back',support_type=cleanForm['support'],
+                                            #classification=cleanForm['cls'])
+                outPvote.save()
+                # For the output page
+                c['title'] = outBack.title
+                c['support'] = outPvote.support_type
+                #c["description"] = outBack.description
+                c['classification'] = outBack.classification
+                
+                return render_to_response('projectsapp/project_thanks.html', c)
+                
+            else:
+                logging.error("User tried to back a project that didnt exist")
+                outData = projectModel.objects.get(pk=int(projid))
+                c['form'] = form
+                c['title']=outData.title
+                return render_to_response("projectsapp/project_back_submit.html", c)
+    
+        else:
+            logging.error("User failed to enter valid content into form.")
+            outData = projectModel.objects.get(pk=int(projid))
+            c['form'] = form
+            c['title']=outData.title
+            return render_to_response("projectsapp/project_back_submit.html", c)
+        
+    else:
+        if projectModel.objects.filter(pk=projid).count() != 0:
+            #get Title from projid
+            outData = projectModel.objects.get(pk=int(projid))
+            form = backForm()
+            c.update({"form": form})
+            c.update({'title':outData.title})
+            return render_to_response('projectsapp/project_back_submit.html', c)
+        else:
+            raise Http404
 

@@ -51,4 +51,6 @@ class pvote(models.Model):
     #like = models.IntegerField()
     #backer = models.IntegerField()
     vote_type = models.CharField(max_length=20)
+    support_type = models.CharField(max_length=200)
+    classification = models.CharField(max_length=100)
     
