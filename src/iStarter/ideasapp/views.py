@@ -206,7 +206,7 @@ def like(request,ideaid):
             else:
                 print 'not found'
                 pass  
-        print xml
+        #print xml
         #not working yet
         #return HttpResponse(xml, mimetype="text/xml")
         return HttpResponse()

@@ -6,6 +6,7 @@ import os
 import sys
 import logging
 import collections
+from random import randint
 #============================================================================================
 # TO ENSURE ALL OF THE FILES CAN SEE ONE ANOTHER.
 
@@ -130,3 +131,35 @@ def project_gallery(request):
 	c['headings'] = template_headings
 	
 	return render_to_response("projectsapp/project_gallery.html", c)	
+ 
+def project_detail(request,projid):
+    ''' Display detail on a project '''
+    
+    #Select the project from table
+    outData = projectModel.objects.get(pk=int(projid))
+    rowdict = {'title':'','pub_date':'','description':'','num_backers':'','id':'','backPercentage':''}
+    
+    #Template for model outputs
+    template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
+                         {'db':'pub_date', 'pretty':'Date Published'},
+                        {'db':'description', 'pretty':'Idea Description'},
+                        {'db':'num_backers', 'pretty':'Number of Backers'}]
+
+    #Prepare the data to pass to the HTML
+    #rowdict['title'] = outData.title
+    rowdict['pub_date'] = outData.pub_date
+    rowdict['description'] = outData.description
+    rowdict['num_backers'] = outData.num_backers
+    rowdict['id']='project_'+str(outData.pk)
+    maxbackers= -1
+    backers = outData.num_backers
+    if backers > maxbackers:
+        maxbackers=backers
+    rowdict['backPercentage'] = 100 * randint(0,backers) / maxbackers
+    c = {"classification":"unclassified","page_title":outData.title}
+    c.update(csrf(request))
+    c['data'] = rowdict
+    c['headings'] = template_headings    
+    print c                    
+
+    return render_to_response("projectsapp/project_detail.html", c)

@@ -14,7 +14,6 @@ class project(models.Model):
     #idea_id = models.CharField(max_length=100)
     num_backers = models.IntegerField()
     '''Ommitted these to make life easier at the start...'''
-
     #name_starter = models.CharField(max_length=100)
     #email_starter = models.CharField(max_length=100)
     verified = models.BooleanField()
