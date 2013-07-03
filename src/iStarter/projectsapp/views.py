@@ -76,13 +76,13 @@ def submit(request):
         else:
             logging.error("User failed to enter valid content into form.")
             c['form'] = form
-            return render_to_response("projectsapp/project_submit_original.html", c)
+            return render_to_response("projectsapp/project_submit.html", c)
         
     else:
         form = projectForm()
         c.update({"form": form})
 
-    return render_to_response('projectsapp/project_submit_original.html', c)
+    return render_to_response('projectsapp/project_submit.html', c)
 
 def project_list(request):     
     c = {"classification":"unclassified",
