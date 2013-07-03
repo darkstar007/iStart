@@ -73,6 +73,7 @@ def saveProject(title, description, classification, ideas, headers, importance_l
                        classification = classification, headers = headers, 
                        num_backers=1, num_likes=1, num_dislikes=0,
                        importance=importance_level, effort=effort_level, resource=resource_level)
+
     out.save()
     for idea in ideas:
         idObj = ideaModel.objects.get(id=idea)

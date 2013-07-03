@@ -25,6 +25,14 @@ else
   {
   document.getElementById(idstr).innerHTML="Disliked";
   }
+
+xmlDoc = xmlhttp.responseXML;
+ele = document.getElementById(xmlDoc.getElementsByTagName("valdata")[0].childNodes[0].nodeValue);
+
+if (ele) {
+   ele.innerHTML = xmlDoc.getElementsByTagName("iddata")[0].childNodes[0].nodeValue;
+}
+
 }
 </script>
 

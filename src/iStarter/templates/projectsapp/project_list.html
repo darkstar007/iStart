@@ -4,6 +4,45 @@
 
 {% block extra_js %}
 
+<script>
+
+function loadXMLDoc(typestr,idstr)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.open("GET","/projects/like/"+idstr,false);
+xmlhttp.send();
+xmlDoc = xmlhttp.responseXML;
+
+if (typestr=="Like")
+  {
+  document.getElementById(idstr).innerHTML="Liked";
+  }
+else if (typestr=="Like")
+  {
+  document.getElementById(idstr).innerHTML="Disliked";
+  }
+else
+{
+  document.getElementById(idstr).innerHTML="Backed";
+}
+
+ele = document.getElementById(xmlDoc.getElementsByTagName("valdata")[0].childNodes[0].nodeValue);
+
+if (ele) {
+   ele.innerHTML = xmlDoc.getElementsByTagName("iddata")[0].childNodes[0].nodeValue;
+}
+
+}
+</script>
+
 {% endblock extra_js %} 
 
 {% block top_row %}
@@ -13,36 +52,46 @@
 			</br></br>
 		</div>
 	</div>
+      </div>
+      
+      {% endblock top_row %}
+      
+      {% block main_block %}
+      
+      <div class="row-fluid">
+	<div class="span6 offset3">
+	  <table class="table table-striped table-condensed text-center table-hover sortable">
+	    <thead>
+	      <tr>
+		{% for heading in headings %}
+		<th> {{heading}} </th>
+		{% endfor %}
+	      </tr>
+	    </thead>
+	    <tbody>
+	      {%for row in tableData%}
+	      <tr> 
+		<TD><a href="/projects/details?project_id={{row.id}}">{{row.title}}</a></TD>
+		<TD>{{row.description}}</TD>
+		<TD>{{row.pub_date|date:"Y/m/d"}}&nbsp{{row.pub_date|date:"H:i"}}</TD>
+		<TD><div id="celllike_{{row.id}}">{{row.num_likes|floatformat:"0"|rjust:"8"}}</div></TD>
+		<TD><div id="celldislike_{{row.id}}">{{row.num_dislikes|floatformat:"0"|rjust:"8"}}</div></TD>
+		<TD><div id="cellback_{{row.id}}">{{row.num_backers|rjust:"8"}}</div></TD>
+		<td>
+		  <span>
+		    <button id="like_{{row.id}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Liked'">Like</button>
+		    <button id="dislike_{{row.id}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Disliked'">Dislike</button>
+		  </span>
+		</td>
+		<td><button id="back_{{row.id}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Backed'">Back</button></td>
 
-{% endblock top_row %}
-
-{% block main_block %}
-
-	<div class="row-fluid">
-		<div class="span6 offset3">
-                <table class="table table-striped table-condensed text-center">
-                    <thead>
-                        <tr>
-                            {% for heading in headings %}
-                                <th> {{heading}} </th>
-                            {% endfor %}
-                                <th>Back</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {%for row in tableData%}
-                            <tr> 
-                                {%for cell in row%}
-                                    <td>{{cell}}</td>
-                                {% endfor %}
-                                <td><a href="/projects/back?project_id={{project_id}}">{{project_id}}Back</a>
-                            </tr>   
-                                
-                        {% endfor %}                         
-                    </tbody>                
-                </table>
-		</div>
+	      </tr>   
+	      
+	      {% endfor %}                         
+	    </tbody>                
+	  </table>
 	</div>
+      </div>
 
 {% endblock main_block %}
 
