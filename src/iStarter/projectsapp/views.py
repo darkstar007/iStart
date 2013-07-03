@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.db.models import Count, Min, Sum, Max, Avg
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 import os
 import sys
@@ -199,7 +199,7 @@ def project_gallery(request):
         	outrow.append(rowdict.copy())
 		out.append(outrow)
 		outrow = []
-	c['tableData'] = outoutIdeas = ideaModel.objects.get(pk=row[1])
+	c['tableData'] = out
 	c['headings'] = template_headings
 	
 	return render_to_response("projectsapp/project_gallery.html", c)	
@@ -222,7 +222,7 @@ def project_detail(request,projid):
     rowdict['pub_date'] = outData.pub_date
     rowdict['description'] = outData.description
     rowdict['num_backers'] = outData.num_backers
-    rowdict['id']='project_'+str(outData.pk)
+    rowdict['id']=projid
     maxbackers= -1
     backers = outData.num_backers
     if backers > maxbackers:
@@ -248,7 +248,7 @@ def project_detail(request,projid):
     celldict = {'field':'','full':'','short':'','id':''}
     for pDataidx, row in enumerate(pideaData):
         for headingidx, heading in enumerate(template_headings_ideas):
-            print row[headingidx]
+            #print row[headingidx]
             celldict['field']=heading['pretty']
             if heading['db']=='likes' or heading['db']=='dislikes':
                 celldict['full']=int(row[headingidx])
@@ -288,18 +288,38 @@ def back(request, projid):
             
             # Form content extracted            
             cleanForm = form.cleaned_data
-            project_headers = formatHttpHeaders(headers)
+            #project_headers = formatHttpHeaders(headers)
 
             #res = saveProject(cleanForm['title'], cleanForm['description'], cleanForm['cls'], cleanForm['ideas'], project_headers)
             #idea.email_starter = formatSubmitterEmail(user)
-            outBack = projectModel.objects.get(pk=projid)
-            outBack.num_backers+=1
-            # For the output page
-            c['title'] = project.title
-            c["description"] = project.description
-            c['classification'] = project.classification
-            
-            return render_to_response('projectsapp/project_thanks.html', c)
+            if projectModel.objects.filter(pk=projid).count() != 0:
+                outBack = projectModel.objects.get(pk=projid)
+                outBack.num_backers=outBack.num_backers+1
+                outBack.save()
+                outPvote = projectVoteModel()
+                outPvote.project_id=projid
+                outPvote.vote_date =datetime.now()
+                outPvote.vote_type='back'
+                outPvote.support_type=cleanForm['support']
+                outPvote.classification=cleanForm['cls']
+                outPvote.save()
+                #outPvote = projectVoteModel(project=projid,vote_date=datetime.now(),vote_type='back',support_type=cleanForm['support'],
+                                            #classification=cleanForm['cls'])
+                outPvote.save()
+                # For the output page
+                c['title'] = outBack.title
+                c['support'] = outPvote.support_type
+                #c["description"] = outBack.description
+                c['classification'] = outBack.classification
+                
+                return render_to_response('projectsapp/project_thanks.html', c)
+                
+            else:
+                logging.error("User tried to back a project that didnt exist")
+                outData = projectModel.objects.get(pk=int(projid))
+                c['form'] = form
+                c['title']=outData.title
+                return render_to_response("projectsapp/project_back_submit.html", c)
     
         else:
             logging.error("User failed to enter valid content into form.")
@@ -309,11 +329,13 @@ def back(request, projid):
             return render_to_response("projectsapp/project_back_submit.html", c)
         
     else:
-        #get Title from projid
-        outData = projectModel.objects.get(pk=int(projid))
-        form = backForm()
-        c.update({"form": form})
-        c.update({'title':outData.title})
-
-    return render_to_response('projectsapp/project_back_submit.html', c)
+        if projectModel.objects.filter(pk=projid).count() != 0:
+            #get Title from projid
+            outData = projectModel.objects.get(pk=int(projid))
+            form = backForm()
+            c.update({"form": form})
+            c.update({'title':outData.title})
+            return render_to_response('projectsapp/project_back_submit.html', c)
+        else:
+            raise Http404
 
