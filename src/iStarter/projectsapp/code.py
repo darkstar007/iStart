@@ -2,12 +2,15 @@ import re
 import operator
 import ideasapp.settings as settings
 from projectsapp.models import project as projectModel
+import logging
 
 import sys
 sys.path.append('..')
 from ideasapp.models import idea as ideaModel
 
 from datetime import datetime
+
+logging.getLogger(__name__)
 
 def formatHttpHeaders(headers):
     ''' formats http headers into a nasty long string because we're not using a document store
@@ -124,6 +127,36 @@ def distinctTagsSortedCount(reverse=True):
     outTagsList.sort(key=operator.itemgetter(1), reverse=reverse)
     
     return outTagsList
+
+#------------------------------------------------------------------------
+
+def getMaxClassification(results):
+    ''' Gets the maximum classification of the objects returned. '''
+
+    classificationRank = [c[0].lower() for c in settings.CLASSIFICATIONS]
     
-
-
+    maxClass = classificationRank[-1]
+    maxClassIdx = 0
+    if len(results) == 0:
+        maxClass = 'unclassified'
+    
+    # Get the results
+    for res in results:
+        
+        try:
+            cls = res.classification.lower()
+        except:
+            continue
+        
+        # Ensure it matches our known set, get it's index in the ranked scale
+        if cls in classificationRank:
+            classIdx = classificationRank.index(cls)
+            
+            # If it's higher than the highest so far, reset the highest so far
+            if classIdx > maxClassIdx:
+                maxClassIdx = classIdx
+                maxClass    = cls
+        
+    return maxClass    
+    
+    
