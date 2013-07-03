@@ -3,7 +3,43 @@
 {% block classification_head %} {{ classification|upper }} {% endblock classification_head %}		
 
 {% block extra_js %}
-
+  	<script>
+  	
+  		
+  		// Adds tags to an array for form population
+  		var inputTags = new Array();
+  		
+  		function modifyTagsArray(e) {
+  			
+  			idx = inputTags.indexOf(e.id);
+  			//alert(idx);
+  			if (idx < 0) {
+  				addToTagsArray(e.id);
+  				document.getElementById(e.id).className = "btn btn-mini btn-success";
+  				}
+  			else {
+  				removeFromArray(e.id);
+  				document.getElementById(e.id).className = "btn btn-mini";
+  				}
+  			//alert(inputTags);
+  		}
+  		
+  		// Add an element to the array
+  		function addToTagsArray(value) {
+  			inputTags.push(value);
+  		}
+  	  	
+  		// remove an element from the array
+  		function removeFromArray(value) {
+  			idx = inputTags.indexOf(value);
+  			inputTags.splice( idx, 5 );
+  		}
+  		
+  		// Assign the hidden tags field to the tags array
+  		function setTagsList() {
+  			document.getElementById("id_existing_tags").value = inputTags;
+  		}
+  	</script>
 {% endblock extra_js %} 
 
 {% block main_block %}
@@ -13,22 +49,20 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Latest Ideas</li>
-              <li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
+              <li class="nav-header">Sort By</li>
+              <li class="active"><a href="#">No Sort</a></li>
+              <li><a href="#">Most Recent</a></li>
+              <li><a href="#">Oldest</a></li>
+              <li><a href="#">Most Backed</a></li>
+              <li><a href="#">Most Liked</a></li>
+              <li><a href="#">Least Liked</a></li>
+              
+              <li class="nav-header">Tag Filters</li>
+				<div class="span10 offset1" style="padding:2px; border-radius:3px; margin:0px auto 5px auto; overflow: auto; max-height: 380px;">
+					{% for known_tag in known_tags %}
+						<button id="{{ known_tag }}" style="margin:0px auto 4px auto;" class="btn btn-mini" onclick="modifyTagsArray(this)" type="button">{{ known_tag }}</button>
+					{% endfor %}
+				</div>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
