@@ -23,6 +23,11 @@ class project(models.Model):
     classification = models.CharField(max_length=100) 
     headers = models.CharField(max_length=20000)
 
+    # This is just a repeat of the information stored in the pvote model
+    num_likes = models.FloatField()  # not sure why these are defined as float, but just copied from ideamodel
+    num_dislikes = models.FloatField()
+    num_backers = models.IntegerField()
+    
     ideas_derived_from = models.ManyToManyField(ideaModel, related_name='title+')
 
     #def __unicode__(self):
@@ -36,4 +41,7 @@ class pvote(models.Model):
     project = models.ForeignKey(project)
     vote_date = models.DateTimeField('voted_on_date')
     username = models.CharField(max_length=128)
-    weight = models.IntegerField()
+    #like = models.IntegerField()
+    #backer = models.IntegerField()
+    vote_type = models.CharField(max_length=20)
+    

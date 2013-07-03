@@ -4,6 +4,32 @@
 
 {% block extra_js %}
 
+<script>
+
+function loadXMLDoc(typestr,idstr)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.open("GET","/projects/like/"+idstr,false);
+xmlhttp.send();
+if (typestr=="Like")
+  {
+  document.getElementById(idstr).innerHTML="Liked";
+  }
+else
+  {
+  document.getElementById(idstr).innerHTML="Disliked";
+  }
+}
+</script>
+
 {% endblock extra_js %} 
 
 {% block top_row %}
@@ -26,7 +52,6 @@
 		{% for heading in headings %}
 		<th> {{heading}} </th>
 		{% endfor %}
-		<th>Back</th>
 	      </tr>
 	    </thead>
 	    <tbody>
@@ -35,9 +60,17 @@
 		<TD><a href="/projects/details?project_id={{row.id}}">{{row.title}}</a></TD>
 		<TD>{{row.description}}</TD>
 		<TD>{{row.pub_date|date:"Y/m/d"}}&nbsp{{row.pub_date|date:"H:i"}}</TD>
-		<td>{% if row.weight == None %} 0 {% else %} {{row.weight}} {% endif %}</td>
-		
-		<td><a href="/projects/back?project_id={{row.id}}">Back</a>
+		<TD><div id="celllike_{{row.id}}">{{row.num_likes|floatformat:"0"|rjust:"8"}}</div></TD>
+		<TD><div id="celldislike_{{row.id}}">{{row.num_dislikes|floatformat:"0"|rjust:"8"}}</div></TD>
+		<TD><div id="cellback_{{row.id}}">{{row.num_backers|rjust:"8"}}</div></TD>
+		<td>
+		  <span>
+		    <button id="like_{{row.id}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Liked'">Like</button>
+		    <button id="dislike_{{row.id}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Disliked'">Dislike</button>
+		  </span>
+		</td>
+		<td><button id="back_{{row.id}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Backed'">Back</button></td>
+
 	      </tr>   
 	      
 	      {% endfor %}                         
