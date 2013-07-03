@@ -57,7 +57,15 @@ def submit(request):
 
             project_headers = formatHttpHeaders(headers)
 
-            savedProject = saveProject(cleanForm['title'], cleanForm['description'], cleanForm['cls'], cleanForm['ideas'], project_headers)
+            savedProject = saveProject(cleanForm['title'],
+                                       cleanForm['description'],
+                                       cleanForm['cls'],
+                                       cleanForm['ideas'],
+                                       project_headers,
+                                       cleanForm['importance_level'],
+                                       cleanForm['effort_level'],
+                                       cleanForm['resource_level']
+                                       )
                                     
             # We can only add tags to a saved object - this saves the structured ones
             res = saveTags(savedProject, cleanForm['new_tags'])
