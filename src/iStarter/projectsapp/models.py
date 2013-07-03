@@ -36,6 +36,11 @@ class project(models.Model):
     # that a user has clicked from the pre-existing list.
     tags = TaggableManager()
 
+    # Creator assigned scores
+    importance = models.IntegerField() 
+    effort = models.IntegerField()
+    resource = models.IntegerField()
+
 class pvote(models.Model):
     project = models.ForeignKey(project)
     vote_date = models.DateTimeField('voted_on_date')
@@ -43,4 +48,6 @@ class pvote(models.Model):
     #like = models.IntegerField()
     #backer = models.IntegerField()
     vote_type = models.CharField(max_length=20)
+    support_type = models.CharField(max_length=200)
+    classification = models.CharField(max_length=100)
     

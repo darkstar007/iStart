@@ -203,13 +203,11 @@ def addTagsPerRow(testDataPath, appName):
         print "%s:\t Adding random tag data for each row/object." %appName,
         
         # For each row, chuck in between 20 and 50 random tags.
-        for row in targetRows:
-            for i in range(randint(1, 10)):
-                word = words[randint(0,len(words)-1)]
-                row.tags.add(word)
-                row.save()
-            row.tags.add('xxx_test_tag')
-            row.save()
+        for r in range(20):
+            for i in range(randint(1, 5)):
+                targetRows[r].tags.add(choice(words[0:50]))
+            targetRows[r].tags.add('xxx_test_tag')
+            targetRows[r].save()
             
         # Make sure they're definitely in there.
         res = model.objects.filter(tags__name__in=["xxx_test_tag"])
