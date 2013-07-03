@@ -1,4 +1,5 @@
 import re
+import operator
 import ideasapp.settings as settings
 from projectsapp.models import project as projectModel
 
@@ -64,20 +65,65 @@ def getDate():
     return datetime.now()
 
 #------------------------------------------------------------------------------------------
-def saveProject(title, description, classification, ideas, headers):
+def saveProject(title, description, classification, ideas, headers, importance_level, effort_level, resource_level):
     ''' Processes idea form data and saves data '''
     #import pdb
     #pdb.set_trace()    
     out = projectModel(title = title, pub_date = getDate(), description = description,
-                       classification = classification, headers = headers)
+                       classification = classification, headers = headers, 
+                       num_backers=1, num_likes=1, num_dislikes=0,
+                       importance=importance_level, effort=effort_level, resource=resource_level)
+
     out.save()
     for idea in ideas:
         idObj = ideaModel.objects.get(id=idea)
         out.ideas_derived_from.add(idObj)
         
-    return
+    return out
 
+#------------------------------------------------------------------------------------------
+def saveTags(target, tags):
+    '''Saves the tags to the idea'''
+    
+    for t in tags:
+        target.tags.add(t)
+    target.save()
+    return target
 
+#------------------------------------------------------------------------
 
+def distinctTagsSortedAlpha():
+    ''' Get a distinct list of tags from the db '''
+    
+    tags = projectModel.tags.all().distinct()
+    outTags = [str(t) for t in tags]
+    outTags.sort()
+    
+    return outTags
+
+#------------------------------------------------------------------------
+
+def distinctTagsSortedCount(reverse=True):
+    ''' Get a list of tags sorted by frequency and by alphabetical order. '''
+    
+    outTagsDict = {}
+    
+    res = projectModel.objects.all()
+    for row in res:
+        tags = row.tags.values()
+        for tag in tags:
+            try:
+                outTagsDict[tag['name']] += 1
+            except:
+                outTagsDict[tag['name']] = 1
+    
+    outTagsList = [[key, val] for key, val in outTagsDict.iteritems()]
+    # First up, sort by the SECONDARY KEY
+    outTagsList.sort(key=operator.itemgetter(0))
+    # Now sort by the PRIMARY KEY, which is count
+    outTagsList.sort(key=operator.itemgetter(1), reverse=reverse)
+    
+    return outTagsList
+    
 
 

@@ -1,14 +1,18 @@
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.db.models import Count, Min, Sum, Max, Avg
+from django.http import HttpResponse
 
 import os
 import sys
 import logging
+from datetime import datetime
 import collections
+
 from random import randint
 import hashlib
 import base64
+
 #============================================================================================
 # TO ENSURE ALL OF THE FILES CAN SEE ONE ANOTHER.
 
@@ -26,17 +30,25 @@ for root, subFolders, files in os.walk(appRoot):
 #============================================================================================
 
 from projectsapp.models import project as projectModel
+from projectsapp.models import pvote as projectVoteModel
+
 from ideasapp.models import idea as ideaModel
+
 from projectsapp.forms import projectForm
 from projectsapp.forms import backForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
+from code import saveTags, distinctTagsSortedAlpha
 
 def submit(request):
     ''' Pulling together ideas into a glorious project. '''
 
     c = {"classification":"unclassified",
-         "page_title":"My Glorious Project"}
+         "page_title":"Submit a Project"}
     c.update(csrf(request))
+    
+    # Create the tag list for selecting by user
+    c['known_tags'] = distinctTagsSortedAlpha()
+    
     # Has the form been submitted?
     if request.method == 'POST':
         
@@ -56,7 +68,22 @@ def submit(request):
 
             project_headers = formatHttpHeaders(headers)
 
-            res = saveProject(cleanForm['title'], cleanForm['description'], cleanForm['cls'], cleanForm['ideas'], project_headers)
+            savedProject = saveProject(cleanForm['title'],
+                                       cleanForm['description'],
+                                       cleanForm['cls'],
+                                       cleanForm['ideas'],
+                                       project_headers,
+                                       cleanForm['importance_level'],
+                                       cleanForm['effort_level'],
+                                       cleanForm['resource_level']
+                                       )
+                                    
+            # We can only add tags to a saved object - this saves the structured ones
+            res = saveTags(savedProject, cleanForm['new_tags'])
+            
+            # This saves the unstructured ones
+            res = saveTags(savedProject, cleanForm['existing_tags'])
+
             #idea.email_starter = formatSubmitterEmail(user)
             # For the output page
             c['title'] = project.title
@@ -81,13 +108,52 @@ def project_list(request):
          "page_title":"All Projects"}
     c.update(csrf(request))
 
-    pData = projectModel.objects.annotate(weight = Sum('pvote__weight')).order_by('-weight').values_list('title','description','pub_date', 'weight')
-
-    c['headings']=['Project Title','Project Description', 'Date Published', 'Weight of Backers']
+    #pData = projectModel.objects.annotate(likes = Sum('pvote__like'), backs = Sum('pvote__backer')).order_by('-pub_date').values('id','title','description','pub_date')
+    pData = projectModel.objects.order_by('-pub_date').values('id','title','description','pub_date',
+                                                               'num_likes', 'num_dislikes', 'num_backers')
+    c['headings']=['Project Title','Project Description', 'Date Published', 'Likes', 'Dislikes', 'Backers', 'Vote', 'Back']
     c['tableData'] = pData
-    
+
     return render_to_response("projectsapp/project_list.html", c)
             	
+def like(request, projectid):
+    ''' Liking and disliking. '''
+    
+    #Databases clicks of the like and dislike buttons
+    # Has the form been submitted?
+
+    if request.method == 'GET': 
+        
+        # Parse the projectid
+        splt = projectid.split('_')
+        
+        prjid = splt[1]
+        choice = splt[0]
+ 
+        if choice in ['like', 'dislike', 'back']:
+ 
+            #Now record this in the db
+            pData = projectModel.objects.filter(id=prjid)[0]
+            newLike = projectVoteModel(project=pData, vote_date=datetime.now(), vote_type = choice)
+
+            if choice == 'like':
+                pData.num_likes += 1
+                newVal = pData.num_likes
+                
+            elif choice == 'dislike':
+                pData.num_dislikes += 1
+                newVal = pData.num_dislikes
+                
+            elif choice == 'back':
+                pData.num_backers +=1
+                newVal = pData.num_backers
+                
+            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>cell'+str(choice)+'_'+prjid+'</valdata></data></xml>'
+            pData.save()
+            newLike.save()
+
+        return HttpResponse(xml, content_type="text/xml")
+    
 def project_gallery(request):
 	''' Display all the projects as table list of icons'''
 	c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
@@ -202,6 +268,7 @@ def project_detail(request,projid):
 
     return render_to_response("projectsapp/project_detail.html", c)
 
+
 def back(request, projid):
     ''' Backing a project '''
 
@@ -249,3 +316,4 @@ def back(request, projid):
         c.update({'title':outData.title})
 
     return render_to_response('projectsapp/project_back_submit.html', c)
+
