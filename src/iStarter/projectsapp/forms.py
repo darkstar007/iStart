@@ -24,3 +24,17 @@ class projectForm(forms.Form):
     
     cls     = forms.ChoiceField(settings.CLASSIFICATIONS, required=True)
 
+
+class backForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(backForm, self).__init__(*args, **kwargs)
+        #self.fields['ideas'] = forms.MultipleChoiceField( choices=get_idea_choices(),
+                                                          #widget = forms.SelectMultiple(attrs={'class': 'span12',  # Make it same with as textare
+
+                                                               
+    support = forms.CharField(required=False, max_length=200,
+                              widget=forms.Textarea(attrs={'placeholder': "What additional support will you provide?",
+                                                           'class': 'span12'}))
+    
+    cls     = forms.ChoiceField(settings.CLASSIFICATIONS, required=True)
+

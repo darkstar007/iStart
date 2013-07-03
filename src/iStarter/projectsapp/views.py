@@ -28,6 +28,7 @@ for root, subFolders, files in os.walk(appRoot):
 from projectsapp.models import project as projectModel
 from ideasapp.models import idea as ideaModel
 from projectsapp.forms import projectForm
+from projectsapp.forms import backForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
 
 def submit(request):
@@ -132,7 +133,7 @@ def project_gallery(request):
         	outrow.append(rowdict.copy())
 		out.append(outrow)
 		outrow = []
-	c['tableData'] = out
+	c['tableData'] = outoutIdeas = ideaModel.objects.get(pk=row[1])
 	c['headings'] = template_headings
 	
 	return render_to_response("projectsapp/project_gallery.html", c)	
@@ -200,3 +201,51 @@ def project_detail(request,projid):
     print out
 
     return render_to_response("projectsapp/project_detail.html", c)
+
+def back(request, projid):
+    ''' Backing a project '''
+
+    c = {"classification":"unclassified",
+         "page_title":"Back Project:"}
+    c.update(csrf(request))
+    # Has the form been submitted?
+    if request.method == 'POST':
+        
+        form = backForm(request.POST)
+        
+        if form.is_valid():
+
+            # Proper Header and django-based user
+            headers = request.META
+            #user = str(request.user)
+            
+            # Form content extracted            
+            cleanForm = form.cleaned_data
+            project_headers = formatHttpHeaders(headers)
+
+            #res = saveProject(cleanForm['title'], cleanForm['description'], cleanForm['cls'], cleanForm['ideas'], project_headers)
+            #idea.email_starter = formatSubmitterEmail(user)
+            outBack = projectModel.objects.get(pk=projid)
+            outBack.num_backers+=1
+            # For the output page
+            c['title'] = project.title
+            c["description"] = project.description
+            c['classification'] = project.classification
+            
+            return render_to_response('projectsapp/project_thanks.html', c)
+    
+        else:
+            logging.error("User failed to enter valid content into form.")
+            outData = projectModel.objects.get(pk=int(projid))
+            c['form'] = form
+            c['title']=outData.title
+            return render_to_response("projectsapp/project_back_submit.html", c)
+        
+    else:
+        #get Title from projid
+        outData = projectModel.objects.get(pk=int(projid))
+        form = backForm()
+        c.update({"form": form})
+        c.update({'title':outData.title})
+
+    return render_to_response('projectsapp/project_back_submit.html', c)
