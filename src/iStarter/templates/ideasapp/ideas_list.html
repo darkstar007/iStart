@@ -3,6 +3,30 @@
 {% block classification_head %} {{ classification|upper }} {% endblock classification_head %}		
 
 {% block extra_js %}
+<script>
+function loadXMLDoc(typestr,idstr)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.open("GET","/ideas/like/"+idstr,false);
+xmlhttp.send();
+if (typestr=="Like")
+  {
+  document.getElementById(idstr).innerHTML="Liked";
+  }
+else
+  {
+  document.getElementById(idstr).innerHTML="Disliked";
+  }
+}
+</script>
 
 {% endblock extra_js %} 
 
@@ -26,24 +50,33 @@
                             {% for heading in headings %}
                                 <th> {{ heading.pretty }} </th>
                             {% endfor %}
+                            <th>Feedback</th>
                         </tr>
                     </thead>
                     {%for row in tableData %}
                         <tr>
-                          {%for cell in row%}    
+                          {%for cell in row.cells%}    
                             <td>{% if cell.field = "Idea Description" %}
-                            <button type="button" class="btn btn-mini" data-toggle="collapse" data-target=#{{cell.id}}>Show Details...</button>
-                            <div id="{{cell.id}}" class="collapse"> {{cell.full}} </div>                 
+                            <button type="button" class="btn btn-mini" data-toggle="collapse" data-target=#div_{{cell.id}}>Show Details...</button>
+                            <div id="div_{{cell.id}}" class="collapse"> {{cell.full}} </div>   
+                            {% elif cell.field = "Number of Likes" %}
+                            <div id="celllike_{{row.uid}}" > {{cell.full}} </div>
+                            {% elif cell.field = "Number of DisLikes" %}
+                            <div id="celldislike_{{row.uid}}" > {{cell.full}} </div>              
                             {% else %}
-                            {{cell.full}}                            
-                            {% endif %} 
-                            </td>                                                                          
+                                {{cell.full}}                            
+                            {% endif %}
+                            {% if forloop.last %}
+                                </td>
+                                <td><span><button id="like_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Liked'">Like</button>
+                                <button id="dislike_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Disliked'">Dislike</button>
+                                </span></td>
+                            {% else %}
+                                </td>   
+                            {% endif %}                                                                       
                         {% endfor %}
                         </tr>
-
-                    {% endfor %}
-
-                                                 
+                    {% endfor %}               
                 </table>
 		</div>
 	</div>

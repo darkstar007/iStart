@@ -5,6 +5,7 @@ from django.db.models import Count, Min, Sum, Max, Avg
 import os
 import sys
 import logging
+import collections
 #============================================================================================
 # TO ENSURE ALL OF THE FILES CAN SEE ONE ANOTHER.
 
@@ -22,6 +23,7 @@ for root, subFolders, files in os.walk(appRoot):
 #============================================================================================
 
 from projectsapp.models import project as projectModel
+
 from projectsapp.forms import projectForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
 
@@ -84,9 +86,47 @@ def project_list(request):
             	
 def project_gallery(request):
 	''' Display all the projects as table list of icons'''
-	c = {"classification":"unclassified","page_title":"Project Gallery"}
+	c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
 	c.update(csrf(request))
+	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers')
+	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','id':''}
 
-	c['headings']=['Idea Title','Date Published','Idea Detail','Number of Backers']
+ 	#Template for model outputs
+ 	template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
+                         {'db':'pub_date', 'pretty':'Date Published'},
+                        {'db':'description', 'pretty':'Idea Description'},
+                        {'db':'num_backers', 'pretty':'Number of Backers'}]
+	
+	# First find maximum backers todate
+	maxbackers= -1
+	backers=0
+	for pDataidx, row in enumerate(pData):
+		for headingidx, heading in enumerate(template_headings):
+			if heading['db']=='num_backers' :
+				backers=row[headingidx]
+			if backers > maxbackers :
+				maxbackers=backers
 
+	# Prepare the data to pass to the HTML
+	outrow = []
+	out = []
+
+	for pDataidx, row in enumerate(pData):
+		for headingidx, heading in enumerate(template_headings):
+			if heading['db']=='title' :
+				rowdict['title'] = row[headingidx][:20]
+			if heading['db']=='pub_date' :
+				rowdict['pub_date'] = row[headingidx]
+			if heading['db']=='description' :
+				rowdict['description'] = row[headingidx][:200]
+			if heading['db']=='num_backers' :
+				rowdict['backPercentage'] = 100 * row[headingidx] / maxbackers
+			if heading['db']=='id' :
+				rowdict['id']='project'+str(pDataidx)+str(headingidx)
+        	outrow.append(rowdict.copy())
+		out.append(outrow)
+		outrow = []
+	c['tableData'] = out
+	c['headings'] = template_headings
+	
 	return render_to_response("projectsapp/project_gallery.html", c)	

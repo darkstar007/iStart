@@ -142,6 +142,8 @@ class testData():
                             jsonfields[field.name]=self.randomEmail()
                         elif field.get_internal_type() == 'BooleanField':
                             jsonfields[field.name]='True'
+                        elif field.get_internal_type() == 'FloatField':
+                            jsonfields[field.name]=1
                         else:
                             continue
                     if cls[0] == 'project' and appname == 'projectsapp':

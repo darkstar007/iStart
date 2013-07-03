@@ -12,6 +12,7 @@ class project(models.Model):
     pub_date = models.DateTimeField('date_published')
     description = models.CharField(max_length=2000) # The main text
     #idea_id = models.CharField(max_length=100)
+    num_backers = models.IntegerField()
     '''Ommitted these to make life easier at the start...'''
 
     #name_starter = models.CharField(max_length=100)

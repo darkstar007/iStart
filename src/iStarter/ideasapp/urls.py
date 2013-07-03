@@ -6,11 +6,12 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
 
-    url(r'^$',    'ideasapp.views.ideas_list', name='ideas_list'),    # For submitting ideas
+    #url(r'^$',    'ideasapp.views.ideas_list', name='ideas_list'),    # For submitting ideas
     url(r'^submit/',    'ideasapp.views.submit', name='submit'),    # For submitting ideas
     url(r'^ideas_cloud/',    'ideasapp.views.ideas_cloud', name='ideas_cloud'),    # For viewing ideas cloud
     url(r'^ideas_list/',    'ideasapp.views.ideas_list', name='ideas_list'),    # For viewing ideas cloud
     url(r'^back/',    'ideasapp.views.back', name='back'),    # For backing an idea
+    url(r'^like/(?P<ideaid>\w+)/$',    'ideasapp.views.like', name='like'),    
 
 )
 
