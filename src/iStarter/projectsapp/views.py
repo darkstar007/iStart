@@ -86,7 +86,7 @@ def project_list(request):
                                                                'num_likes', 'num_dislikes', 'num_backers')
     c['headings']=['Project Title','Project Description', 'Date Published', 'Likes', 'Dislikes', 'Backers', 'Vote', 'Back']
     c['tableData'] = pData
-    print pData
+
     return render_to_response("projectsapp/project_list.html", c)
             	
 def like(request, projectid):
