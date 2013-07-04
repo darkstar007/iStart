@@ -130,7 +130,7 @@ def like(request, projectid):
         prjid = splt[1]
         choice = splt[0]
  
-        if choice in ['like', 'dislike', 'back']:
+        if choice in ['like', 'dislike']:
  
             #Now record this in the db
             pData = projectModel.objects.filter(id=prjid)[0]
@@ -138,15 +138,13 @@ def like(request, projectid):
 
             if choice == 'like':
                 pData.num_likes += 1
-                newVal = pData.num_likes
+
                 
             elif choice == 'dislike':
                 pData.num_dislikes += 1
-                newVal = pData.num_dislikes
+
+	    newVal = pData.num_likes - pData.num_dislikes
                 
-            elif choice == 'back':
-                pData.num_backers +=1
-                newVal = pData.num_backers
                 
             xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(prjid)+'</valdata></data></xml>'
             pData.save()
@@ -258,8 +256,8 @@ def project_detail(request,projid):
     rowdict['pub_date'] = outData.pub_date
     rowdict['description'] = outData.description
     rowdict['num_backers'] = outData.num_backers
-    rowdict['likes'] = int(outData.num_likes)
-    rowdict['dislike'] = int(outData.num_dislikes)
+    rowdict['likes_total'] = int(outData.num_likes - outData.num_dislikes)
+
     rowdict['id']=projid
     maxbackers= -1
     backers = outData.num_backers

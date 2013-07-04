@@ -46,15 +46,13 @@
 				</div>
 			{% endif %}
 <table class="table">
-<thead><tr><th>Like</th><th>Dislikes</th><th>Feedback</th></tr></thead>
 <tr>
-   <td><div id="pcelllike_{{data.id}}" > {{data.likes}} </div></td>
-   <td><div id="pcelldislike_{{data.id}}" > {{data.dislike}} </div></td>
 
    <td> 
      <span>
-       <button id="like_{{data.id}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Like', 'projects', this.id,'pcelllike_');"><i class="icon-arrow-up"></i></button>
-<button id="dislike_{{data.id}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Dislike', 'projects',this.id,'pcelldislike_');"><i class="icon-arrow-down"></i></button>
+       <i class="icon-arrow-up" id="like_{{data.id}}" onclick="loadFeedbackXMLDoc('Like', 'projects', this.id,'totalplike_');"></i>
+   <div id="totalplike_{{data.id}}" > {{data.likes_total}} </div>
+       <i class="icon-arrow-down" id="dislike_{{data.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'projects',this.id,'totalplike_');"></i>
      </span>
    </td>
 </tr>
