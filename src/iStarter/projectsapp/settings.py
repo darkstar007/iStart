@@ -18,9 +18,16 @@ VALUES_FIELD = ['title','pub_date','description', 'num_backers', 'pk', 'classifi
 #Template for model outputs
 TEMPLATE_HEADINGS = [{'db':'title', 'pretty':'Idea Title'}, 
                      {'db':'pub_date', 'pretty':'Date Published'},
-                    {'db':'description', 'pretty':'Idea Description'},
-                    {'db':'num_backers', 'pretty':'Number of Backers'},
-                    {'db':'pk','pretty':'Project Id'}]
+                     {'db':'description', 'pretty':'Idea Description'},
+                     {'db':'num_backers', 'pretty':'Number of Backers'},
+                     {'db':'pk','pretty':'Project Id'},
+                     {'db':'importance','pretty':'Importance of task'},
+                     {'db':'effort','pretty':'Level of Effort required'},
+                     {'db':'resource','pretty':'Resources required'},
+                     {'db':'active','pretty':'Project is Active'},
+                     {'db':'num_likes','pretty':'Number of Likes'},
+                     {'db':'num_dislikes','pretty':'Number of Dislikes'}]
+
 
 SORT_URL_KEY_NAME = 'sort'
 TAG_URL_KEY_NAME = 'tags'
