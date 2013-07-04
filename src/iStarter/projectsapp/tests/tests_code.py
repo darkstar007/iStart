@@ -25,7 +25,7 @@ class TestGetClassification(TestCase):
                              importance=1,
                              effort=1,
                              resource=1,
-                             proj_active=1
+                             active=1
                              )
 
         # Create a row for each different classification string in it
