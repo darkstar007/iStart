@@ -280,8 +280,56 @@ def project_detail(request,projid):
     c['data'] = rowdict
     c['headings'] = template_headings    
     
-    ''' Here on down is the code for making related ideas table '''    
+    ''' Here on down is the code for making related ideas gallery '''     
+        #Template for model outputs
+    template_headings_ideas = [{'db':'title', 'pretty':'Idea Title'}, 
+                         {'db':'pub_date', 'pretty':'Date Published'},
+                        {'db':'description', 'pretty':'Idea Description'},
+                        {'db':'pk','pretty':'Project Id'},
+                        {'db':'likes', 'pretty':'Likes'},
+                        {'db':'dislikes', 'pretty':'Disikes'},
+                        ]    
     
+    
+    pideaData = outData.ideas_derived_from.values_list('title','pub_date','description','pk','likes','dislikes')
+    #print pideaData
+    max_likes = ideaModel.objects.all().aggregate(Max('likes'))
+    max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
+    rowdict = {'title':'','pub_date':'','description':'','id':'','likes':'','dislikes': ''}
+    
+    # Prepare the data to pass to the HTML
+    #outrow = []
+    out = []
+    outrow = {'uid':'','perc_likes':'','perc_dislikes':'','cells':[]}
+    for pDataidx, row in enumerate(pideaData):
+        for headingidx, heading in enumerate(template_headings_ideas):
+            if heading['db']=='title' :
+                rowdict['title'] = row[headingidx][:20]
+            if heading['db']=='pub_date' :
+                rowdict['pub_date'] = row[headingidx]
+            if heading['db']=='description' :
+                rowdict['description'] = row[headingidx][:100]
+            if heading['db']=='pk':
+                rowdict['id']=row[headingidx]
+            if heading['db']=='likes':
+                rowdict['likes']=int(row[headingidx])
+            if heading['db']=='dislikes':
+                rowdict['dislikes']=int(row[headingidx])
+        outrow['cells'].append(rowdict.copy())
+        outrow['perc_likes']=100*rowdict['likes']/max_likes['likes__max']
+        outrow['perc_dislikes']=100*rowdict['dislikes']/max_dislikes['dislikes__max']
+        outrow['uid']=str(rowdict['id'])
+        out.append(outrow.copy())
+        #print outrow
+        outrow = {'average_likes':'','average_dislikes':'','cells':[]}
+        print out
+    c['tableData_ideas'] = out
+    c['headings_ideas'] = template_headings_ideas
+    
+    return render_to_response("projectsapp/project_detail.html", c)
+    
+'''    
+     #Here on down is the code for making related ideas table
      #Template for model outputs
     template_headings_ideas = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
@@ -313,7 +361,7 @@ def project_detail(request,projid):
     c['tableData_ideas'] = out
 
     return render_to_response("projectsapp/project_detail.html", c)
-
+'''
 
 def back(request, projid):
     ''' Backing a project '''

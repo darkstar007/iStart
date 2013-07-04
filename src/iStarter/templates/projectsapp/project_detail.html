@@ -87,24 +87,19 @@
         </div>                                             
     </div>
     </br>
-    <div class="row-fluid">
-        <div class="span6 offset3">
-            
-        </div>
-    </div>
 {% endblock top_row %}
 
 {% block main_block %}
 <div class="row-fluid">
     <div class="span6 offset3">
-        <h4>Project Description</h4>
+        <h3>Project Description</h3>
         <p> {{ data.description }} </p>
     </div>
 </div>
 </br></br> 
 <div class="row-fluid">
     <div class="span6 offset3">             
-        <h4>Project FAQ</h4>
+        <h3>Project FAQ</h3>
         <p><em>Place holder for some Project Frequently asked questions</em></p>
     </div>
 </div>
@@ -119,41 +114,53 @@
 </br></br>
 <div class="row-fluid">
     <div class="span6 offset3">
-                <h4>Seed Ideas</h4>
-                                <table class="table table-striped table-condensed table-bordered table-hover text-center sortable">
-                                    <thead>
-                                        <tr>
-                                            {% for heading in headings_ideas %}
-                                                <th> {{ heading.pretty }} </th>
-                                            {% endfor %}
-                                            <th>Feedback</th>
-                                        </tr>
-                                    </thead>
-                                    {%for row in tableData_ideas %}
-                                        <tr>
-                                          {%for cell in row.cells%}    
-                                            <td>{% if cell.field = "Idea Description" %}
-                                            <button type="button" class="btn btn-mini" data-toggle="collapse" data-target=#div_{{cell.id}}>Show Details...</button>
-                                            <div id="div_{{cell.id}}" class="collapse"> {{cell.full}} </div>   
-                                            {% elif cell.field = "Number of Likes" %}
-                                            <div id="celllike_{{row.uid}}" > {{cell.full}} </div>
-                                            {% elif cell.field = "Number of DisLikes" %}
-                                            <div id="celldislike_{{row.uid}}" > {{cell.full}} </div>              
-                                            {% else %}
-                                                {{cell.full}}                            
-                                            {% endif %}
-                                            {% if forloop.last %}
-                                                </td>
-                                                <td><span><button id="like_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Liked'">Like</button>
-                                                <button id="dislike_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Disliked'">Dislike</button>
-                                                </span></td>
-                                            {% else %}
-                                                </td>   
-                                            {% endif %}                                                                       
-                                        {% endfor %}
-                                        </tr>
-                                    {% endfor %}               
-                                </table>
+                <h3>Seed Ideas</h3>
+                {% for row in tableData_ideas %}
+				{% if forloop.counter0|divisibleby:"3" %}
+					<div class="row-fluid">
+				{% endif %}
+				{% for cell in row.cells %}
+                            {% if row.perc_likes > 80 %}
+        					<li class="span4">
+        						<div class="thumbnail" style="height:auto;border: 2px solid green;">
+        							<div class="caption">		
+                                                <!--<div class="alert alert-success">-->			
+        								<h4>{{ cell.title }}</h4>
+                                                <!--</div>-->
+                            				<p> {{ cell.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}       							
+                                            </div>
+        						</div>
+        					</li>
+                            {% elif row.perc_dislikes > 80 %}
+                                <li class="span4">
+        						<div class="thumbnail" style="height:auto;border: 2px solid red;">
+        							<div class="caption">		
+                                                <!--<div class="alert alert-danger">-->			
+        								<h4>{{ cell.title }}</h4>
+                                                <!--</div>-->
+        								<p> {{ cell.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+                                            </div>
+        						</div>
+        					</li>
+                            {% else %}
+                                <li class="span4">
+        						<div class="thumbnail" style="height:auto;">
+        							<div class="caption">					
+        								<h4>{{ cell.title }}</h4>
+        								<p> {{ cell.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+                                            </div>
+        						</div>
+        					</li>
+                            {% endif %}
+				{% endfor %}
+				{% if forloop.counter|divisibleby:"3" %}	
+					</div><!--/row-->
+				{% endif %}
+			{% endfor %}
+            </div>
     </div>
 </div>
 
