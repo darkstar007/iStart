@@ -158,8 +158,8 @@ def project_gallery(request):
 	''' Display all the projects as table list of icons'''
 	c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
 	c.update(csrf(request))
-	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'projActive', 'num_likes', 'num_dislikes')
-	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'projActive':'','num_likes':'','num_dislikes':''}
+	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'active', 'num_likes', 'num_dislikes')
+	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'active':'','num_likes':'','num_dislikes':''}
 
  	#Template for model outputs
  	template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
@@ -170,7 +170,7 @@ def project_gallery(request):
 						{'db':'importance','pretty':'Importance of task'},
                         {'db':'effort','pretty':'Level of Effort required'},
                         {'db':'resource','pretty':'Resources required'},
-                        {'db':'projActive','pretty':'Project is Active'},
+                        {'db':'active','pretty':'Project is Active'},
                         {'db':'num_likes','pretty':'Number of Likes'},
                         {'db':'num_dislikes','pretty':'Number of Dislikes'}]
 	
@@ -203,12 +203,10 @@ def project_gallery(request):
 			if heading['db']=='resource' :
 				res=row[headingidx]	
 				
-		print 'imp is ',imp,' eff is ',eff,' res is ',res
 		backersRequired = eff * ((6-imp)**2) * (res**3)
 		backPercentage  = 100 * num_backers / backersRequired	
 		rowdict['backPercentage'] = int(backPercentage)
 		rowdict['backersRequired'] = backersRequired
-		print 'backersrequired is ',backersRequired,' backpercentage is ',backPercentage
 		
 		for headingidx, heading in enumerate(template_headings):
 			if heading['db']=='title' :
@@ -221,12 +219,12 @@ def project_gallery(request):
 				num_backers = row[headingidx]
 			if heading['db']=='pk':
 				rowdict['id']=row[headingidx]
-			if heading['db']=='projActive' :
+			if heading['db']=='active' :
 				# assign a couple of projects a sbeing active to test its all working
 				if pDataidx == 2 or pDataidx==4 :
-					rowdict['projActive']= 1 # row[headingidx]
+					rowdict['active']= 1 # row[headingidx]
 				else:
-					rowdict['projActive']= 0 # row[headingidx]
+					rowdict['active']= 0 # row[headingidx]
 			if heading['db']=='num_likes' :
 				rowdict['num_likes']=int(row[headingidx])
 			if heading['db']=='num_dislikes' :
