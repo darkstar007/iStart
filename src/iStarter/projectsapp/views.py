@@ -3,6 +3,7 @@ from django.core.context_processors import csrf
 from django.db.models import Count, Min, Sum, Max, Avg
 from django.http import HttpResponse, Http404
 
+
 import os
 import sys
 import logging
@@ -243,8 +244,7 @@ def project_gallery(request):
  
 def project_detail(request,projid):
     ''' Display detail on a project '''
-    
-    #Select the project from table
+
     outData = projectModel.objects.get(pk=int(projid))
     rowdict = {'title':'','pub_date':'','description':'','num_backers':'','id':'','backPercentage':'',
                'importance':'','effort':'','resource':'', 'active':'','backersRequired':'','effort_list':[],

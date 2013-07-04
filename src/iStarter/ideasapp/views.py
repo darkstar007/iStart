@@ -27,6 +27,7 @@ for root, subFolders, files in os.walk(appRoot):
 #FOSS
 from ideasapp.forms import ideaForm
 from ideasapp.models import idea as ideaModel
+from projectsapp.models import project as projectModel
 from ideasapp.models import ideaLikes as likesModel
 from code import formatSubmitterEmail, formatHttpHeaders, ideasCloud, getDate, saveIdea
 from code import saveTags, distinctTagsSortedAlpha
@@ -114,13 +115,6 @@ def ideas_cloud(request):
     return render_to_response("ideasapp/ideas_cloud.html", c)
             
 #-------------------------------------------------------------------#   
-
-def back(idea_id):
-    '''The back this idea link was clicked somewhere'''
-    return idea_id
-    #TODO: Finish off this functionality!
-
- #-------------------------------------------------------------------#  
         
 def ideas_list(request):     
     c = {"classification":"unclassified",
@@ -131,8 +125,37 @@ def ideas_list(request):
     template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
                          {'db':'description', 'pretty':'Idea Description'},
-                         {'db':'likes', 'pretty':'Number of Likes'},
-                         {'db':'dislikes', 'pretty':'Number of DisLikes'}]
+                            {'db':'linked_projects','pretty':'Linked Projects'},
+                            {'db':'response', 'pretty':'Responses'}
+                            ]
+    
+    pData = ideaModel.objects.values_list('title','pub_date','description', 'likes', 'dislikes','pk')
+    max_likes = ideaModel.objects.all().aggregate(Max('likes'))
+    max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
+    out = []
+    outdict = {'title':'','pub_date':'','description':'','likes':0,'dislikes':0, 'perc_likes':0,'perc_dislikes':0, 'linked_projects':[]}
+    for row in pData:
+        outdict['title']=row[0]
+        outdict['pub_date']=row[1]
+        outdict['description']=row[2]
+        outdict['likes']=int(row[3])
+        outdict['dislikes']=int(row[4])
+        outdict['perc_likes']=100*outdict['likes']/max_likes['likes__max']
+        outdict['perc_dislikes']=100*outdict['dislikes']/max_dislikes['dislikes__max']
+        projs = projectModel.objects.filter(ideas_derived_from=row[5])
+        if projs:
+            for proj in projs:
+                outdict['linked_projects'].append(proj.id)
+        out.append(outdict.copy())
+        print outdict
+        outdict['linked_projects']=[]
+        
+    c['headings'] = template_headings
+    c['tableData'] = out
+    
+    return render_to_response("ideasapp/ideas_list.html", c)            
+
+    '''
     #get the values form db - this could be user requested - e.g. based on pub date
     pData = ideaModel.objects.values_list('title','pub_date','description', 'likes', 'dislikes')
     #Make the pretty headings
@@ -160,7 +183,7 @@ def ideas_list(request):
     c['tableData'] = out
     
     return render_to_response("ideasapp/ideas_list.html", c)
-            
+    '''
 #-------------------------------------------------------------------#               
             
 def like(request,ideaid):
@@ -225,9 +248,9 @@ def ideas_gallery(request):
     print avg_dislikes
     '''
     max_likes = ideaModel.objects.all().aggregate(Max('likes'))
-    print max_likes
+    #print max_likes
     max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
-    print max_dislikes
+    #print max_dislikes
     rowdict = {'title':'','pub_date':'','description':'','id':'','likes':'','dislikes': ''}
 
     #Template for model outputs
