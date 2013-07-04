@@ -38,6 +38,7 @@ from projectsapp.forms import projectForm
 from projectsapp.forms import backForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
 from code import saveTags, distinctTagsSortedAlpha
+from code import backersRequiredAlgorithm
 
 def submit(request):
     ''' Pulling together ideas into a glorious project. '''
@@ -184,10 +185,6 @@ def project_gallery(request):
 			if backers > maxbackers :
 				maxbackers=backers
 
-	# Sometime need to do it this way instead of the loop
-	# dont know how yet though
-	# maxbackers = projectModel.objects.annotate(likes = Max('num_backers'))
-
 	# Prepare the data to pass to the HTML
 	outrow = []
 	out = []
@@ -202,8 +199,9 @@ def project_gallery(request):
 				eff=row[headingidx]	
 			if heading['db']=='resource' :
 				res=row[headingidx]	
-				
-		backersRequired = eff * ((6-imp)**2) * (res**3)
+		
+		backersRequired = backersRequiredAlgorithm(eff, imp, res)		
+		#backersRequired = eff * ((6-imp)**2) * (res**3)
 		backPercentage  = 100 * num_backers / backersRequired	
 		rowdict['backPercentage'] = int(backPercentage)
 		rowdict['backersRequired'] = backersRequired
