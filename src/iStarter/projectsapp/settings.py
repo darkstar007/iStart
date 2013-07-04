@@ -38,12 +38,12 @@ VALID_SORT_FIELDS = {'pub_date'         : 'Published Date',
                      #'classification'   : 'Classification', -- This removed for the time being as we're storing it as a string and not a sortable field.
                      'num_likes'        : 'Likes',
                      'num_dislikes'     : 'Dislikes',
-                     'mean_likes'       : 'Average Like/Dislike',
+                     #'mean_likes'       : 'Average Like/Dislike',
                      'num_backers'      : 'Backers',
                      'importance'       : 'Importance', 
                      'effort'           : 'Effort',
-                     'resource'         : 'Resource',
-                     'active'           : 'Active or Inactive'}
+                     'resource'         : 'Resource'}
+                     #'active'           : 'Active or Inactive'}
 
 # These are the fields you might want to filter on - typically more discrete values               
 VALID_FILTERS =      {'classification' : [i[0] for i in CLASSIFICATIONS],

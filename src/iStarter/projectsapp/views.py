@@ -41,7 +41,7 @@ from projectsapp.forms import projectForm
 from projectsapp.forms import backForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
 from code import saveTags, distinctTagsSortedAlpha
-from customObjectQueries import filteredRetrieval, validateQueryParams
+from customObjectQueries import filteredRetrieval, validateQueryParams, buildSingleSortAndFilterItems
 
 def submit(request):
     ''' Pulling together ideas into a glorious project. '''
@@ -260,13 +260,17 @@ def project_gallery_filtered(request):
     safeParams = validateQueryParams(params)
 
     # Get the data, having handled the sorting and filtering 
-    resultSet = filteredRetrieval(safeParams)
-
-    # Create the tag list for selecting by user
-    c['known_tags'] = distinctTagsSortedAlpha()
+    resultSet = filteredRetrieval(projectModel, safeParams)
 
     # Get the project max classification
     c['classification'] = getMaxClassification(resultSet) or 'top secret'
+    
+    # Create the tag list for selecting by user
+    c['known_tags'] = distinctTagsSortedAlpha()
+
+    # Get the urls needed to filter the results when someone clicks on them
+    c['sorts_and_filters'] = buildSingleSortAndFilterItems()
+    print c['sorts_and_filters']
     
     # Get the fields we want out into a list
     flds = [f['db'] for f in settings.TEMPLATE_HEADINGS]

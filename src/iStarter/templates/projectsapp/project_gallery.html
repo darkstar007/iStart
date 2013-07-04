@@ -4,8 +4,6 @@
 
 {% block extra_js %}
   	<script>
-  	
-  		
   		// Adds tags to an array for form population
   		var inputTags = new Array();
   		
@@ -37,8 +35,48 @@
   		
   		// Assign the hidden tags field to the tags array
   		function setTagsList() {
-  			document.getElementById("id_existing_tags").value = inputTags;
-  		}
+  			var tagArr = inputTags.join(",");
+  			var a_href = $('#tag_filter').attr('href');
+  			a_href += tagArr;
+  			var new_href = $('#tag_filter').attr('href', a_href);
+    		}
+  		
+
+	  	// Set the sortlist
+  		function toggleSortOrder(el) {
+	  		alert(el.id);
+	  		var direction = $("#" + el.id).attr('direction');
+	  		alert(direction);
+	  		
+	  		if (direction==-1) {
+	  			alert('hello');
+	  			$("#" + el.id).attr('direction', 1);
+	  			alert($("#" + el.id).attr('direction'));
+	  			var href_in = $("#" + el.id).attr('href');
+		  		href_out = href_in.replace('-'+el.id, el.id);
+		  		var new_href = $("#"+el.id).attr('href', href_out);
+	  		}
+	  		
+	  		else  {
+	  			alert('else');
+	  			var new_direction = $("#" + el.id).attr('direction', -1);
+	  			alert($("#" + el.id).attr('direction'));
+	  			var href_in = $("#" + el.id).attr('href');
+		  		href_out = href_in.replace(el.id, '-'+el.id);
+		  		var new_href = $("#"+el.id).attr('href', href_out);
+	  		}
+
+	  	}
+
+	  	// Set the sortlist
+  		function setSortList() {}
+
+  		
+	  	// Set the sortlist
+  		function setSortList() {}
+	  			
+  		
+	  		
   	</script>
 {% endblock extra_js %} 
 
@@ -49,25 +87,29 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Sort By</li>
-              <li class="active"><a href="#">No Sort</a></li>
-              <li><a href="#">Age</a></li>
-              <li><a href="#">Backers</a></li>
-              <li><a href="#">Likes</a></li>
-              <hr></hr>
-              <li class="nav-header">Tag Filters</li>
-			  <li style="padding:2px; border-radius:3px; margin:0px auto 5px auto; overflow: auto; max-height: 200px;">
+            	
+              	<li class="nav-header">Tag Filters</li>
+			  	<li style="padding:2px; border-radius:3px; margin:0px auto 5px auto; overflow: auto; max-height: 200px;">
 					{% for known_tag in known_tags %}
 						<button id="{{ known_tag }}" style="margin:0px auto 4px auto;" class="btn btn-mini" onclick="modifyTagsArray(this)" type="button">{{ known_tag }}</button>
 					{% endfor %}
-			  </li>
-              <hr></hr>
-
-			  <li class="nav-header">Projects</li>
-              <li><a href="#">You like</a></li>
-              <li><a href="#">You dislike</a></li>
-              <li><a href="#">You back</a></li>
-
+				<li>
+					<button style="float:right; margin:5px; auto" class="btn btn-primary" onclick="setTagsList()" id="{{ sorts_and_filters.tag_item.id }}" href="/projects/gallery_filtered/{{sorts_and_filters.tag_item.url}}">
+						{{ sorts_and_filters.tag_item.display_name }}
+					</button>
+				</li>
+                
+				<hr></hr>
+                
+                <li class="nav-header">Sort By</li>
+            	<li class="active"><a href="/projects/gallery_filtered/">No Sort</a></li>
+            	<!-- The actual sorts -->
+            	{% for sort_item in sorts_and_filters.sort_items %}
+           		<li>
+           			<a onclick="toggleSortOrder(this)" direction= "{{ sort_item.direction }}" id="{{ sort_item.id }}" href="/projects/gallery_filtered/{{ sort_item.url }}"> {{ sort_item.display_name }} </a>
+           		</li>
+            	{% endfor %}
+              	
             </ul>
           </div><!--/.well -->
         </div><!--/span-->

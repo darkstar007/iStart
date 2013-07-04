@@ -78,26 +78,14 @@ def sortedResults(resultSet, params):
     ''' Returns results sorted by a URL parameter.
         This does accept multiple fields to do its sorting by.
     '''
-    
+    print params
     # Get the field user has requested to sort on
     sortValue = params[settings.SORT_URL_KEY_NAME]
     
     # sortValue should look like this: "<fieldName1>;<direction>,<fieldName2>;<direction>"
     # Split this up
-    sortFields = [s for s in sortValue.split(',')]
-    
-    orderByFlds = []
-    # Split this up again and build a list to provide to the order_by method as an args list.
-    # Each sortFld should look like this: <fieldName>;<direction>. Eg: 'title;-1' or 'title;-1'
-    for sortFld in sortFields:
-        # Get the direction (ascending or descending)
-        fld, direction = sortFld.split(';')
-        if int(direction) == -1:
-            fld = "-" + fld
-        
-        orderByFlds.append(fld)
-        print orderByFlds
-        
+    orderByFlds = [s for s in sortValue.split(',')]
+            
     # Sort the results
     try:
         resultSet = resultSet.order_by(*orderByFlds)
@@ -134,6 +122,68 @@ def filteredRetrieval(targetModel, params):
     
 
     return resultSet
+
+#------------------------------------------------------------------------
+
+def buildSingleSortUrl(key, reverse=False):
+    ''' Builds the url to be called for sorting '''
+
+    if reverse == True:
+        url = '?%s=-%s' %(settings.SORT_URL_KEY_NAME, key)
+    else:
+        url = '?%s=%s' %(settings.SORT_URL_KEY_NAME, key)
+    return url
+
+#------------------------------------------------------------------------
+
+def buildSingleFieldFilterUrl():
+    ''' Builds the url to be called for field-based filtering '''
+
+    # This to probably be handled in js because it needs user text input
+
+#------------------------------------------------------------------------
+
+def buildSingleTagFilterUrl():
+    ''' Builds the url to be called for tag-based filtering '''
+    
+    return "?%s=" %settings.TAG_URL_KEY_NAME
+    
+#------------------------------------------------------------------------
+
+def buildSingleSortAndFilterItems():
+    ''' Builds all the sort and filter items including urls and pretty names '''
+
+ 
+    sortItems = []
+    # SORT capable fields
+    for key, val in settings.VALID_SORT_FIELDS.items():
+
+        # For positive sorts
+        li = {'url'          : buildSingleSortUrl(key),
+              'display_name' : val,
+              'direction'    : 1,
+              'id'           : "%s" %(key)}
+        sortItems.append(li)
+        # For negative sorts
+        """
+        li = {'url'          : buildSingleSortUrl(key, reverse=True),
+              'display_name' : val + '(desc)',
+              'id'           : "%s_desc" %(key)}
+        sortItems.append(li)
+        """
+        
+    # Tag item
+    tagItem = {'url'          : buildSingleTagFilterUrl(),
+               'display_name' : 'Filter',
+               'id'           : 'tag_filter'}
+    
+    return {"tag_item" : tagItem,
+            "sort_items" : sortItems}
+               
+    
+
+
+
 
 
 
