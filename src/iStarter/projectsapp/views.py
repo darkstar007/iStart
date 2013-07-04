@@ -156,7 +156,7 @@ def like(request, projectid):
     
 def project_gallery(request):
 	''' Display all the projects as table list of icons'''
-	c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
+	c = {"classification":"unclassified","page_title":"iStarter Project Gallery"}
 	c.update(csrf(request))
 	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'active', 'num_likes', 'num_dislikes')
 	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'importance':'', 'effort':'', 'resource':'', 'active':'','num_likes':'','num_dislikes':''}
