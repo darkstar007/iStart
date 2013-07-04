@@ -19,7 +19,7 @@
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
+              <li><a href="/projects">List all projects</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
@@ -33,44 +33,58 @@
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
-          <div class="hero-unit">
-            <h2>{{ page_title }}</h2>
-          </div>
+            	<h1>{{ page_title }}</h1>
+        		  </br></br>
 			{% for row in tableData %}
-			{% if forloop.counter|divisibleby:"3" %}
-				<div class="row-fluid">
-			{% endif %}
-			{% for cell in row.cells %}
-				<div class="span4">
-                            {% if row.perc_likes > 80 %} 
-                                 <div class="alert alert-success">
-                                  <h5>{{ cell.title }}</h5>
-        					<p> {{ cell.description }} </p>
-                                  <em><p>Likes: {{ cell.likes }} &nbsp;&nbsp; <button id="like_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Liked'">Like</button></p></em>
-                                  <em><p>Dislikes: {{ cell.dislikes }}&nbsp;&nbsp;<button id="dislike_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Disliked'">Dislike</button></p></em>
-                                 </div>
-                            {% elif row.perc_dislikes > 80 %} 
-                                    <div class="alert alert-error">
-                                    <h5> {{ cell.title }} </h5>
-            				   <p> {{ cell.description }} </p>
-                                    <em><p>Likes: {{ cell.likes }} &nbsp;&nbsp; <button id="like_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Liked'">Like</button></p></em>
-                                  <em><p>Dislikes: {{ cell.dislikes }}&nbsp;&nbsp;<button id="dislike_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Disliked'">Dislike</button></p></em>
-                                    </div> 
+				{% if forloop.counter0|divisibleby:"3" %}
+					<div class="row-fluid">
+				{% endif %}
+				{% for cell in row.cells %}
+                            {% if row.perc_likes > 80 %}
+        					<li class="span4">
+        						<div class="thumbnail" style="height:auto;border: 2px solid green;">
+        							<div class="caption">		
+                                                <!--<div class="alert alert-success">-->			
+        								<h4>{{ cell.title }}</h4>
+                                                <!--</div>-->
+                            				<p> {{ cell.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}       							
+                                            </div>
+        						</div>
+        					</li>
+                            {% elif row.perc_dislikes > 80 %}
+                                <li class="span4">
+        						<div class="thumbnail" style="height:auto;border: 2px solid red;">
+        							<div class="caption">		
+                                                <!--<div class="alert alert-danger">-->			
+        								<h4>{{ cell.title }}</h4>
+                                                <!--</div>-->
+        								<p> {{ cell.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+                                            </div>
+        						</div>
+        					</li>
                             {% else %}
-                                  <h5>{{ cell.title }} </h5>
-                                  <p>{{ cell.description }}</p> 
-                                  <em><p>Likes: {{ cell.likes }} &nbsp;&nbsp; <button id="like_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Liked'">Like</button></p></em>
-                                  <em><p>Dislikes: {{ cell.dislikes }}&nbsp;&nbsp;<button id="dislike_{{row.uid}}" type="button" class="btn btn-mini" onclick="loadXMLDoc(this.innerHTML,this.id);this.disabled=true;this.innerHTML='Disliked'">Dislike</button></p></em> 
+                                <li class="span4">
+        						<div class="thumbnail" style="height:auto;">
+        							<div class="caption">					
+        								<h4>{{ cell.title }}</h4>
+        								<p> {{ cell.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+                                            </div>
+        						</div>
+        					</li>
                             {% endif %}
-				</div>
+				{% endfor %}
+				{% if forloop.counter|divisibleby:"3" %}	
+					</div><!--/row-->
+				{% endif %}
 			{% endfor %}
-			{% if forloop.counter|divisibleby:"3" %}			
-				</div><!--/row-->
-			{% endif %}
-			{% endfor %}
-            </div><!--/span-->
-        </div><!--/row-->
+
+
     </div><!--/.fluid-container-->
+    <hr>
+
     
 
  <!-- Le javascript
