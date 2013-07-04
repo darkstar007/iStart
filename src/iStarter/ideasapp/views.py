@@ -191,7 +191,7 @@ def like(request,ideaid):
                     #outLikes.vote_type='like'
                     outIdeas.save()
                     outLikes.save()
-                    xml = '<data><iddata>'+str(int(numlikes))+'</iddata><valdata>'+'celllike_'+titlehsh+'</valdata></data>'
+                    xml = '<data><iddata>'+str(int(numlikes))+'</iddata><valdata>'+titlehsh+'</valdata></data>'
                 elif choice == 'dislike':
                     outLikes = likesModel(title_id=row[1],vote_date=datetime.now(),vote_type='dislike')
                     #outLikes.title=ideaModel.objects.get(pk=row[1])
@@ -199,7 +199,7 @@ def like(request,ideaid):
                     #outLikes.vote_type='dislike'
                     outIdeas.dislikes=outIdeas.dislikes+1
                     numdislikes = outIdeas.dislikes
-                    xml = '<data><iddata>'+str(int(numdislikes))+'</iddata><valdata>'+'celldislike_'+titlehsh+'</valdata></data>'
+                    xml = '<data><iddata>'+str(int(numdislikes))+'</iddata><valdata>'+titlehsh+'</valdata></data>'
                     outIdeas.save()
                     outLikes.save()
                 break

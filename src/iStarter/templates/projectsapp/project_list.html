@@ -4,42 +4,6 @@
 
 {% block extra_js %}
 
-<script>
-
-function loadFeedbackXMLDoc(typestr, model, idstr)
-{
-var xmlhttp;
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.open("GET","/"+model+"/like/"+idstr,false);
-xmlhttp.send();
-xmlDoc = xmlhttp.responseXML;
-
-
-if (typestr=="Like")
-  {
-  document.getElementById('dis'+idstr).disabled = true;
-  }
-else if (typestr=="Dislike")
-  {
-  document.getElementById(idstr.slice(3,idstr.length)).disabled = true;
-  }
-
-ele = document.getElementById(xmlDoc.getElementsByTagName("valdata")[0].childNodes[0].nodeValue);
-
-if (ele) {
-   ele.innerHTML = xmlDoc.getElementsByTagName("iddata")[0].childNodes[0].nodeValue;
-}
-
-}
-</script>
-
 {% endblock extra_js %} 
 
 {% block top_row %}
@@ -68,7 +32,7 @@ if (ele) {
 	    <tbody>
 	      {%for row in tableData%}
 	      <tr> 
-		<TD><a href="/projects/details?project_id={{row.id}}">{{row.title}}</a></TD>
+		<TD><a href="/projects/project_detail/{{row.id}}">{{row.title}}</a></TD>
 		<TD>{{row.description}}</TD>
 		<TD>{{row.pub_date|date:"Y/m/d"}}&nbsp{{row.pub_date|date:"H:i"}}</TD>
 		<TD><div id="celllike_{{row.id}}">{{row.num_likes|floatformat:"0"|rjust:"8"}}</div></TD>
@@ -76,11 +40,11 @@ if (ele) {
 		<TD><div id="cellback_{{row.id}}">{{row.num_backers|rjust:"8"}}</div></TD>
 		<td>
 		  <span>
-		    <button id="like_{{row.id}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Like','projects',this.id);this.disabled=true;"><i class="icon-arrow-up"></i></button>
-		    <button id="dislike_{{row.id}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Dislike','projects',this.id);this.disabled=true;"><i class="icon-arrow-down"></i></button>
+		    <button id="like_{{row.id}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Like','projects',this.id,'celllike_');"><i class="icon-arrow-up"></i></button>
+		    <button id="dislike_{{row.id}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Dislike','projects',this.id,'celldislike_');"><i class="icon-arrow-down"></i></button>
 		  </span>
 		</td>
-		<td><button id="back_{{row.id}}" type="button" class="btn btn-mini" onclick="loadFeedbackXMLDoc(this.innerHTML,'projects',this.id);this.disabled=true;this.innerHTML='Backed'">Back</button></td>
+		<td><button id="back_{{row.id}}" type="button" class="btn btn-mini" onclick="loadFeedbackXMLDoc(this.innerHTML,'projects',this.id,'cellback_');this.innerHTML='Backed';">Back</button></td>
 		
 	      </tr>   
 	      

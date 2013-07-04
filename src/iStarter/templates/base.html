@@ -44,7 +44,7 @@
   	<script src="/static/js/jquery.js"></script>
 <script>
 
-function loadFeedbackXMLDoc(typestr, model, idstr)
+function loadFeedbackXMLDoc(typestr, model, idstr, basecellid)
 {
 var xmlhttp;
 if (window.XMLHttpRequest)
@@ -69,7 +69,9 @@ else if (typestr=="Dislike")
   document.getElementById(idstr.slice(3,idstr.length)).disabled = true;
   }
 
-ele = document.getElementById(xmlDoc.getElementsByTagName("valdata")[0].childNodes[0].nodeValue);
+document.getElementById(idstr).disabled = true;
+
+ele = document.getElementById(basecellid+xmlDoc.getElementsByTagName("valdata")[0].childNodes[0].nodeValue);
 
 if (ele) {
    ele.innerHTML = xmlDoc.getElementsByTagName("iddata")[0].childNodes[0].nodeValue;

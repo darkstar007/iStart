@@ -148,10 +148,11 @@ def like(request, projectid):
                 pData.num_backers +=1
                 newVal = pData.num_backers
                 
-            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>cell'+str(choice)+'_'+prjid+'</valdata></data></xml>'
+            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(prjid)+'</valdata></data></xml>'
             pData.save()
             newLike.save()
-
+        else:
+            xml = '<xml><error>Invalid choice "' + choice + '" selected</error></xml>'
         return HttpResponse(xml, content_type="text/xml")
     
 def project_gallery(request):
