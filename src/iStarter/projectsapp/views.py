@@ -159,7 +159,7 @@ def project_gallery(request):
 	c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
 	c.update(csrf(request))
 	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'active', 'num_likes', 'num_dislikes')
-	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'active':'','num_likes':'','num_dislikes':''}
+	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'importance':'', 'effort':'', 'resource':'', 'active':'','num_likes':'','num_dislikes':''}
 
  	#Template for model outputs
  	template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
@@ -216,9 +216,15 @@ def project_gallery(request):
 			if heading['db']=='description' :
 				rowdict['description'] = row[headingidx][:200]
 			if heading['db']=='num_backers' :
-				num_backers = row[headingidx]
+				rowdict['num_backers'] = row[headingidx]
 			if heading['db']=='pk':
 				rowdict['id']=row[headingidx]
+			if heading['db']=='importance':
+				rowdict['importance'] = row[headingidx]
+			if heading['db']=='effort':
+				rowdict['effort'] = row[headingidx]
+			if heading['db']=='resource':
+					rowdict['resource'] = row[headingidx]
 			if heading['db']=='active' :
 				# assign a couple of projects a sbeing active to test its all working
 				if pDataidx == 2 or pDataidx==4 :
