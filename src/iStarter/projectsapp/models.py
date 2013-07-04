@@ -44,6 +44,7 @@ class project(models.Model):
 	# Is the project active ?
     active = models.BooleanField()
 
+
 class pvote(models.Model):
     project = models.ForeignKey(project)
     vote_date = models.DateTimeField('voted_on_date')
