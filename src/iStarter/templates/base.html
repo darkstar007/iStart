@@ -28,6 +28,7 @@
         padding-bottom: 40px;
         background-color: #f5f5f5;
       }
+     .myinverse { background-color: green; }
     </style>
 
 	{% block extra_styles %}
@@ -46,6 +47,7 @@
 
 function loadFeedbackXMLDoc(typestr, model, idstr, basecellid)
 {
+
 var xmlhttp;
 if (window.XMLHttpRequest)
   {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -55,21 +57,48 @@ else
   {// code for IE6, IE5
   xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
   }
-xmlhttp.open("GET","/"+model+"/like/"+idstr,false);
-xmlhttp.send();
-xmlDoc = xmlhttp.responseXML;
 
-
+// Figure out the ID of the 'other' glyph
 if (typestr=="Like")
   {
-  document.getElementById('dis'+idstr).disabled = true;
+  otherID = 'dis'+idstr;
   }
 else if (typestr=="Dislike")
   {
-  document.getElementById(idstr.slice(3,idstr.length)).disabled = true;
+  otherID = idstr.slice(3,idstr.length);
   }
 
-document.getElementById(idstr).disabled = true;
+if ($("#"+idstr).hasClass("icon-white")) {
+
+  xmlhttp.open("GET","/"+model+"/like/"+otherID,false);
+
+
+  $("#"+idstr).removeClass("icon-white");
+  $("#"+idstr).removeClass("myinverse");
+
+//} else if ($("#"+otherID).hasClass("icon-white")) {
+//
+//  xmlhttp.open("GET","/"+model+"/like/"+idstr,false);
+//  xmlhttp.send();
+//
+//  xmlhttp.open("GET","/"+model+"/like/"+idstr,false);
+//  xmlhttp.send();
+//
+//  $("#"+otherID).removeClass("icon-white");
+//  $("#"+otherID).removeClass("myinverse");
+//  $("#"+idstr).addClass("icon-white");
+//  $("#"+idstr).addClass("myinverse");
+
+} else {
+  xmlhttp.open("GET","/"+model+"/like/"+idstr,false);
+
+  $("#"+idstr).addClass("icon-white");
+  $("#"+idstr).addClass("myinverse");
+
+}
+
+xmlhttp.send();
+xmlDoc = xmlhttp.responseXML;
 
 ele = document.getElementById(basecellid+xmlDoc.getElementsByTagName("valdata")[0].childNodes[0].nodeValue);
 
