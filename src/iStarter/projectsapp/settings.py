@@ -28,25 +28,25 @@ TAG_URL_KEY_NAME = 'tags'
 # These are the valid sort fields and their pretty names - typically continuous values
 VALID_SORT_FIELDS = {'pub_date'         : 'Published Date',
                      'title'            : 'Title',
-                     'classification'   : 'Classification',
+                     #'classification'   : 'Classification', -- This removed for the time being as we're storing it as a string and not a sortable field.
                      'num_likes'        : 'Likes',
                      'num_dislikes'     : 'Dislikes',
                      'mean_likes'       : 'Average Like/Dislike',
                      'num_backers'      : 'Backers',
                      'importance'       : 'Importance', 
                      'effort'           : 'Effort',
-                     'resource'         : 'Resource'}
+                     'resource'         : 'Resource',
+                     'active'           : 'Active or Inactive'}
 
 # These are the fields you might want to filter on - typically more discrete values               
 VALID_FILTERS =      {'classification' : [i[0] for i in CLASSIFICATIONS],
                       'importance'     : [str(r) for r in range(1, PROJECT_RATING_LEVELS)],  # Keeps it inline with our rating scale
                       'resource'       : [str(r) for r in range(1, PROJECT_RATING_LEVELS)],  # Keeps it inline with our rating scale
                       'effort'         : [str(r) for r in range(1, PROJECT_RATING_LEVELS)],  # Keeps it inline with our rating scale
-                      'proj_active'    : ['1', '0'],
+                      'active'         : ['1', '0'],
                       'verified'       : ['1', '0']}
 
 # All together now - keeping these separate allows us to check against them in different ways
 VALID_FILTER_PARAMS = {SORT_URL_KEY_NAME : VALID_SORT_FIELDS,
-                       'direction'       : [-1, 1],
                        TAG_URL_KEY_NAME  : None}
 VALID_FILTER_PARAMS.update(VALID_FILTERS)

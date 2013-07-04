@@ -109,31 +109,31 @@ def sortedResults(resultSet, params):
 
 #------------------------------------------------------------------------
 
-def filteredRetrieval(projectsModel, params):
+def filteredRetrieval(targetModel, params):
     ''' Gets the db objects filtered on content '''
     
     # Get all of the results with only the fields we want
-    resultSet = projectModel.objects.all()
+    resultSet = targetModel.objects.all()
     
     # TAGS FILTERING
     if settings.TAG_URL_KEY_NAME in params.keys():
-        resultSet = tagBasedFilter(resultSet, params) 
-
-
+        resultSet = tagBasedFilter(resultSet, params)
+    
     # FILTERING
-    validFlds = settings.VALID_FILTER_FIELDS
-    paramFlds = params.keys() 
+    validFlds = settings.VALID_FILTERS
+    paramFlds = params.keys()
+     
     # Are any of the URL parameter fields in the list of valid filter fields?
     # An empty list evaluates to False.
     if bool([i for i in validFlds if i in paramFlds]) == True:
         resultSet = exactMatchFilter(resultSet, params)
 
-
     # MULTI-FIELD SORTING
     if settings.SORT_URL_KEY_NAME in params.keys():
         resultSet = sortedResults(resultSet, params)
+    
 
-
+    return resultSet
 
 
 
