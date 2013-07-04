@@ -223,6 +223,8 @@ def project_detail(request,projid):
     rowdict['pub_date'] = outData.pub_date
     rowdict['description'] = outData.description
     rowdict['num_backers'] = outData.num_backers
+    rowdict['likes'] = int(outData.num_likes)
+    rowdict['dislike'] = int(outData.num_dislikes)
     rowdict['id']=projid
     maxbackers= -1
     backers = outData.num_backers

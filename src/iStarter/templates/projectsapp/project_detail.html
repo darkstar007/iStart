@@ -45,6 +45,23 @@
 				<div class="bar" style="width: {{data.backPercentage}}%;"></div>
 				</div>
 			{% endif %}
+<table class="table">
+<thead><tr><th>Like</th><th>Dislikes</th><th>Feedback</th></tr></thead>
+<tr>
+   <td><div id="pcelllike_{{data.id}}" > {{data.likes}} </div></td>
+   <td><div id="pcelldislike_{{data.id}}" > {{data.dislike}} </div></td>
+
+   <td> 
+     <span>
+       <button id="like_{{data.id}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Like', 'projects', this.id,'pcelllike_');"><i class="icon-arrow-up"></i></button>
+<button id="dislike_{{data.id}}" type="button" class="btn btn-small" onclick="loadFeedbackXMLDoc('Dislike', 'projects',this.id,'pcelldislike_');"><i class="icon-arrow-down"></i></button>
+     </span>
+   </td>
+</tr>
+
+</td>
+</tr>
+</table>
                 <h4><em>Project Gallery</em></h4>
                 </br></br>
                 <h4><em>Seed Ideas</em></h4>
