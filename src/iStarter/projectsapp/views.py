@@ -244,12 +244,16 @@ def project_gallery(request):
 	return render_to_response("projectsapp/project_gallery.html", c)	
 
 
+#----------------------------------------------------------------------------------------
 
 def project_gallery_filtered(request):
     ''' Display some of the projects, depending on filter parameters'''
     
     #TODO: Update this classification dynamically based on highest value in data
     c = {"page_title":"iSTARter Project Gallery"}
+    
+    # Get the headings data
+    c['headings'] = settings.TEMPLATE_HEADINGS
     
     # Get the request parameters from the url - into a dictionary
     params = request.GET.dict()
@@ -264,12 +268,18 @@ def project_gallery_filtered(request):
     # Get the project max classification
     c['classification'] = getMaxClassification(resultSet) or 'top secret'
     
+    # Get the fields we want out into a list
+    flds = [f['db'] for f in settings.TEMPLATE_HEADINGS]
     
-    c['tableData'] = out
-    c['headings'] = settings.TEMPLATE_HEADINGS
+    # Now get a list containing each row stored as a dict
+    data = resultSet.values(*flds)
+    
+    # Now whack it into another list for good measure - never have enough ;)
+    c['tableData'] = [data]
     
     return render_to_response("projectsapp/project_gallery.html", c)    
 
+#----------------------------------------------------------------------------------------
 
 def project_detail(request,projid):
     ''' Display detail on a project '''
