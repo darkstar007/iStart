@@ -47,7 +47,7 @@
 					<li class="span4">
 						<div class="thumbnail" style="height:450px;">
 							{% if cell.backPercentage < 33 %} 
-								{% if cell.projActive %}
+								{% if cell.proj_active %}
 									<div class="progress progress-info progress-striped active">
 										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
 									</div>
@@ -57,7 +57,7 @@
 									</div>
 								{% endif %}
 							{% elif cell.backPercentage < 66 %}
-								{% if cell.projActive %}
+								{% if cell.proj_active %}
 									<div class="progress progress-info progress-striped active">
 										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
 									</div>
@@ -67,7 +67,7 @@
 									</div>
 								{% endif %}
 							{% else %}
-								{% if cell.projActive %}
+								{% if cell.proj_active %}
 									<div class="progress progress-info progress-striped active">
 										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
 									</div>

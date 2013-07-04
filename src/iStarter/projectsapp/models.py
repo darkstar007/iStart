@@ -42,7 +42,7 @@ class project(models.Model):
     resource = models.IntegerField()
 
 	# Is the project active ?
-    projActive = models.BooleanField()
+    proj_active = models.BooleanField()
 
 class pvote(models.Model):
     project = models.ForeignKey(project)

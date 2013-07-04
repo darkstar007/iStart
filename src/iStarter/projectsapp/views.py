@@ -244,25 +244,35 @@ def project_detail(request,projid):
     
     #Select the project from table
     outData = projectModel.objects.get(pk=int(projid))
-    rowdict = {'title':'','pub_date':'','description':'','num_backers':'','id':'','backPercentage':''}
+    rowdict = {'title':'','pub_date':'','description':'','num_backers':'','id':'','backPercentage':'',
+               'importance':'','effort':'','resource':'', 'proj_active':'','backersRequired':'','effort_list':[],
+                'importance_list':[],'resource_list':[]}
     
     #Template for model outputs
     template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
                         {'db':'description', 'pretty':'Idea Description'},
-                        {'db':'num_backers', 'pretty':'Number of Backers'}]
+                        {'db':'num_backers', 'pretty':'Number of Backers'},
+                        {'db':'importance','pretty':'Importance'},
+                        {'db':'effort','pretty':'Effort'},
+                        {'db':'resource','pretty':'Resource'}]
 
     #Prepare the data to pass to the HTML
     #rowdict['title'] = outData.title
     rowdict['pub_date'] = outData.pub_date
     rowdict['description'] = outData.description
     rowdict['num_backers'] = outData.num_backers
+    rowdict['importance'] = outData.importance
+    rowdict['effort']=outData.effort
+    rowdict['effort_list'] = range(outData.effort)
+    rowdict['importance_list'] = range(outData.importance)
+    rowdict['resource_list'] = range(outData.resource)
+    rowdict['resource'] = outData.resource
     rowdict['id']=projid
-    maxbackers= -1
-    backers = outData.num_backers
-    if backers > maxbackers:
-        maxbackers=backers
-    rowdict['backPercentage'] = 100 * randint(0,backers) / maxbackers
+    backersRequired = rowdict['effort'] * ((6-rowdict['importance'])**2) * (rowdict['resource']**3)
+    rowdict['backersRequired']=backersRequired
+    rowdict['backPercentage'] = 100 * rowdict['num_backers'] / backersRequired
+    rowdict['proj_active'] = outData.proj_active
     c = {"classification":"unclassified","page_title":outData.title}
     c.update(csrf(request))
     c['data'] = rowdict
