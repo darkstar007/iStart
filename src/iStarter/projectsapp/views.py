@@ -243,7 +243,7 @@ def project_detail(request,projid):
     #Select the project from table
     outData = projectModel.objects.get(pk=int(projid))
     rowdict = {'title':'','pub_date':'','description':'','num_backers':'','id':'','backPercentage':'',
-               'importance':'','effort':'','resource':'', 'proj_active':'','backersRequired':'','effort_list':[],
+               'importance':'','effort':'','resource':'', 'active':'','backersRequired':'','effort_list':[],
                 'importance_list':[],'resource_list':[]}
     
     #Template for model outputs
@@ -270,7 +270,7 @@ def project_detail(request,projid):
     backersRequired = rowdict['effort'] * ((6-rowdict['importance'])**2) * (rowdict['resource']**3)
     rowdict['backersRequired']=backersRequired
     rowdict['backPercentage'] = 100 * rowdict['num_backers'] / backersRequired
-    rowdict['proj_active'] = outData.proj_active
+    rowdict['active'] = outData.active
     c = {"classification":"unclassified","page_title":outData.title}
     c.update(csrf(request))
     c['data'] = rowdict
