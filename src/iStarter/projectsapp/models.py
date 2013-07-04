@@ -43,6 +43,9 @@ class project(models.Model):
     # Is the project active?
     active = models.BooleanField()
 
+	# Is the project active ?
+    active = models.BooleanField()
+
 class pvote(models.Model):
     project = models.ForeignKey(project)
     vote_date = models.DateTimeField('voted_on_date')
@@ -50,4 +53,6 @@ class pvote(models.Model):
     #like = models.IntegerField()
     #backer = models.IntegerField()
     vote_type = models.CharField(max_length=20)
+    support_type = models.CharField(max_length=200)
+    classification = models.CharField(max_length=100)
     

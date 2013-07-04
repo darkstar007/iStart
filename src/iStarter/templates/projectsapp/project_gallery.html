@@ -67,49 +67,69 @@
               <li><a href="#">You like</a></li>
               <li><a href="#">You dislike</a></li>
               <li><a href="#">You back</a></li>
+
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
         
         
         <div class="span9">
-          <div class="hero-unit">
-            <h1>{{ page_title }}</h1>
-            <p>Its your turn to drive. Only those projects with the most backers will be developed</p>
-            <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-          </div>
-	
+        	<div class="hero-unit">
+            	<h1>{{ page_title }}</h1>
+            	<p>Its your turn to drive.</p>
+            	<p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+          	</div>
+		  
 			{% for row in tableData %}
-			{% if forloop.counter|divisibleby:"3" %}
-				<div class="row-fluid">
-			{% endif %}
-			{% for cell in row %}
-				<div class="span4">
-					{% if cell.backPercentage < 25 %} 
-						<div class="progress progress-danger progress-striped active">
-							<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+				{% if forloop.counter0|divisibleby:"3" %}
+					<div class="row-fluid">
+				{% endif %}
+				{% for cell in row %}
+					<li class="span4">
+						<div class="thumbnail" style="height:450px;">
+							{% if cell.backPercentage < 33 %} 
+								{% if cell.active %}
+									<div class="progress progress-info progress-striped active">
+										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+									</div>
+								{% else %}
+									<div class="progress progress-danger">
+										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+									</div>
+								{% endif %}
+							{% elif cell.backPercentage < 66 %}
+								{% if cell.active %}
+									<div class="progress progress-info progress-striped active">
+										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+									</div>
+								{% else %}
+									<div class="progress progress-warning">
+										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+									</div>
+								{% endif %}
+							{% else %}
+								{% if cell.active %}
+									<div class="progress progress-info progress-striped active">
+										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+									</div>
+								{% else %}
+									<div class="progress progress-success">
+										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+									</div>
+								{% endif %}
+							{% endif %}
+							<center><a href="/projects/project_detail/{{ cell.id }}"><img src="/static/images/300x200.png"></a></center>
+							<div class="caption">					
+								<h4>{{ cell.title }}</h4>
+								<p> {{ cell.description }} </p>
+								<i class="icon-thumbs-up"></i> {{cell.num_likes}} <i class="icon-thumbs-down"></i> {{cell.num_dislikes}}
+							</div>
 						</div>
-					{% elif cell.backPercentage < 50 %}
-						<div class="progress progress-warning progress-striped active">
-							<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
-						</div>
-					{% elif cell.backPercentage < 75 %}
-						<div class="progress progress-success progress-striped active">
-							<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
-						</div>
-					{% else %}
-						<div class="progress progress-info progress-striped active">
-							<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
-						</div>
-					{% endif %}
-					<h2>{{ cell.title }}</h2>
-					<p> {{ cell.description }} </p>
-					<p><a class="btn" href="/projects/project_detail/{{ cell.id }}">View details &raquo;</a></p>
-				</div>
-			{% endfor %}
-			{% if forloop.counter|divisibleby:"3" %}			
+					</li>
+				{% endfor %}
+				{% if forloop.counter|divisibleby:"3" %}	
 					</div><!--/row-->
-			{% endif %}
+				{% endif %}
 			{% endfor %}
 
 

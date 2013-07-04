@@ -12,9 +12,9 @@
 		<div class="span6 offset3">
 			<h2 class="text-center">{{ page_title }}</h2>
                 <p><em>Published on: {{ data.pub_date }}</em></p>
-                <p><a class="btn btn-success btn-mini" href=# value="disable" disabled>Back this Project &raquo;</a>
-                <a class="btn btn-mini btn-info" href=# value="disable" disabled>Follow this Project</a>
-                <a class="btn btn-mini btn-warning" href=# value="disable" disabled>Share this Project</a>  
+                <p><a class="btn btn-success btn-mini" href="/projects/back/{{data.id}}"</button>Back This Project</a>
+                <button class="btn btn-mini btn-info" href=#>Follow this Project</button>
+                <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=' + window.location;">Share this Project</button>  
                 </br></br>              
                 </p>
 		</div>

@@ -8,7 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 #from ideasapp.models import idea as ideaModel
 from datetime import datetime, timedelta
-from random import randint, choice
+from random import randint, choice, uniform
 import importlib
 import inspect
 import sys
@@ -135,7 +135,7 @@ class testData():
                         elif field.get_internal_type() == 'CharField':
                             jsonfields[field.name]=self.randomText(field.max_length)                        
                         elif field.get_internal_type() == 'IntegerField':                   
-                            jsonfields[field.name]=randint(0,5000)
+                            jsonfields[field.name]=randint(1,5)
                         elif field.get_internal_type() == 'DateTimeField':                    
                             jsonfields[field.name]=self.randomDate()
                         elif field.get_internal_type() == 'EmailField':
@@ -143,7 +143,7 @@ class testData():
                         elif field.get_internal_type() == 'BooleanField':
                             jsonfields[field.name]='True'
                         elif field.get_internal_type() == 'FloatField':
-                            jsonfields[field.name]=1
+                            jsonfields[field.name]=uniform(1.0,100.0)
                         else:
                             continue
                     if cls[0] == 'project' and appname == 'projectsapp':
