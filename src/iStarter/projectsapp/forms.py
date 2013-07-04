@@ -42,8 +42,6 @@ class projectForm(forms.Form):
     effort_level     = forms.IntegerField(widget=forms.Select(choices=get_rating_levels()), required=True)
     resource_level   = forms.IntegerField(widget=forms.Select(choices=get_rating_levels()), required=True)
 
-
-
 class backForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(backForm, self).__init__(*args, **kwargs)

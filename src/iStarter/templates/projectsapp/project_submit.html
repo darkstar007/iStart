@@ -86,7 +86,8 @@
 						Importance
 					</div>
 					<div class="span4">
-						{{ form.importance_level }}
+						<div id="starimportance" data-score="3"></div>
+						<!--{{ form.importance_level }}-->
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -95,7 +96,8 @@
 						Effort
 					</div>
 					<div class="span4">
-						{{ form.effort_level }}
+						<div id="stareffort" data-score="3"></div>
+						<!--{{ form.effort_level }}-->
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -104,11 +106,15 @@
 						Resource
 					</div>
 					<div class="span4">
-						{{ form.resource_level }}
+						<div id="starresource" data-score="3"></div>
+						<!--{{ form.resource_level }}-->
 					</div>
 				</div>
+				<div class="row-fluid">
+					Backers Required:  25
+				</div>
 			</div>
-			
+		
 			<div class="span4">
 		        <div>
 			        {{ form.title.errors }}
@@ -151,6 +157,21 @@
 		</div>
 		
 	</form>
+	
+	<!-- javascript at end for speed -->
+	<script type="text/javascript">
+		$(function() {
+			$.fn.raty.defaults.path = '/static/raty-2.5.2/lib/img';	
+			$("div[id^=star]").raty({
+				score: function() {
+					return $(this).attr('data-score');
+				}
+			});
+		})();
+	</script>
+	<script>
+		$('#star').raty();
+	</script>
 	
 {% endblock main_block %}
 

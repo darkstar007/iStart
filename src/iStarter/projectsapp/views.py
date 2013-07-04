@@ -52,7 +52,7 @@ def submit(request):
     
     # Has the form been submitted?
     if request.method == 'POST':
-        
+        print cleanForm['resource_level']
         form = projectForm(request.POST)
         
         if form.is_valid():

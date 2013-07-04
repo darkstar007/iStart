@@ -128,7 +128,7 @@ def distinctTagsSortedCount(reverse=True):
 #------------------------------------------------------------------------
 # code to calculate the numbr of backers required before a project is taken on
 #
-#	effort 		: The amount of effort reuired to complete the project (1-5)
+#	effort 		: The amount of effort required to complete the project (1-5)
 #		It might require a lot of software design, or development of a new algorithm
 #				This is really a measure of manpower requirements
 #   importance 	: How important is it that the project gets taken on (1-5)
