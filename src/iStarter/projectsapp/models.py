@@ -41,6 +41,9 @@ class project(models.Model):
     effort = models.IntegerField()
     resource = models.IntegerField()
 
+	# Is the project active ?
+    projActive = models.BooleanField()
+
 class pvote(models.Model):
     project = models.ForeignKey(project)
     vote_date = models.DateTimeField('voted_on_date')

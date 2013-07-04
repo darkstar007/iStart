@@ -159,15 +159,21 @@ def project_gallery(request):
 	''' Display all the projects as table list of icons'''
 	c = {"classification":"unclassified","page_title":"iSTARter Project Gallery"}
 	c.update(csrf(request))
-	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk')
-	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','id':''}
+	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'projActive', 'num_likes', 'num_dislikes')
+	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'projActive':'','num_likes':'','num_dislikes':''}
 
  	#Template for model outputs
  	template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
                         {'db':'description', 'pretty':'Idea Description'},
                         {'db':'num_backers', 'pretty':'Number of Backers'},
-                        {'db':'pk','pretty':'Project Id'}]
+                        {'db':'pk','pretty':'Project Id'},
+						{'db':'importance','pretty':'Importance of task'},
+                        {'db':'effort','pretty':'Level of Effort required'},
+                        {'db':'resource','pretty':'Resources required'},
+                        {'db':'projActive','pretty':'Project is Active'},
+                        {'db':'num_likes','pretty':'Number of Likes'},
+                        {'db':'num_dislikes','pretty':'Number of Dislikes'}]
 	
 	# First find maximum backers todate
 	maxbackers= -1
@@ -179,11 +185,32 @@ def project_gallery(request):
 			if backers > maxbackers :
 				maxbackers=backers
 
+	# Sometime need to do it this way instead of the loop
+	# dont know how yet though
+	# maxbackers = projectModel.objects.annotate(likes = Max('num_backers'))
+
 	# Prepare the data to pass to the HTML
 	outrow = []
 	out = []
-
+	
 	for pDataidx, row in enumerate(pData):
+		for headingidx, heading in enumerate(template_headings):
+			if heading['db']=='num_backers' :
+				num_backers = row[headingidx]
+			if heading['db']=='importance' :
+				imp=row[headingidx]
+			if heading['db']=='effort' :
+				eff=row[headingidx]	
+			if heading['db']=='resource' :
+				res=row[headingidx]	
+				
+		print 'imp is ',imp,' eff is ',eff,' res is ',res
+		backersRequired = eff * ((6-imp)**2) * (res**3)
+		backPercentage  = 100 * num_backers / backersRequired	
+		rowdict['backPercentage'] = int(backPercentage)
+		rowdict['backersRequired'] = backersRequired
+		print 'backersrequired is ',backersRequired,' backpercentage is ',backPercentage
+		
 		for headingidx, heading in enumerate(template_headings):
 			if heading['db']=='title' :
 				rowdict['title'] = row[headingidx][:20]
@@ -192,16 +219,24 @@ def project_gallery(request):
 			if heading['db']=='description' :
 				rowdict['description'] = row[headingidx][:200]
 			if heading['db']=='num_backers' :
-				rowdict['backPercentage'] = 100 * row[headingidx] / maxbackers
-			#if heading['db']=='id' :
-				#rowdict['id']='project'+str(pDataidx)+str(headingidx)
-                if heading['db']=='pk':
-                    rowdict['id']=row[headingidx]
+				num_backers = row[headingidx]
+			if heading['db']=='pk':
+				rowdict['id']=row[headingidx]
+			if heading['db']=='projActive' :
+				# assign a couple of projects a sbeing active to test its all working
+				if pDataidx == 2 or pDataidx==4 :
+					rowdict['projActive']= 1 # row[headingidx]
+				else:
+					rowdict['projActive']= 0 # row[headingidx]
+			if heading['db']=='num_likes' :
+				rowdict['num_likes']=int(row[headingidx])
+			if heading['db']=='num_dislikes' :
+				rowdict['num_dislikes']=int(row[headingidx])				
         	outrow.append(rowdict.copy())
 		out.append(outrow)
 		outrow = []
 	c['tableData'] = out
-	c['headings'] = template_headings
+	#c['headings'] = template_headings
 	
 	return render_to_response("projectsapp/project_gallery.html", c)	
  
@@ -267,7 +302,6 @@ def project_detail(request,projid):
         outrow = {'uid':'','cells':[]}
     c['headings_ideas'] = template_headings_ideas      
     c['tableData_ideas'] = out
-    print out
 
     return render_to_response("projectsapp/project_detail.html", c)
 
@@ -315,7 +349,7 @@ def back(request, projid):
                 #c["description"] = outBack.description
                 c['classification'] = outBack.classification
                 
-                return render_to_response('projectsapp/project_thanks.html', c)
+                return render_to_response('projectsapp/back_thanks.html', c)
                 
             else:
                 logging.error("User tried to back a project that didnt exist")
