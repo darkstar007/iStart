@@ -27,6 +27,7 @@ for root, subFolders, files in os.walk(appRoot):
 #FOSS
 from ideasapp.forms import ideaForm
 from ideasapp.models import idea as ideaModel
+from projectsapp.models import project as projectModel
 from ideasapp.models import ideaLikes as likesModel
 from code import formatSubmitterEmail, formatHttpHeaders, ideasCloud, getDate, saveIdea
 from code import saveTags, distinctTagsSortedAlpha
@@ -114,13 +115,6 @@ def ideas_cloud(request):
     return render_to_response("ideasapp/ideas_cloud.html", c)
             
 #-------------------------------------------------------------------#   
-
-def back(idea_id):
-    '''The back this idea link was clicked somewhere'''
-    return idea_id
-    #TODO: Finish off this functionality!
-
- #-------------------------------------------------------------------#  
         
 def ideas_list(request):     
     c = {"classification":"unclassified",
@@ -131,8 +125,38 @@ def ideas_list(request):
     template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
                          {'db':'description', 'pretty':'Idea Description'},
-                         {'db':'likes', 'pretty':'Number of Likes'},
-                         {'db':'dislikes', 'pretty':'Number of DisLikes'}]
+                            {'db':'linked_projects','pretty':'Linked Projects'},
+                            {'db':'response', 'pretty':'Responses'}
+                            ]
+    
+    pData = ideaModel.objects.values_list('title','pub_date','description', 'likes', 'dislikes','pk', 'id')
+    max_likes = ideaModel.objects.all().aggregate(Max('likes'))
+    max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
+    out = []
+    outdict = {'title':'','pub_date':'','description':'','likes':0,'dislikes':0, 'perc_likes':0,'perc_dislikes':0, 'linked_projects':[]}
+    for row in pData:
+        outdict['title']=row[0]
+        outdict['pub_date']=row[1]
+        outdict['description']=row[2]
+        outdict['likes']=int(row[3])
+        outdict['dislikes']=int(row[4])
+        outdict['perc_likes']=100*outdict['likes']/max_likes['likes__max']
+        outdict['perc_dislikes']=100*outdict['dislikes']/max_dislikes['dislikes__max']
+        outdict['id'] = row[6]
+        projs = projectModel.objects.filter(ideas_derived_from=row[5])
+        if projs:
+            for proj in projs:
+                outdict['linked_projects'].append(proj.id)
+        out.append(outdict.copy())
+        print outdict
+        outdict['linked_projects']=[]
+        
+    c['headings'] = template_headings
+    c['tableData'] = out
+    
+    return render_to_response("ideasapp/ideas_list.html", c)            
+
+    '''
     #get the values form db - this could be user requested - e.g. based on pub date
     pData = ideaModel.objects.values_list('title','pub_date','description', 'likes', 'dislikes')
     #Make the pretty headings
@@ -160,9 +184,42 @@ def ideas_list(request):
     c['tableData'] = out
     
     return render_to_response("ideasapp/ideas_list.html", c)
-            
+'''
+
 #-------------------------------------------------------------------#               
-            
+
+def unlike(request, ideaid):
+    ''' This is the reverse of clicking on a selected like/dislike button '''
+    if request.method == 'GET': 
+        #dislike_ideas183
+        #Strip the choice
+        idea_id = ideaid[ideaid.find('_')+1:]
+
+        choice = ideaid[:ideaid.find('_')]
+
+        #Now record this in the db
+
+        if choice in ['like', 'dislike']:
+ 
+            #Now record this in the db
+            iData = ideaModel.objects.filter(id=idea_id)[0]
+            oldLike = likesModel.objects.filter(title=iData, vote_type = choice).order_by('-vote_date')[0]
+            print 'Found one at', oldLike.vote_date
+            if choice == 'like':
+                iData.likes -= 1
+                newVal = iData.likes
+                
+            elif choice == 'dislike':
+                iData.dislikes -= 1
+                newVal = iData.dislikes
+                
+            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(idea_id)+'</valdata></data></xml>'
+            iData.save()
+            oldLike.delete()
+        else:
+            xml = '<xml><error>Invalid choice "' + choice + '" selected</error></xml>'
+        return HttpResponse(xml, content_type="text/xml")
+    
 def like(request,ideaid):
     ''' Liking and disliking. '''
     
@@ -171,43 +228,31 @@ def like(request,ideaid):
     if request.method == 'GET': 
         #dislike_ideas183
         #Strip the choice
-        titlehsh = ideaid[ideaid.find('_')+1:]
-        print titlehsh
+        idea_id = ideaid[ideaid.find('_')+1:]
+
         choice = ideaid[:ideaid.find('_')]
-        print choice
+
         #Now record this in the db
-        pData = ideaModel.objects.values_list('title','pk')
-        for row in pData:
-            if titlehsh == base64.b64encode(hashlib.sha256(row[0]).digest(), altchars="ZZ")[:32]:
-                #make the db cahnges for this title
-                #outLikes = likesModel.objects.get(pk=row[1])
-                outIdeas = ideaModel.objects.get(pk=row[1])
 
-                if choice == 'like':
-                    outLikes = likesModel(title_id=row[1],vote_date=datetime.now(),vote_type='like')
-                    #outLikes.title=ideaModel.objects.get(pk=row[1])
-                    #outLikes.vote_date=datetime.now()
-                    outIdeas.likes=outIdeas.likes+1
-                    numlikes = outIdeas.likes
-                    #outLikes.vote_type='like'
-                    outIdeas.save()
-                    outLikes.save()
-                    xml = '<data><iddata>'+str(int(numlikes))+'</iddata><valdata>'+'celllike_'+titlehsh+'</valdata></data>'
-                elif choice == 'dislike':
-                    outLikes = likesModel(title_id=row[1],vote_date=datetime.now(),vote_type='dislike')
-                    #outLikes.title=ideaModel.objects.get(pk=row[1])
-                    #outLikes.vote_date=datetime.now()
-                    #outLikes.vote_type='dislike'
-                    outIdeas.dislikes=outIdeas.dislikes+1
-                    numdislikes = outIdeas.dislikes
-                    xml = '<data><iddata>'+str(int(numdislikes))+'</iddata><valdata>'+'celldislike_'+titlehsh+'</valdata></data>'
-                    outIdeas.save()
-                    outLikes.save()
-                break
-            else:
+        if choice in ['like', 'dislike']:
+ 
+            #Now record this in the db
+            iData = ideaModel.objects.filter(id=idea_id)[0]
+            newLike = likesModel(title=iData, vote_date=datetime.now(), vote_type = choice)
 
-                pass  
-        
+            if choice == 'like':
+                iData.likes += 1
+                newVal = iData.likes
+                
+            elif choice == 'dislike':
+                iData.dislikes += 1
+                newVal = iData.dislikes
+                
+            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(idea_id)+'</valdata></data></xml>'
+            iData.save()
+            newLike.save()
+        else:
+            xml = '<xml><error>Invalid choice "' + choice + '" selected</error></xml>'
         return HttpResponse(xml, content_type="text/xml")
             
 #-------------------------------------------------------------------#              
@@ -225,9 +270,9 @@ def ideas_gallery(request):
     print avg_dislikes
     '''
     max_likes = ideaModel.objects.all().aggregate(Max('likes'))
-    print max_likes
+    #print max_likes
     max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
-    print max_dislikes
+    #print max_dislikes
     rowdict = {'title':'','pub_date':'','description':'','id':'','likes':'','dislikes': ''}
 
     #Template for model outputs

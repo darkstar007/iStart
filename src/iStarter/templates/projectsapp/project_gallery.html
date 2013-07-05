@@ -49,39 +49,63 @@
 							{% if cell.backPercentage < 33 %} 
 								{% if cell.active %}
 									<div class="progress progress-info progress-striped active">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+										<div class="bar" style="width: {{cell.backPercentage}}%;" 
+											rel="popover" 
+											title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
+												data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+										</div>
 									</div>
 								{% else %}
 									<div class="progress progress-danger">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+										<div class="bar" style="width: {{cell.backPercentage}}%;"
+										rel="popover" 
+										title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
+											data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+										</div>
 									</div>
 								{% endif %}
 							{% elif cell.backPercentage < 66 %}
 								{% if cell.active %}
 									<div class="progress progress-info progress-striped active">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+										<div class="bar" style="width: {{cell.backPercentage}}%;"
+										rel="popover" 
+										title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
+											data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+										</div>
 									</div>
 								{% else %}
 									<div class="progress progress-warning">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+										<div class="bar" style="width: {{cell.backPercentage}}%;"
+										rel="popover" 
+										title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
+											data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+										</div>
 									</div>
 								{% endif %}
 							{% else %}
 								{% if cell.active %}
 									<div class="progress progress-info progress-striped active">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+										<div class="bar" style="width: {{cell.backPercentage}}%;"
+										rel="popover" 
+										title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
+											data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+										</div>
 									</div>
 								{% else %}
 									<div class="progress progress-success">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"></div>
+										<div class="bar" style="width: {{cell.backPercentage}}%;"
+										rel="popover" 
+										title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
+											data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+										</div>
 									</div>
 								{% endif %}
 							{% endif %}
+							<p class="text-info"><i class="icon-user"></i>{{cell.num_backers }} <i class="icon-thumbs-up"></i> {{cell.num_likes}} <i class="icon-thumbs-down"></i> {{cell.num_dislikes}}</p>
 							<center><a href="/projects/project_detail/{{ cell.id }}"><img src="/static/images/300x200.png"></a></center>
 							<div class="caption">					
 								<h4>{{ cell.title }}</h4>
 								<p> {{ cell.description }} </p>
-								<i class="icon-thumbs-up"></i> {{cell.num_likes}} <i class="icon-thumbs-down"></i> {{cell.num_dislikes}}
 							</div>
 						</div>
 					</li>
@@ -94,23 +118,16 @@
 
     </div><!--/.fluid-container-->
     <hr>
-
- <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../assets/js/jquery.js"></script>
-    <script src="../assets/js/bootstrap-transition.js"></script>
-    <script src="../assets/js/bootstrap-alert.js"></script>
-    <script src="../assets/js/bootstrap-modal.js"></script>
-    <script src="../assets/js/bootstrap-dropdown.js"></script>
-    <script src="../assets/js/bootstrap-scrollspy.js"></script>
-    <script src="../assets/js/bootstrap-tab.js"></script>
-    <script src="../assets/js/bootstrap-tooltip.js"></script>
-    <script src="../assets/js/bootstrap-popover.js"></script>
-    <script src="../assets/js/bootstrap-button.js"></script>
-    <script src="../assets/js/bootstrap-collapse.js"></script>
-    <script src="../assets/js/bootstrap-carousel.js"></script>
-    <script src="../assets/js/bootstrap-typeahead.js"></script>
+	<div>&nbsp;</div>
+	
+	<!-- place javascript at end to increase page load speed -->
+	<script>
+		$(document).ready(function(){
+	    	$("[rel=tooltip]").tooltip({ placement: 'top'});
+	    	$("[rel=popover]").popover({ placement: 'left', trigger: 'hover', html: 'true'});
+	
+		});
+	</script>
 
 {% endblock main_block %}
 
