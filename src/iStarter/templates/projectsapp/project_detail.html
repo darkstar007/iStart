@@ -126,7 +126,7 @@
 				{% endif %}
                             {% if row.perc_likes > 80 %}
         					<li class="span4">
-        						<div class="thumbnail" style="height:200px;border: 2px solid green;">
+        						<div class="thumbnail" style="height:250px;border: 2px solid green;">
         							<div class="caption">		
                                                 <!--<div class="alert alert-success">-->			
         								<h4>{{ row.title }}</h4>
@@ -134,13 +134,22 @@
                             				<p> {{ row.description }} </p>
         								<i class="icon-thumbs-up" id="like_{{row.id}}" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id,'celllike_', 'celldislike_');"></i><span id="celllike_{{row.id}}">{{row.likes}}</span>
                                                     <i class="icon-thumbs-down"id="dislike_{{row.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'ideas', this.id,'celldislike_', 'celllike_');"></i><span id="celldislike_{{row.id}}">{{row.dislikes}}</span>
-                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>       							
+                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Idea&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>
+                                                    {% if row.linked_projects %}
+                                                        <p>Linked Projects:
+                                                        {% for proj in row.linked_projects %}
+                                                            <a href="/projects/project_detail/{{proj}}">{{proj}},</a>
+                                                        {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p>No Linked Projects</p>
+                                                    {% endif %}      							
                                             </div>
         						</div>
         					</li>
                             {% elif row.perc_dislikes > 80 %}
                                 <li class="span4">
-        						<div class="thumbnail" style="height:200px;border: 2px solid red;">
+        						<div class="thumbnail" style="height:250px;border: 2px solid red;">
         							<div class="caption">		
                                                 <!--<div class="alert alert-danger">-->			
         								<h4>{{ row.title }}</h4>
@@ -148,19 +157,37 @@
         								<p> {{ row.description }} </p>
         								<i class="icon-thumbs-up" id="like_{{row.id}}" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id,'celllike_', 'celldislike_');"></i><span id="celllike_{{row.id}}">{{row.likes}}</span>
                                                     <i class="icon-thumbs-down"id="dislike_{{row.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'ideas', this.id,'celldislike_', 'celllike_');"></i><span id="celldislike_{{row.id}}">{{row.dislikes}}</span>
-                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>      							
+                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Idea&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>
+                                                    {% if row.linked_projects %}
+                                                        <p>Linked Projects:
+                                                        {% for proj in row.linked_projects %}
+                                                            <a href="/projects/project_detail/{{proj}}">{{proj}},</a>
+                                                        {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p>No Linked Projects</p>
+                                                    {% endif %}       							
                                             </div>
         						</div>
         					</li>
                             {% else %}
                                 <li class="span4">
-        						<div class="thumbnail" style="height:200px;">
+        						<div class="thumbnail" style="height:250px;">
         							<div class="caption">					
         								<h4>{{ row.title }}</h4>
         								<p> {{ row.description }} </p>
         								<i class="icon-thumbs-up" id="like_{{row.id}}" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id,'celllike_', 'celldislike_');"></i><span id="celllike_{{row.id}}">{{row.likes}}</span>
                                                     <i class="icon-thumbs-down"id="dislike_{{row.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'ideas', this.id,'celldislike_', 'celllike_');"></i><span id="celldislike_{{row.id}}">{{row.dislikes}}</span>
-                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>      							
+                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Idea&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>
+                                                    {% if row.linked_projects %}
+                                                        <p>Linked Projects:
+                                                        {% for proj in row.linked_projects %}
+                                                            <a href="/projects/project_detail/{{proj}}">{{proj}},</a>
+                                                        {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p>No Linked Projects</p>
+                                                    {% endif %}        							
                                             </div>
         						</div>
         					</li>
