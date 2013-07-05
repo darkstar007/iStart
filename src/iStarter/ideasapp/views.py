@@ -278,6 +278,7 @@ def ideas_gallery(request):
         c['headings'] = template_headings
         c['tableData'] = out       
         
+
     return render_to_response("ideasapp/ideas_gallery.html", c)	          
             
             
