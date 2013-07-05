@@ -140,7 +140,7 @@ def ideas_list(request):
     outdict = {'title':'','pub_date':'','description':'','likes':0,'dislikes':0, 'perc_likes':0,'perc_dislikes':0, 'linked_projects':[]}
     for row in pData:
         outdict['title']=row[0]
-        outdict['pub_date']=row[1]
+        outdict['pub_date']=row[1].isoformat()[:10]
         outdict['description']=row[2]
         outdict['likes']=int(row[3])
         outdict['dislikes']=int(row[4])
