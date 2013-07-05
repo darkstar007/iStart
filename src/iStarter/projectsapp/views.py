@@ -172,12 +172,11 @@ def like(request, projectid):
 
             if choice == 'like':
                 pData.num_likes += 1
-
+                newVal = pData.num_likes
                 
             elif choice == 'dislike':
                 pData.num_dislikes += 1
-
-	    newVal = pData.num_likes - pData.num_dislikes
+                newVal = pData.num_dislikes
                 
                 
             xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(prjid)+'</valdata></data></xml>'
