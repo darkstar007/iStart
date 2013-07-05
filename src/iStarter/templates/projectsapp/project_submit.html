@@ -82,7 +82,10 @@
 				<hr></hr>
 				<div class="row-fluid">
 					{{ form.importance_level.errors }}
-					<div class="span4">
+					<div class="span4" 
+						rel="popover" 
+						title="<p class=&quot;text-info&quot;><em>Importance</em></p>" 
+						data-content="<em>How important is it that the project gets taken on? This could reflect the national priority framework or it might be that other initiatives cannot be taken on until this is completed</em>">
 						Importance
 					</div>
 					<div class="span4">
@@ -91,7 +94,10 @@
 				</div>
 				<div class="row-fluid">
 					{{ form.effort_level.errors }}
-					<div class="span4">
+					<div class="span4"
+					rel="popover" 
+					title="<p class=&quot;text-info&quot;><em>Effort</em></p>" 
+					data-content="<em>The amount of effort required to complete the project. It might require a lot of software design, or the development of a new algorithm. This is really a measure of manpower requirements</em>">
 						Effort
 					</div>
 					<div class="span4">
@@ -100,7 +106,10 @@
 				</div>
 				<div class="row-fluid">
 					{{ form.resource_level.errors }}
-					<div class="span4">
+					<div class="span4"
+					rel="popover" 
+					title="<p class=&quot;text-info&quot;><em>Resource</em></p>" 
+					data-content="<em>How many extra resources are required to achived the project's goals. These are things that cost money Examples might be: &quot;needs a new computer&quot;; &quot;needs software purchasing&quot;; &quot;needs new paperclips&quot;</em>">
 						Resource
 					</div>
 					<div class="span4">
@@ -151,7 +160,13 @@
 		</div>
 		
 	</form>
-	
+	<!-- place javascript at end to increase page load speed -->
+	<script>
+		$(document).ready(function(){
+	    	$("[rel=tooltip]").tooltip({ placement: 'top'});
+	    	$("[rel=popover]").popover({ placement: 'top', trigger: 'hover', html: 'true'});
+		});
+	</script>
 {% endblock main_block %}
 
 {% block classification_tail %} {{ classification }} {% endblock classification_tail %}
