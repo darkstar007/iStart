@@ -43,9 +43,10 @@
                                     None
                                 {% endif %}
                                 </td>
+
                                 <td>
-                                <i class="icon-thumbs-up"></i>{{row.likes}}
-                                <i class="icon-thumbs-down"></i>{{row.dislikes}}
+                                <i class="icon-thumbs-up" id="like_{{row.id}}" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id,'celllike_', 'celldislike_');"></i><span id="celllike_{{row.id}}">{{row.likes}}</span>
+                                <i class="icon-thumbs-down"id="dislike_{{row.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'ideas', this.id,'celldislike_', 'celllike_');"></i><span id="celldislike_{{row.id}}">{{row.dislikes}}</span>
                                 <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>
                                 </td>                           
                             </tr>
@@ -64,8 +65,8 @@
                                 {% endif %}
                                 </td>
                                 <td>
-                                <i class="icon-thumbs-up"></i>{{row.likes}}
-                                <i class="icon-thumbs-down"></i>{{row.dislikes}}
+                                <i class="icon-thumbs-up" id="like_{{row.id}}" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id,'celllike_', 'celldislike_');"></i><span id="celllike_{{row.id}}">{{row.likes}}</span>
+                                <i class="icon-thumbs-down"id="dislike_{{row.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'ideas', this.id,'celldislike_', 'celllike_');"></i><span id="celldislike_{{row.id}}">{{row.dislikes}}</span>
                                 <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>  
                                 </td>                             
                             </tr>
@@ -84,8 +85,9 @@
                                 {% endif %}
                                 </td>
                                 <td>
-                                <i class="icon-thumbs-up"></i>{{row.likes}}
-                                <i class="icon-thumbs-down"></i>{{row.dislikes}}   
+                                <i class="icon-thumbs-up" id="like_{{row.id}}" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id,'celllike_','celldislike_');"></i><span id="celllike_{{row.id}}">{{row.likes}}</span>
+                                <i class="icon-thumbs-down"id="dislike_{{row.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'ideas', this.id,'celldislike_','celllike_');"></i><span id="celldislike_{{row.id}}">{{row.dislikes}}</span>
+
                                 <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Idea&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>                              
                                 </td>                            
                             </tr>

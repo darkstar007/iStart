@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^ideas_gallery/',    'ideasapp.views.ideas_gallery', name='ideas_gallery'),    # For viewing ideas cloud
     url(r'^back/',    'ideasapp.views.back', name='back'),    # For backing an idea
     url(r'^like/(?P<ideaid>\w+)/$',    'ideasapp.views.like', name='like'),    
+    url(r'^unlike/(?P<ideaid>\w+)/$',    'ideasapp.views.unlike', name='unlike'),    
 
 )
 

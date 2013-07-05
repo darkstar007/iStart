@@ -117,7 +117,39 @@ def project_list(request):
     c['tableData'] = pData
 
     return render_to_response("projectsapp/project_list.html", c)
-            	
+
+def unlike(request, projectid):
+    ''' This is the reverse of clicking on a selected like/dislike button '''
+    if request.method == 'GET': 
+
+        # Parse the projectid
+        splt = projectid.split('_')
+        
+        prjid = splt[1]
+        choice = splt[0]
+
+        #Now record this in the db
+
+        if choice in ['like', 'dislike']:
+ 
+            #Now record this in the db
+            pData = projectModel.objects.filter(id=prjid)[0]
+            oldLike = projectVoteModel.objects.filter(project=pData, vote_type = choice).order_by('-vote_date')[0]
+            if choice == 'like':
+                pData.num_likes -= 1
+                newVal = pData.num_likes
+                
+            elif choice == 'dislike':
+                pData.num_dislikes -= 1
+                newVal = pData.num_dislikes
+                
+            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(prjid)+'</valdata></data></xml>'
+            pData.save()
+            oldLike.delete()
+        else:
+            xml = '<xml><error>Invalid choice "' + choice + '" selected</error></xml>'
+        return HttpResponse(xml, content_type="text/xml")
+
 def like(request, projectid):
     ''' Liking and disliking. '''
     
@@ -132,7 +164,7 @@ def like(request, projectid):
         prjid = splt[1]
         choice = splt[0]
  
-        if choice in ['like', 'dislike', 'back']:
+        if choice in ['like', 'dislike']:
  
             #Now record this in the db
             pData = projectModel.objects.filter(id=prjid)[0]
@@ -140,20 +172,19 @@ def like(request, projectid):
 
             if choice == 'like':
                 pData.num_likes += 1
-                newVal = pData.num_likes
+
                 
             elif choice == 'dislike':
                 pData.num_dislikes += 1
-                newVal = pData.num_dislikes
+
+	    newVal = pData.num_likes - pData.num_dislikes
                 
-            elif choice == 'back':
-                pData.num_backers +=1
-                newVal = pData.num_backers
                 
-            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>cell'+str(choice)+'_'+prjid+'</valdata></data></xml>'
+            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(prjid)+'</valdata></data></xml>'
             pData.save()
             newLike.save()
-
+        else:
+            xml = '<xml><error>Invalid choice "' + choice + '" selected</error></xml>'
         return HttpResponse(xml, content_type="text/xml")
     
 def project_gallery(request):
@@ -264,12 +295,16 @@ def project_detail(request,projid):
     rowdict['pub_date'] = outData.pub_date
     rowdict['description'] = outData.description
     rowdict['num_backers'] = outData.num_backers
+
+    rowdict['likes_total'] = int(outData.num_likes - outData.num_dislikes)
+
     rowdict['importance'] = outData.importance
     rowdict['effort']=outData.effort
     rowdict['effort_list'] = range(outData.effort)
     rowdict['importance_list'] = range(outData.importance)
     rowdict['resource_list'] = range(outData.resource)
     rowdict['resource'] = outData.resource
+
     rowdict['id']=projid
     backersRequired = rowdict['effort'] * ((6-rowdict['importance'])**2) * (rowdict['resource']**3)
     rowdict['backersRequired']=backersRequired

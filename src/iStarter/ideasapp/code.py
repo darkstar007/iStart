@@ -66,6 +66,7 @@ def saveIdea(ideaTitle, ideaText, ideaClassification, ideaHeaders):
 
     out = ideaModel(title = ideaTitle, pub_date = getDate(), description = ideaText, num_backers = 1,
                     classification = ideaClassification, headers = ideaHeaders, likes=0.0, dislikes=0.0)
+
     out.save()
     return out
 
