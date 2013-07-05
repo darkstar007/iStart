@@ -313,6 +313,7 @@ def project_gallery_filtered(request):
     
     # Add in backer info in place.
     for row in data:
+        row['id'] = row['pk']
         backersRequired = brAlg(row[settings.EFFORT_FIELD], row[settings.IMPORTANCE_FIELD], row[settings.RESOURCE_FIELD])        
         backPercentage  = 100 * row[settings.NUM_BACKERS] / backersRequired    
         row['backPercentage'] = int(backPercentage)
