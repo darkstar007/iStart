@@ -14,6 +14,9 @@ from random import randint
 import hashlib
 import base64
 
+import projectsapp.settings as settings
+from projectsapp.code import getMaxClassification
+
 #============================================================================================
 # TO ENSURE ALL OF THE FILES CAN SEE ONE ANOTHER.
 
@@ -39,7 +42,9 @@ from projectsapp.forms import projectForm
 from projectsapp.forms import backForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
 from code import saveTags, distinctTagsSortedAlpha
+from customObjectQueries import filteredRetrieval, validateQueryParams, buildSingleSortAndFilterItems
 from code import backersRequiredAlgorithm
+from projectScoringAlgs import backersRequiredAlgorithm as brAlg
 
 def submit(request):
     ''' Pulling together ideas into a glorious project. '''
@@ -178,7 +183,6 @@ def like(request, projectid):
                 pData.num_dislikes += 1
                 newVal = pData.num_dislikes
                 
-                
             xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(prjid)+'</valdata></data></xml>'
             pData.save()
             newLike.save()
@@ -187,14 +191,15 @@ def like(request, projectid):
         return HttpResponse(xml, content_type="text/xml")
     
 def project_gallery(request):
-	''' Display all the projects as table list of icons'''
-	c = {"classification":"unclassified","page_title":"iStarter Project Gallery"}
-	c.update(csrf(request))
-	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'active', 'num_likes', 'num_dislikes')
-	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'importance':'', 'effort':'', 'resource':'', 'active':'','num_likes':'','num_dislikes':''}
 
- 	#Template for model outputs
- 	template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
+    ''' Display all the projects as table list of icons'''
+    c = {"classification":"unclassified","page_title":"iStarter Project Gallery"}
+    c.update(csrf(request))
+    pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'active', 'num_likes', 'num_dislikes')
+    rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'importance':'', 'effort':'', 'resource':'', 'active':'','num_likes':'','num_dislikes':''}
+
+    #Template for model outputs
+    template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
                         {'db':'description', 'pretty':'Idea Description'},
                         {'db':'num_backers', 'pretty':'Number of Backers'},
@@ -205,16 +210,15 @@ def project_gallery(request):
                         {'db':'active','pretty':'Project is Active'},
                         {'db':'num_likes','pretty':'Number of Likes'},
                         {'db':'num_dislikes','pretty':'Number of Dislikes'}]
-	
-	# First find maximum backers todate
-	maxbackers= -1
-	backers=0
-	for pDataidx, row in enumerate(pData):
-		for headingidx, heading in enumerate(template_headings):
-			if heading['db']=='num_backers' :
-				backers=row[headingidx]
-			if backers > maxbackers :
-				maxbackers=backers
+    # First find maximum backers todate
+    maxbackers= -1
+    backers=0
+    for pDataidx, row in enumerate(pData):
+        for headingidx, heading in enumerate(template_headings):
+            if heading['db']=='num_backers' :
+                backers=row[headingidx]
+            if backers > maxbackers :
+                maxbackers=backers
 
 	# Prepare the data to pass to the HTML
 	outrow = []
@@ -270,8 +274,55 @@ def project_gallery(request):
 	c['tableData'] = out
 	#c['headings'] = template_headings
 	
-	return render_to_response("projectsapp/project_gallery.html", c)	
- 
+	return render_to_response("projectsapp/project_gallery.html", c)
+
+#----------------------------------------------------------------------------------------
+
+def project_gallery_filtered(request):
+    ''' Display some of the projects, depending on filter parameters'''
+    
+    #TODO: Update this classification dynamically based on highest value in data
+    c = {"page_title":"iSTARter Project Gallery"}
+    
+    # Get the headings data
+    c['headings'] = settings.TEMPLATE_HEADINGS
+    
+    # Get the request parameters from the url - into a dictionary
+    params = request.GET.dict()
+    safeParams = validateQueryParams(params)
+
+    # Get the data, having handled the sorting and filtering 
+    resultSet = filteredRetrieval(projectModel, safeParams)
+
+    # Get the project max classification
+    c['classification'] = getMaxClassification(resultSet) or 'unknown'
+    
+    # Create the tag list for selecting by user
+    c['known_tags'] = distinctTagsSortedAlpha()
+
+    # Get the urls needed to filter the results when someone clicks on them
+    c['sorts_and_filters'] = buildSingleSortAndFilterItems()
+    
+    # Get the fields we want out into a list
+    flds = [f['db'] for f in settings.TEMPLATE_HEADINGS]
+    
+    # Now get a list containing each row stored as a dict
+    data = resultSet.values(*flds)
+    
+    # Add in backer info in place.
+    for row in data:
+        backersRequired = brAlg(row[settings.EFFORT_FIELD], row[settings.IMPORTANCE_FIELD], row[settings.RESOURCE_FIELD])        
+        backPercentage  = 100 * row[settings.NUM_BACKERS] / backersRequired    
+        row['backPercentage'] = int(backPercentage)
+        row['backersRequired'] = backersRequired
+        
+    # Now whack it into another list for good measure - never have enough ;)
+    c['tableData'] = [data]
+    
+    return render_to_response("projectsapp/project_gallery.html", c)    
+
+#----------------------------------------------------------------------------------------
+
 def project_detail(request,projid):
     ''' Display detail on a project '''
 
