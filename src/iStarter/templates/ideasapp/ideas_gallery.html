@@ -43,10 +43,10 @@
                             {% if row.perc_likes > 80 %}
         					<li class="span4">
         						<div class="thumbnail" style="height:auto;border: 2px solid green;">
-        							<div class="caption">		
-                                                <!--<div class="alert alert-success">-->			
-        								<h4>{{ cell.title }}</h4>
-                                                <!--</div>-->
+        							<div class="caption">				
+        								<h4>{{ cell.title }}&nbsp
+                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{cell.title}}   Description:{{cell.description}}'">Share</button>
+                                                    </h4>
                             				<p> {{ cell.description }} </p>
         								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}       							
                                             </div>
@@ -55,12 +55,12 @@
                             {% elif row.perc_dislikes > 80 %}
                                 <li class="span4">
         						<div class="thumbnail" style="height:auto;border: 2px solid red;">
-        							<div class="caption">		
-                                                <!--<div class="alert alert-danger">-->			
-        								<h4>{{ cell.title }}</h4>
-                                                <!--</div>-->
+        							<div class="caption">				
+        								<h4>{{ cell.title }}&nbsp
+                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{cell.title}}   Description:{{cell.description}}'">Share</button>
+                                                    </h4>
         								<p> {{ cell.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}     							
                                             </div>
         						</div>
         					</li>
@@ -68,7 +68,9 @@
                                 <li class="span4">
         						<div class="thumbnail" style="height:auto;">
         							<div class="caption">					
-        								<h4>{{ cell.title }}</h4>
+        								<h4>{{ cell.title }}&nbsp
+                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{cell.title}}   Description:{{cell.description}}'">Share</button>
+                                                    </h4>
         								<p> {{ cell.description }} </p>
         								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
                                             </div>

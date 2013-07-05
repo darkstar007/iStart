@@ -45,7 +45,7 @@
   	<script src="/static/js/jquery.js"></script>
 <script>
 
-function loadFeedbackXMLDoc(typestr, model, idstr, basecellid)
+function loadFeedbackXMLDoc(typestr, model, idstr, basecellid, otherbasecellid)
 {
 
 var xmlhttp;
@@ -70,7 +70,7 @@ else if (typestr=="Dislike")
 
 if ($("#"+idstr).hasClass("icon-white")) {
 
-  xmlhttp.open("GET","/"+model+"/like/"+otherID,false);
+  xmlhttp.open("GET","/"+model+"/unlike/"+idstr,false);
 
 
   $("#"+idstr).removeClass("icon-white");
@@ -79,16 +79,16 @@ if ($("#"+idstr).hasClass("icon-white")) {
 } else if ($("#"+otherID).hasClass("icon-white")) {
 
 
-  if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp2=new XMLHttpRequest();
+  xmlhttp.open("GET","/"+model+"/unlike/"+otherID,false);
+  xmlhttp.send();
+
+  xmlDoc = xmlhttp.responseXML;
+
+  ele = document.getElementById(otherbasecellid+xmlDoc.getElementsByTagName("valdata")[0].childNodes[0].nodeValue);
+
+  if (ele) {
+     ele.innerHTML = xmlDoc.getElementsByTagName("iddata")[0].childNodes[0].nodeValue;
   }
-  else
-  {// code for IE6, IE5
-    xmlhttp2=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp2.open("GET","/"+model+"/like/"+idstr,false);
-  xmlhttp2.send();
 
   xmlhttp.open("GET","/"+model+"/like/"+idstr,false);
 
@@ -138,7 +138,7 @@ if (ele) {
           <div class="nav-collapse collapse">
           <ul class="nav">
           	<li><a href="/">Home</a></li>
-          	<li><a href="/ideas">Ideas</a></li>
+          	<li><a href="/ideas/ideas_gallery">Ideas</a></li>
           	<li><a href="/projects/project_gallery">Projects</a></li>
           	
           	{% block nav_items_left %}
@@ -216,7 +216,7 @@ if (ele) {
         
     <footer class="footer">
       <div class="container">
-        <p>Built by Information Management Department <a href="/docs/dstl">&copy; [Dstl] 2013</a></p>
+        <p>Built by Information Management Department <a href="https://www.dstl.gov.uk">&copy; [Dstl] 2013</a></p>
         <ul class="footer-links">
           <li><a href="/docs/prototypes">About Prototypes</a></li>
           <li class="muted">&middot;</li>
