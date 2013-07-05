@@ -178,12 +178,12 @@ def like(request, projectid):
             if choice == 'like':
                 pData.num_likes += 1
                 newVal = pData.num_likes
-                
+
             elif choice == 'dislike':
                 pData.num_dislikes += 1
                 newVal = pData.num_dislikes
                 
-            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(prjid)+'</valdata></data></xml>'
+            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(prjid)+'</valdata></data></xml>'            
             pData.save()
             newLike.save()
         else:
@@ -311,6 +311,7 @@ def project_gallery_filtered(request):
     
     # Add in backer info in place.
     for row in data:
+        row['id'] = row['pk']
         backersRequired = brAlg(row[settings.EFFORT_FIELD], row[settings.IMPORTANCE_FIELD], row[settings.RESOURCE_FIELD])        
         backPercentage  = 100 * row[settings.NUM_BACKERS] / backersRequired    
         row['backPercentage'] = int(backPercentage)
