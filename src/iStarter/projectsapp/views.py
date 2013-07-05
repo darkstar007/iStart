@@ -58,7 +58,6 @@ def submit(request):
     
     # Has the form been submitted?
     if request.method == 'POST':
-        
         form = projectForm(request.POST)
         
         if form.is_valid():

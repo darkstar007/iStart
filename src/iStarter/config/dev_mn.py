@@ -11,7 +11,7 @@ ADMINS = (
 #Set this to true to load data - false to not
 testDataChk = True
 #Paths for where the nouns file and header data file is stored
-testDataPath = r'/home/matt/iStart/src/iStarter/config'
+testDataPath = r'/home/matt/tmpis/iStart/src/iStarter/config'
 nounsfile = 'nouns.txt'
 headersfile = 'example_headers.txt'
 
@@ -21,7 +21,7 @@ testDataAppsList = ['ideasapp', 'projectsapp']
 testDataNumRows = 60
 #Path to where fixutres file will be saved - this should be accessible really
 #as its always in the fixtures directory under app
-fixtureOutPath = r'/home/matt/iStart/src/iStarter/'
+fixtureOutPath = r'/home/matt/tmpis/iStart/src/iStarter/'
 fixtureDateFname = 'initial_data.json'
 
 DATABASES = {
