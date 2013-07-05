@@ -21,7 +21,8 @@ NUM_BACKERS = 'num_backers'
 VALUES_FIELD = ['title','pub_date','description', 'num_backers', 'pk', 'classification']
 
 #Template for model outputs
-TEMPLATE_HEADINGS = [{'db':'title', 'pretty':'Idea Title'}, 
+TEMPLATE_HEADINGS = [{'db':'pk', 'pretty':'ID'}, 
+                     {'db':'title', 'pretty':'Idea Title'}, 
                      {'db':'pub_date', 'pretty':'Date Published'},
                      {'db':'description', 'pretty':'Idea Description'},
                      {'db':'num_backers', 'pretty':'Number of Backers'},
