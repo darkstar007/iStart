@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block classification_head %} {{ classification|upper }} {% endblock classification_head %}		
+
+{% block extra_js %}
+
+<script>
+  		// Adds tags to an array for form population
+  		var inputTags = new Array();
+  		
+  		function modifyTagsArray(e) {
+  			
+  			idx = inputTags.indexOf(e.id);
+  			//alert(idx);
+  			if (idx < 0) {
+  				addToTagsArray(e.id);
+  				document.getElementById(e.id).className = "btn btn-mini btn-primary";
+  				}
+  			else {
+  				removeFromArray(e.id);
+  				document.getElementById(e.id).className = "btn btn-mini";
+  				}
+  			//alert(inputTags);
+  		}
+  		
+  		// Add an element to the array
+  		function addToTagsArray(value) {
+  			inputTags.push(value);
+  		}
+  	  	
+  		// remove an element from the array
+  		function removeFromArray(value) {
+  			idx = inputTags.indexOf(value);
+  			inputTags.splice( idx, 5 );
+  		}
+  		
+  		// Assign the hidden tags field to the tags array
+  		function setTagsList(el) {
+  			var tagArr = inputTags.join(",");
+  			//alert(tagArr);
+  			var a_href = $('#tag_filter').attr('href');
+  			a_href += tagArr;
+  			//alert(a_href);
+  			$("#"+el.id).attr("href", a_href);
+  			$('body').load(a_href);
+  			//window.location = a_href;
+			}
+  		
+		// Retrieves URL parameter values for name (key)
+  		function getURLParameter(name) {
+  		    return decodeURI(
+  		        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+  		    );
+  		}
+  		
+	  	// Set the sortlist
+  		function toggleSortOrder(el) {
+	  		//alert('ID '+el.id);
+	  		
+	  		//var s_href = $('#location').attr('href');
+	  		var s_href = window.location;
+	  		//alert('shref '+s_href);
+	  		
+	  		var field = getURLParameter('sort');
+	  		
+	  		if (el.id == field || el.id == String("-")+String(field)) {
+	  			
+	  			if (field.indexOf('-') == -1) {
+	  				var newField = String('-') + String(field);
+	  				//alert(newField);
+	  				var new_href = String(s_href).replace(String(field), newField);
+	  				$('body').load(new_href);
+	  				$("#"+el.id).attr("href", new_href);
+	  				//alert(new_href);
+	  				
+	  			}
+	  			else {
+	  				//alert('in else');
+	  				var newField = String(field);
+	  				//alert(newField);
+	  				var new_href = String(s_href).replace(String(field), newField);
+	  				//alert(new_href);
+	  				$('body').load(new_href);
+	  				$("#"+el.id).attr("href", new_href);
+	  				//alert(new_href);
+	  			}
+	  			
+	  		}
+	  		else {
+	  			
+	  			//alert('field is null');
+	  		}
+	  	}
+	
+</script>
+
+{% endblock extra_js %} 
+
+{% block main_block %}
+
+<div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              
+              <li class="nav-header">Tag Filters</li>
+			  	<li style="padding:2px; border-radius:3px; margin:0px auto 5px auto; overflow: auto; max-height: 200px;">
+					{% for known_tag in known_tags %}
+						<button id="{{ known_tag }}" style="margin:0px auto 4px auto;" class="btn btn-mini" onclick="modifyTagsArray(this)" type="button">{{ known_tag }}</button>
+					{% endfor %}
+				<li>
+					<button style="float:right; margin:5px; auto" class="btn btn-primary" onclick="setTagsList(this)" id="{{ sorts_and_filters.tag_item.id }}" href="/projects/gallery_filtered/{{sorts_and_filters.tag_item.url}}">
+						{{ sorts_and_filters.tag_item.display_name }}
+					</button>
+				</li>
+                
+				<hr></hr>
+                
+                <li class="nav-header">Sort By</li>
+            	<li class="active"><a href="/projects/gallery_filtered/">No Sort</a></li>
+            	<!-- The actual sorts -->
+            	{% for sort_item in sorts_and_filters.sort_items %}
+           		<li>
+           			<a onclick="toggleSortOrder(this)" direction= "{{ sort_item.direction }}" id="{{ sort_item.id }}" href="{{ sort_item.url }}"> {{ sort_item.display_name }} </a>
+           		</li>
+            	{% endfor %}
+              	
+              
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+            	<h1>{{ page_title }}</h1>
+        		  </br></br>
+			{% for row in tableData %}
+			<div class="row-fluid">
+				{% for cell in row %}
+                            {% if cell.perc_likes > 80 %}
+        					<li class="span4">
+        						<div class="thumbnail" style="height:auto;border: 2px solid green;">
+        							<div class="caption">		
+                                                <!--<div class="alert alert-success">-->			
+        								<h4>{{ cell.title }}</h4>
+                                                <!--</div>-->
+                            				<p> {{ cell.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}       							
+                                     </div>
+        						</div>
+        					</li>
+                            {% elif cell.perc_dislikes > 80 %}
+                            <li class="span4">
+        						<div class="thumbnail" style="height:auto;border: 2px solid red;">
+        							<div class="caption">		
+                                                <!--<div class="alert alert-danger">-->			
+        								<h4>{{ cell.title }}</h4>
+                                                <!--</div>-->
+        								<p> {{ cell.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+                                    </div>
+        						</div>
+        					</li>
+                            {% else %}
+                                <li class="span4">
+        						<div class="thumbnail" style="height:auto;">
+        							<div class="caption">					
+        								<h4>{{ cell.title }}</h4>
+        								<p> {{ cell.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+                                    </div>
+        						</div>
+        					</li>
+                            {% endif %}
+				{% endfor %}
+			{% endfor %}
+
+    </div><!--/.fluid-container-->
+    <hr>
+
+    
+
+ <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+{% endblock main_block %}
+
+{% block classification_tail %} {{ classification }} {% endblock classification_tail %}

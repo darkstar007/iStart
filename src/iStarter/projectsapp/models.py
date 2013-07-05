@@ -40,6 +40,8 @@ class project(models.Model):
     importance = models.IntegerField() 
     effort = models.IntegerField()
     resource = models.IntegerField()
+    # Is the project active?
+    active = models.BooleanField()
 
 	# Is the project active ?
     active = models.BooleanField()

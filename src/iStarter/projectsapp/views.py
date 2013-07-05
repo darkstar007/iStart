@@ -3,6 +3,7 @@ from django.core.context_processors import csrf
 from django.db.models import Count, Min, Sum, Max, Avg
 from django.http import HttpResponse, Http404
 
+
 import os
 import sys
 import logging
@@ -12,6 +13,9 @@ import collections
 from random import randint
 import hashlib
 import base64
+
+import projectsapp.settings as settings
+from projectsapp.code import getMaxClassification
 
 #============================================================================================
 # TO ENSURE ALL OF THE FILES CAN SEE ONE ANOTHER.
@@ -38,7 +42,9 @@ from projectsapp.forms import projectForm
 from projectsapp.forms import backForm
 from code import formatSubmitterEmail, formatHttpHeaders, getDate, saveProject
 from code import saveTags, distinctTagsSortedAlpha
+from customObjectQueries import filteredRetrieval, validateQueryParams, buildSingleSortAndFilterItems
 from code import backersRequiredAlgorithm
+from projectScoringAlgs import backersRequiredAlgorithm as brAlg
 
 def submit(request):
     ''' Pulling together ideas into a glorious project. '''
@@ -116,7 +122,39 @@ def project_list(request):
     c['tableData'] = pData
 
     return render_to_response("projectsapp/project_list.html", c)
-            	
+
+def unlike(request, projectid):
+    ''' This is the reverse of clicking on a selected like/dislike button '''
+    if request.method == 'GET': 
+
+        # Parse the projectid
+        splt = projectid.split('_')
+        
+        prjid = splt[1]
+        choice = splt[0]
+
+        #Now record this in the db
+
+        if choice in ['like', 'dislike']:
+ 
+            #Now record this in the db
+            pData = projectModel.objects.filter(id=prjid)[0]
+            oldLike = projectVoteModel.objects.filter(project=pData, vote_type = choice).order_by('-vote_date')[0]
+            if choice == 'like':
+                pData.num_likes -= 1
+                newVal = pData.num_likes
+                
+            elif choice == 'dislike':
+                pData.num_dislikes -= 1
+                newVal = pData.num_dislikes
+                
+            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(prjid)+'</valdata></data></xml>'
+            pData.save()
+            oldLike.delete()
+        else:
+            xml = '<xml><error>Invalid choice "' + choice + '" selected</error></xml>'
+        return HttpResponse(xml, content_type="text/xml")
+
 def like(request, projectid):
     ''' Liking and disliking. '''
     
@@ -131,7 +169,7 @@ def like(request, projectid):
         prjid = splt[1]
         choice = splt[0]
  
-        if choice in ['like', 'dislike', 'back']:
+        if choice in ['like', 'dislike']:
  
             #Now record this in the db
             pData = projectModel.objects.filter(id=prjid)[0]
@@ -140,30 +178,28 @@ def like(request, projectid):
             if choice == 'like':
                 pData.num_likes += 1
                 newVal = pData.num_likes
-                
+	            
             elif choice == 'dislike':
                 pData.num_dislikes += 1
                 newVal = pData.num_dislikes
                 
-            elif choice == 'back':
-                pData.num_backers +=1
-                newVal = pData.num_backers
-                
-            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>cell'+str(choice)+'_'+prjid+'</valdata></data></xml>'
+            xml = '<xml><data><iddata>'+str(int(newVal))+'</iddata><valdata>'+str(prjid)+'</valdata></data></xml>'            
             pData.save()
             newLike.save()
-
+        else:
+            xml = '<xml><error>Invalid choice "' + choice + '" selected</error></xml>'
         return HttpResponse(xml, content_type="text/xml")
     
 def project_gallery(request):
-	''' Display all the projects as table list of icons'''
-	c = {"classification":"unclassified","page_title":"iStarter Project Gallery"}
-	c.update(csrf(request))
-	pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'active', 'num_likes', 'num_dislikes')
-	rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'importance':'', 'effort':'', 'resource':'', 'active':'','num_likes':'','num_dislikes':''}
 
- 	#Template for model outputs
- 	template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
+    ''' Display all the projects as table list of icons'''
+    c = {"classification":"unclassified","page_title":"iStarter Project Gallery"}
+    c.update(csrf(request))
+    pData = projectModel.objects.values_list('title','pub_date','description', 'num_backers', 'pk', 'importance', 'effort', 'resource', 'active', 'num_likes', 'num_dislikes')
+    rowdict = {'title':'','pub_date':'','description':'','backPercentage':'','backersRequired':'','id':'', 'importance':'', 'effort':'', 'resource':'', 'active':'','num_likes':'','num_dislikes':''}
+
+    #Template for model outputs
+    template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
                         {'db':'description', 'pretty':'Idea Description'},
                         {'db':'num_backers', 'pretty':'Number of Backers'},
@@ -174,16 +210,15 @@ def project_gallery(request):
                         {'db':'active','pretty':'Project is Active'},
                         {'db':'num_likes','pretty':'Number of Likes'},
                         {'db':'num_dislikes','pretty':'Number of Dislikes'}]
-	
-	# First find maximum backers todate
-	maxbackers= -1
-	backers=0
-	for pDataidx, row in enumerate(pData):
-		for headingidx, heading in enumerate(template_headings):
-			if heading['db']=='num_backers' :
-				backers=row[headingidx]
-			if backers > maxbackers :
-				maxbackers=backers
+    # First find maximum backers todate
+    maxbackers= -1
+    backers=0
+    for pDataidx, row in enumerate(pData):
+        for headingidx, heading in enumerate(template_headings):
+            if heading['db']=='num_backers' :
+                backers=row[headingidx]
+            if backers > maxbackers :
+                maxbackers=backers
 
 	# Prepare the data to pass to the HTML
 	outrow = []
@@ -239,16 +274,66 @@ def project_gallery(request):
 	c['tableData'] = out
 	#c['headings'] = template_headings
 	
-	return render_to_response("projectsapp/project_gallery.html", c)	
- 
+	return render_to_response("projectsapp/project_gallery.html", c)
+
+#----------------------------------------------------------------------------------------
+
+def project_gallery_filtered(request):
+    ''' Display some of the projects, depending on filter parameters'''
+    
+    #TODO: Update this classification dynamically based on highest value in data
+    c = {"page_title":"iSTARter Project Gallery"}
+    
+    # Get the headings data
+    c['headings'] = settings.TEMPLATE_HEADINGS
+    
+    # Get the request parameters from the url - into a dictionary
+    params = request.GET.dict()
+    safeParams = validateQueryParams(params)
+
+    # Get the data, having handled the sorting and filtering 
+    resultSet = filteredRetrieval(projectModel, safeParams)
+
+    # Get the project max classification
+    c['classification'] = getMaxClassification(resultSet) or 'unknown'
+    
+    # Create the tag list for selecting by user
+    c['known_tags'] = distinctTagsSortedAlpha()
+
+    # Get the urls needed to filter the results when someone clicks on them
+    c['sorts_and_filters'] = buildSingleSortAndFilterItems()
+    
+    # Get the fields we want out into a list
+    flds = [f['db'] for f in settings.TEMPLATE_HEADINGS]
+    
+    # Now get a list containing each row stored as a dict
+    data = resultSet.values(*flds)
+    
+    allRows = []
+    rowList = []
+    i = 0
+    for row in data:
+        row['id'] = row['pk']
+        backersRequired = brAlg(row[settings.EFFORT_FIELD], row[settings.IMPORTANCE_FIELD], row[settings.RESOURCE_FIELD])        
+        backPercentage  = 100 * row[settings.NUM_BACKERS] / backersRequired    
+        row['backPercentage'] = int(backPercentage)
+        row['backersRequired'] = backersRequired
+        rowList.append(row)
+    
+    # Now whack it into another list for good measure - never have enough ;)
+    c['tableData'] = rowList
+    
+    return render_to_response("projectsapp/project_gallery.html", c)    
+
+#----------------------------------------------------------------------------------------
+
 def project_detail(request,projid):
     ''' Display detail on a project '''
-    
-    #Select the project from table
+
     outData = projectModel.objects.get(pk=int(projid))
     rowdict = {'title':'','pub_date':'','description':'','num_backers':'','id':'','backPercentage':'',
                'importance':'','effort':'','resource':'', 'active':'','backersRequired':'','effort_list':[],
-                'importance_list':[],'resource_list':[]}
+                'importance_list':[],'resource_list':[], 'num_likes':0,'num_dislikes':0}
     
     #Template for model outputs
     template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
@@ -264,12 +349,16 @@ def project_detail(request,projid):
     rowdict['pub_date'] = outData.pub_date
     rowdict['description'] = outData.description
     rowdict['num_backers'] = outData.num_backers
+    rowdict['num_likes'] = int(outData.num_likes)
+    rowdict['num_dislikes'] = int(outData.num_dislikes)
+
     rowdict['importance'] = outData.importance
-    rowdict['effort']=outData.effort
+    rowdict['effort'] = outData.effort
     rowdict['effort_list'] = range(outData.effort)
     rowdict['importance_list'] = range(outData.importance)
     rowdict['resource_list'] = range(outData.resource)
     rowdict['resource'] = outData.resource
+
     rowdict['id']=projid
     backersRequired = rowdict['effort'] * ((6-rowdict['importance'])**2) * (rowdict['resource']**3)
     rowdict['backersRequired']=backersRequired
@@ -280,40 +369,36 @@ def project_detail(request,projid):
     c['data'] = rowdict
     c['headings'] = template_headings    
     
-    ''' Here on down is the code for making related ideas table '''    
     
-     #Template for model outputs
-    template_headings_ideas = [{'db':'title', 'pretty':'Idea Title'}, 
-                         {'db':'pub_date', 'pretty':'Date Published'},
-                         {'db':'description', 'pretty':'Idea Description'},
-                         {'db':'likes', 'pretty':'Number of Likes'},
-                         {'db':'dislikes', 'pretty':'Number of DisLikes'}]
-    #get the values form db - this could be user requested - e.g. based on pub date
-    pideaData = outData.ideas_derived_from.values_list('title','pub_date','description','likes','dislikes')
+    '''Ideas gallery - yes should import this but times tight... '''
+    pideaData = outData.ideas_derived_from.values_list('title','pub_date','description', 'pk', 'likes', 'dislikes', 'id')
+    #print pideaData
+    max_likes = ideaModel.objects.all().aggregate(Max('likes'))
+    max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
+    outdict = {'title':'','pub_date':'','description':'','likes':0,'dislikes':0, 'perc_likes':0,'perc_dislikes':0, 'linked_projects':[]}
     out = []
-    outrow = {'uid':'','cells':[]}
-    celldict = {'field':'','full':'','short':'','id':''}
-    for pDataidx, row in enumerate(pideaData):
-        for headingidx, heading in enumerate(template_headings_ideas):
-            #print row[headingidx]
-            celldict['field']=heading['pretty']
-            if heading['db']=='likes' or heading['db']=='dislikes':
-                celldict['full']=int(row[headingidx])
-            else:
-                celldict['full']=row[headingidx]
-            #This is the autogenerated id we'll use in the tempalte
-            celldict['id']='idea'+str(pDataidx)+str(headingidx)
-            outrow['cells'].append(celldict.copy())
-        #Do a hash of the title to store as uid
-        uid = base64.b64encode(hashlib.sha256(row[0]).digest(), altchars="ZZ")[:32]
-        outrow['uid']=uid
-        out.append(outrow.copy())
-        outrow = {'uid':'','cells':[]}
-    c['headings_ideas'] = template_headings_ideas      
+    #Simpler
+    for row in pideaData:
+        outdict['title']=row[0][:15]
+        outdict['pub_date']=row[1]
+        outdict['description']=row[2][:100]
+        outdict['likes']=int(row[4])
+        outdict['dislikes']=int(row[5])
+        outdict['perc_likes']=100*outdict['likes']/max_likes['likes__max']
+        outdict['perc_dislikes']=100*outdict['dislikes']/max_dislikes['dislikes__max']
+        outdict['id'] = row[3]
+        projs = projectModel.objects.filter(ideas_derived_from=row[3])
+        if projs:
+            for proj in projs:
+                outdict['linked_projects'].append(proj.id)
+        out.append(outdict.copy())
+        #print outdict
+        outdict['linked_projects']=[]
+      
+
     c['tableData_ideas'] = out
-
+    
     return render_to_response("projectsapp/project_detail.html", c)
-
 
 def back(request, projid):
     ''' Backing a project '''
@@ -385,3 +470,9 @@ def back(request, projid):
         else:
             raise Http404
 
+def learn_more(request) :
+	c = {"classification":"unclassified",
+         "page_title":"Learn More:"}
+	c.update(csrf(request))
+	return render_to_response('projectsapp/Learn_more.html', c)
+    

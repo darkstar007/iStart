@@ -65,7 +65,8 @@ def saveIdea(ideaTitle, ideaText, ideaClassification, ideaHeaders):
     #pdb.set_trace()    
 
     out = ideaModel(title = ideaTitle, pub_date = getDate(), description = ideaText, num_backers = 1,
-                    classification = ideaClassification, headers = ideaHeaders)
+                    classification = ideaClassification, headers = ideaHeaders, likes=0.0, dislikes=0.0)
+
     out.save()
     return out
 
@@ -138,6 +139,38 @@ def loadTestData():
     
     fh.close()
     '''
+    
+#------------------------------------------------------------------------
+
+def getMaxClassification(results):
+    ''' Gets the maximum classification of the objects returned. '''
+
+    classificationRank = [c[0].lower() for c in settings.CLASSIFICATIONS]
+    
+    maxClass = classificationRank[-1]
+    maxClassIdx = 0
+    if len(results) == 0:
+        maxClass = 'unclassified'
+    
+    # Get the results
+    for res in results:
+        
+        try:
+            cls = res.classification.lower()
+        except:
+            continue
+        
+        # Ensure it matches our known set, get it's index in the ranked scale
+        if cls in classificationRank:
+            classIdx = classificationRank.index(cls)
+            
+            # If it's higher than the highest so far, reset the highest so far
+            if classIdx > maxClassIdx:
+                maxClassIdx = classIdx
+                maxClass    = cls
+        
+    return maxClass    
+    
 
 
 

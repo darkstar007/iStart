@@ -11,7 +11,6 @@ urlpatterns = patterns('',
     url(r'^$',   include('projectsapp.urls')),    			# Site landing is passed to projectsapp
     url(r'^ideas/',   include('ideasapp.urls')),    		# krazee ideas for R&D
     url(r'^projects/',   include('projectsapp.urls')),  	# project looking for backing or in development
-
 )
 
 
