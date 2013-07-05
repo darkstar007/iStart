@@ -43,10 +43,10 @@
                             {% if row.perc_likes > 80 %}
         					<li class="span4">
         						<div class="thumbnail" style="height:auto;border: 2px solid green;">
-        							<div class="caption">				
-        								<h4>{{ cell.title }}&nbsp
-                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{cell.title}}   Description:{{cell.description}}'">Share</button>
-                                                    </h4>
+        							<div class="caption">		
+                                                <!--<div class="alert alert-success">-->			
+        								<h4>{{ cell.title }}</h4>
+                                                <!--</div>-->
                             				<p> {{ cell.description }} </p>
         								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}       							
                                             </div>
@@ -55,12 +55,12 @@
                             {% elif row.perc_dislikes > 80 %}
                                 <li class="span4">
         						<div class="thumbnail" style="height:auto;border: 2px solid red;">
-        							<div class="caption">				
-        								<h4>{{ cell.title }}&nbsp
-                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{cell.title}}   Description:{{cell.description}}'">Share</button>
-                                                    </h4>
+        							<div class="caption">		
+                                                <!--<div class="alert alert-danger">-->			
+        								<h4>{{ cell.title }}</h4>
+                                                <!--</div>-->
         								<p> {{ cell.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}     							
+        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
                                             </div>
         						</div>
         					</li>
@@ -68,9 +68,7 @@
                                 <li class="span4">
         						<div class="thumbnail" style="height:auto;">
         							<div class="caption">					
-        								<h4>{{ cell.title }}&nbsp
-                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{cell.title}}   Description:{{cell.description}}'">Share</button>
-                                                    </h4>
+        								<h4>{{ cell.title }}</h4>
         								<p> {{ cell.description }} </p>
         								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
                                             </div>
@@ -92,19 +90,6 @@
  <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../assets/js/jquery.js"></script>
-    <script src="../assets/js/bootstrap-transition.js"></script>
-    <script src="../assets/js/bootstrap-alert.js"></script>
-    <script src="../assets/js/bootstrap-modal.js"></script>
-    <script src="../assets/js/bootstrap-dropdown.js"></script>
-    <script src="../assets/js/bootstrap-scrollspy.js"></script>
-    <script src="../assets/js/bootstrap-tab.js"></script>
-    <script src="../assets/js/bootstrap-tooltip.js"></script>
-    <script src="../assets/js/bootstrap-popover.js"></script>
-    <script src="../assets/js/bootstrap-button.js"></script>
-    <script src="../assets/js/bootstrap-collapse.js"></script>
-    <script src="../assets/js/bootstrap-carousel.js"></script>
-    <script src="../assets/js/bootstrap-typeahead.js"></script>
 
 {% endblock main_block %}
 
