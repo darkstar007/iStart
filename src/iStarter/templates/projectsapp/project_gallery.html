@@ -103,9 +103,9 @@
 							{% endif %}
 							<p class="text-info"rel="popover" title="Project Details" data-content="<em>How many people have backed, liked or disliked this project. (click thumbs to vote)">
 								<i class="icon-user"></i>{{cell.num_backers }}
-									<i class="icon-thumbs-up" id="like_{{cell.id}}" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id,'celllike_', 'celldislike_');"></i>
+									<i class="icon-thumbs-up" id="like_{{cell.id}}" onclick="loadFeedbackXMLDoc('Like', 'projects', this.id,'celllike_', 'celldislike_');"></i>
 									<span id="celllike_{{cell.id}}">{{cell.num_likes}}</span>
-								<i class="icon-thumbs-down"id="dislike_{{cell.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'ideas', this.id,'celldislike_', 'celllike_');"></i>
+								<i class="icon-thumbs-down"id="dislike_{{cell.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'projects', this.id,'celldislike_', 'celllike_');"></i>
 									<span id="celldislike_{{cell.id}}">{{cell.num_dislikes}}</span>
 							</p>
 							<center>
