@@ -483,3 +483,9 @@ def back(request, projid):
         else:
             raise Http404
 
+def learn_more(request) :
+	c = {"classification":"unclassified",
+         "page_title":"Learn More:"}
+	c.update(csrf(request))
+	return render_to_response('projectsapp/learn_more.html', c)
+    
