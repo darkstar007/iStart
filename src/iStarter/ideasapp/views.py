@@ -278,41 +278,6 @@ def ideas_gallery(request):
         c['headings'] = template_headings
         c['tableData'] = out       
         
-
-    '''
-    # Prepare the data to pass to the HTML
-    #outrow = []
-    out = []
-    outrow = {'uid':'','perc_likes':'','perc_dislikes':'','cells':[]}
-    for pDataidx, row in enumerate(pData):
-        for headingidx, heading in enumerate(template_headings):
-            if heading['db']=='title' :
-                rowdict['title'] = row[headingidx][:20]
-            if heading['db']=='pub_date' :
-                rowdict['pub_date'] = row[headingidx]
-            if heading['db']=='description' :
-                rowdict['description'] = row[headingidx][:100]
-            if heading['db']=='pk':
-                rowdict['id']=row[headingidx]
-            if heading['db']=='likes':
-                rowdict['likes']=int(row[headingidx])
-            if heading['db']=='dislikes':
-                rowdict['dislikes']=int(row[headingidx])
-            projs = projectModel.objects.filter(ideas_derived_from=row[3])
-            if projs:
-                for proj in projs:
-                    rowdict['linked_projects'].append(proj.id)
-        outrow['cells'].append(rowdict.copy())
-        outrow['perc_likes']=100*rowdict['likes']/max_likes['likes__max']
-        outrow['perc_dislikes']=100*rowdict['dislikes']/max_dislikes['dislikes__max']
-        outrow['uid']=str(rowdict['id'])
-        out.append(outrow.copy())
-        rowdict['linked_projects']=[]
-        outrow = {'average_likes':'','average_dislikes':'','cells':[]}
-        print out
-    c['tableData'] = out
-    c['headings'] = template_headings
-    '''	
     return render_to_response("ideasapp/ideas_gallery.html", c)	          
             
             
