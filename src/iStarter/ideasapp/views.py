@@ -231,7 +231,7 @@ def ideas_gallery(request):
     ''' Display all the projects as table list of icons'''
     c = {"classification":"unclassified","page_title":"iStarter Ideas Gallery"}
     c.update(csrf(request))
-    pData = ideaModel.objects.values_list('title','pub_date','description', 'pk', 'likes', 'dislikes')
+    pData = ideaModel.objects.values_list('title','pub_date','description', 'pk', 'likes', 'dislikes', 'id')
     '''
     #Get the average for likes and dislikes
     avg_likes = ideaModel.objects.all().aggregate(Avg('likes'))
@@ -243,8 +243,7 @@ def ideas_gallery(request):
     #print max_likes
     max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
     #print max_dislikes
-    rowdict = {'title':'','pub_date':'','description':'','id':'','likes':'','dislikes': '','linked_projects':[]}
-
+    '''
     #Template for model outputs
     template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
                          {'db':'pub_date', 'pretty':'Date Published'},
@@ -254,8 +253,7 @@ def ideas_gallery(request):
                         {'db':'dislikes', 'pretty':'Disikes'},
                         {'db':'linked_projects','pretty':'Linked Projects'},
                         ]
-
-
+     '''
 
     outdict = {'title':'','pub_date':'','description':'','likes':0,'dislikes':0, 'perc_likes':0,'perc_dislikes':0, 'linked_projects':[]}
     out = []
@@ -268,6 +266,7 @@ def ideas_gallery(request):
         outdict['dislikes']=int(row[4])
         outdict['perc_likes']=100*outdict['likes']/max_likes['likes__max']
         outdict['perc_dislikes']=100*outdict['dislikes']/max_dislikes['dislikes__max']
+        outdict['id'] = row[6]
         projs = projectModel.objects.filter(ideas_derived_from=row[5])
         if projs:
             for proj in projs:
@@ -275,7 +274,7 @@ def ideas_gallery(request):
         out.append(outdict.copy())
         #print outdict
         outdict['linked_projects']=[]
-        c['headings'] = template_headings
+        #c['headings'] = template_headings
         c['tableData'] = out       
         
     return render_to_response("ideasapp/ideas_gallery.html", c)	          
