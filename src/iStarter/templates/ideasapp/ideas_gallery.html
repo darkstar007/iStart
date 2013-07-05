@@ -39,43 +39,77 @@
 				{% if forloop.counter0|divisibleby:"3" %}
 					<div class="row-fluid">
 				{% endif %}
-				            {% if row.perc_likes > 80 %}
+     							
+                            {% if row.perc_likes > 80 %}
         					<li class="span4">
-        						<div class="thumbnail" style="height:auto;border: 2px solid green;">
-        							<div class="caption">		
-                                                <!--<div class="alert alert-success">-->			
-        								<h4>{{ row.title }}</h4>
-                                                <!--</div>-->
-                            				<p> {{ row.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{row.likes}} <i class="icon-thumbs-down"></i> {{row.dislikes}}       							
+        						<div class="thumbnail" style="height:200px;border: 2px solid green; box-shadow: 5px 5px 10px #CACAC8;">
+        							<div class="caption">				
+        								<h4>{{ row.title }}
+                                                    </h4>
+                            				<p> {{ row.description|truncatewords:20 }} </p>
+                                                    <i class="icon-thumbs-up" id="like_{{row.id}}" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id,'celllike_', 'celldislike_');"></i><span id="celllike_{{row.id}}">{{row.likes}}</span>
+                                                    <i class="icon-thumbs-down"id="dislike_{{row.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'ideas', this.id,'celldislike_', 'celllike_');"></i><span id="celldislike_{{row.id}}">{{row.dislikes}}</span>
+                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Idea&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>
+                                                    {% if row.linked_projects %}
+                                                        <p>Linked Projects:
+                                                        {% for proj in row.linked_projects %}
+                                                            <a href="/projects/project_detail/{{proj}}">{{proj}},</a>
+                                                        {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p>No Linked Projects</p>
+                                                    {% endif %}                                                    
                                             </div>
         						</div>
         					</li>
                             {% elif row.perc_dislikes > 80 %}
                                 <li class="span4">
-        						<div class="thumbnail" style="height:auto;border: 2px solid red;">
-        							<div class="caption">		
-                                                <!--<div class="alert alert-danger">-->			
-        								<h4>{{ row.title }}</h4>
-                                                <!--</div>-->
-        								<p> {{ row.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{row.likes}} <i class="icon-thumbs-down"></i> {{row.dislikes}}      							
+        						<div class="thumbnail" style="height:200px;border: 2px solid red; box-shadow: 5px 5px 10px #CACAC8;">
+        							<div class="caption">				
+        								<h4>{{ row.title }}
+                                                    </h4>
+        								<p> {{ row.description|truncatewords:20 }} </p>
+        								<i class="icon-thumbs-up" id="like_{{row.id}}" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id,'celllike_', 'celldislike_');"></i><span id="celllike_{{row.id}}">{{row.likes}}</span>
+                                                    <i class="icon-thumbs-down"id="dislike_{{row.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'ideas', this.id,'celldislike_', 'celllike_');"></i><span id="celldislike_{{row.id}}">{{row.dislikes}}</span>
+                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Idea&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>
+                                                    {% if row.linked_projects %}
+                                                        <p>Linked Projects:
+                                                        {% for proj in row.linked_projects %}
+                                                            <a href="/projects/project_detail/{{proj}}">{{proj}},</a>
+                                                        {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p>No Linked Projects</p>
+                                                    {% endif %}     
                                             </div>
         						</div>
         					</li>
                             {% else %}
                                 <li class="span4">
-        						<div class="thumbnail" style="height:auto;">
+        						<div class="thumbnail" style="height:200px; box-shadow: 5px 5px 10px #CACAC8;">
         							<div class="caption">					
-        								<h4>{{ row.title }}</h4>
-        								<p> {{ row.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{row.likes}} <i class="icon-thumbs-down"></i> {{row.dislikes}}      							
+        								<h4>{{ row.title }}
+                                                    </h4>
+        								<p> {{ row.description|truncatewords:20 }} </p>
+        								<i class="icon-thumbs-up" id="like_{{row.id}}" onclick="loadFeedbackXMLDoc('Like', 'ideas', this.id,'celllike_', 'celldislike_');"></i><span id="celllike_{{row.id}}">{{row.likes}}</span>
+                                                    <i class="icon-thumbs-down"id="dislike_{{row.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'ideas', this.id,'celldislike_', 'celllike_');"></i><span id="celldislike_{{row.id}}">{{row.dislikes}}</span>
+                                                    <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Idea&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button>
+                                                    {% if row.linked_projects %}
+                                                        <p>Linked Projects:
+                                                        {% for proj in row.linked_projects %}
+                                                            <a href="/projects/project_detail/{{proj}}">{{proj}},</a>
+                                                        {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p>No Linked Projects</p>
+                                                    {% endif %}     
                                             </div>
         						</div>
         					</li>
                             {% endif %}
 				{% if forloop.counter|divisibleby:"3" %}	
 					</div><!--/row-->
+					</br>
 				{% endif %}
 			{% endfor %}
 

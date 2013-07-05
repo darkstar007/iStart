@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^unlike/(?P<projectid>\w+)/$', 'projectsapp.views.unlike', name='unlike'),						# for saying you like a project
     url(r'^project_detail/(?P<projid>\w+)/$','projectsapp.views.project_detail', name='project_detail'),	# Look at the detail of a project
     url(r'^back/(?P<projid>\w+)/$',    'projectsapp.views.back', name='back'),								# For saying you will back a project
-
+	url(r'^learn_more/', 'projectsapp.views.learn_more', name='project_learn_more'),						# more information
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

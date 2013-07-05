@@ -135,7 +135,7 @@
         	<div class="hero-unit">
             	<h1>{{ page_title }}</h1>
             	<p>Its your turn to drive.</p>
-            	<p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+            	<p><a href="/projects/learn_more" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
           	</div>
 		  		  
 			{% for row in tableData %}
@@ -143,7 +143,7 @@
 					<div class="row-fluid">
 				{% endif %}
 					<li class="span4">
-						<div class="thumbnail" style="height:450px;">
+						<div class="thumbnail" style="height:450px;  box-shadow: 5px 5px 10px #CACAC8;">
 							{% if row.backPercentage < 33 %} 
 								{% if row.active %}
 									<div class="progress progress-info progress-striped active">

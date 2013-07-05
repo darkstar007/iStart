@@ -333,7 +333,7 @@ def project_detail(request,projid):
     outData = projectModel.objects.get(pk=int(projid))
     rowdict = {'title':'','pub_date':'','description':'','num_backers':'','id':'','backPercentage':'',
                'importance':'','effort':'','resource':'', 'active':'','backersRequired':'','effort_list':[],
-                'importance_list':[],'resource_list':[]}
+                'importance_list':[],'resource_list':[], 'num_likes':0,'num_dislikes':0}
     
     #Template for model outputs
     template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
@@ -349,11 +349,11 @@ def project_detail(request,projid):
     rowdict['pub_date'] = outData.pub_date
     rowdict['description'] = outData.description
     rowdict['num_backers'] = outData.num_backers
-
-    rowdict['likes_total'] = int(outData.num_likes - outData.num_dislikes)
+    rowdict['num_likes'] = int(outData.num_likes)
+    rowdict['num_dislikes'] = int(outData.num_dislikes)
 
     rowdict['importance'] = outData.importance
-    rowdict['effort']=outData.effort
+    rowdict['effort'] = outData.effort
     rowdict['effort_list'] = range(outData.effort)
     rowdict['importance_list'] = range(outData.importance)
     rowdict['resource_list'] = range(outData.resource)
@@ -369,51 +369,34 @@ def project_detail(request,projid):
     c['data'] = rowdict
     c['headings'] = template_headings    
     
-    ''' Here on down is the code for making related ideas gallery '''     
-        #Template for model outputs
-    template_headings_ideas = [{'db':'title', 'pretty':'Idea Title'}, 
-                         {'db':'pub_date', 'pretty':'Date Published'},
-                        {'db':'description', 'pretty':'Idea Description'},
-                        {'db':'pk','pretty':'Project Id'},
-                        {'db':'likes', 'pretty':'Likes'},
-                        {'db':'dislikes', 'pretty':'Disikes'},
-                        ]    
     
-    
-    pideaData = outData.ideas_derived_from.values_list('title','pub_date','description','pk','likes','dislikes')
+    '''Ideas gallery - yes should import this but times tight... '''
+    pideaData = outData.ideas_derived_from.values_list('title','pub_date','description', 'pk', 'likes', 'dislikes', 'id')
     #print pideaData
     max_likes = ideaModel.objects.all().aggregate(Max('likes'))
     max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
-    rowdict = {'title':'','pub_date':'','description':'','id':'','likes':'','dislikes': ''}
-    
-    # Prepare the data to pass to the HTML
-    #outrow = []
+    outdict = {'title':'','pub_date':'','description':'','likes':0,'dislikes':0, 'perc_likes':0,'perc_dislikes':0, 'linked_projects':[]}
     out = []
-    outrow = {'uid':'','perc_likes':'','perc_dislikes':'','cells':[]}
-    for pDataidx, row in enumerate(pideaData):
-        for headingidx, heading in enumerate(template_headings_ideas):
-            if heading['db']=='title' :
-                rowdict['title'] = row[headingidx][:20]
-            if heading['db']=='pub_date' :
-                rowdict['pub_date'] = row[headingidx]
-            if heading['db']=='description' :
-                rowdict['description'] = row[headingidx][:100]
-            if heading['db']=='pk':
-                rowdict['id']=row[headingidx]
-            if heading['db']=='likes':
-                rowdict['likes']=int(row[headingidx])
-            if heading['db']=='dislikes':
-                rowdict['dislikes']=int(row[headingidx])
-        outrow['cells'].append(rowdict.copy())
-        outrow['perc_likes']=100*rowdict['likes']/max_likes['likes__max']
-        outrow['perc_dislikes']=100*rowdict['dislikes']/max_dislikes['dislikes__max']
-        outrow['uid']=str(rowdict['id'])
-        out.append(outrow.copy())
-        #print outrow
-        outrow = {'average_likes':'','average_dislikes':'','cells':[]}
+    #Simpler
+    for row in pideaData:
+        outdict['title']=row[0][:15]
+        outdict['pub_date']=row[1]
+        outdict['description']=row[2][:100]
+        outdict['likes']=int(row[4])
+        outdict['dislikes']=int(row[5])
+        outdict['perc_likes']=100*outdict['likes']/max_likes['likes__max']
+        outdict['perc_dislikes']=100*outdict['dislikes']/max_dislikes['dislikes__max']
+        outdict['id'] = row[3]
+        projs = projectModel.objects.filter(ideas_derived_from=row[3])
+        if projs:
+            for proj in projs:
+                outdict['linked_projects'].append(proj.id)
+        out.append(outdict.copy())
+        #print outdict
+        outdict['linked_projects']=[]
+      
 
     c['tableData_ideas'] = out
-    c['headings_ideas'] = template_headings_ideas
     
     return render_to_response("projectsapp/project_detail.html", c)
 
@@ -487,3 +470,9 @@ def back(request, projid):
         else:
             raise Http404
 
+def learn_more(request) :
+	c = {"classification":"unclassified",
+         "page_title":"Learn More:"}
+	c.update(csrf(request))
+	return render_to_response('projectsapp/Learn_more.html', c)
+    
