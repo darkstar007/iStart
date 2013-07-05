@@ -64,7 +64,14 @@
           <div class="nav-collapse collapse">
           <ul class="nav">
           	<li><a href="/">Home</a></li>
-          	<li><a href="/ideas/ideas_gallery">Ideas</a></li>
+          	<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Ideas <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					<li> <a href="/ideas/ideas_gallery">	Ideas Gallery	</a></li>
+					<li> <a href="/ideas/submit">	Submit an Idea	</a></li>
+					<li> <a href="/ideas/ideas_list">	List of Ideas	</a></li>
+				</ul>
+			</li>
           	<li><a href="/projects/project_gallery">Projects</a></li>
           	
           	{% block nav_items_left %}
