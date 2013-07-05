@@ -49,7 +49,38 @@
   		    document.getElementById("id_existing_tags").value = inputTags;
   		}
 
-  		
+                // def backersRequiredAlgorithm(effort, importance, resources) :		
+                //      	return effort * ((6-importance)**2) * (resources**3)
+
+                function recompute_backers() {
+	           var newval = new Number($('#stareffort').raty('score')) * 
+                                  Math.pow( new Number(6 - $('#starimportance').raty('score')), 2) *
+                                  Math.pow(new Number($('#starresource').raty('score')),3);
+                   document.getElementById('num_backers').innerHTML = newval;
+//alert($('#stareffort').raty('score')+' '+(6 - $('#starimportance').raty('score'))+' '+$('#starresource').raty('score'));
+                }
+
+                $(document).ready(function(){
+			$.fn.raty.defaults.path = '/static/raty-2.5.2/lib/img';	
+//			$("div[id^=star]").raty({
+//				score: function() {
+//					return $(this).attr('data-score');
+//				}
+//			});
+
+                    $("div[id^=star]").bind('mousemove', 0, false, 
+                       function(event) {
+
+                      });
+
+                    $("div[id^=star]").raty({
+                          click: function(score, evt) {
+                                   recompute_backers();
+                                 }
+                      });
+	            $("div[id^=star]").raty('click', 3);
+
+                });
   	</script>
 
 {% endblock extra_js %} 
@@ -119,7 +150,8 @@
 					</div>
 				</div>
 				<div class="row-fluid">
-					Backers Required:  25
+					<div class="span4">Backers Required:</div>
+                                        <div class="span4"><span id="num_backers">729</span></div>
 				</div>
 			</div>
 		
@@ -168,17 +200,8 @@
 	
 	<!-- javascript at end for speed -->
 	<script type="text/javascript">
-		$(function() {
-			$.fn.raty.defaults.path = '/static/raty-2.5.2/lib/img';	
-			$("div[id^=star]").raty({
-				score: function() {
-					return $(this).attr('data-score');
-				}
-			});
-		})();
 	</script>
 	<script>
-		$('#star').raty();
 	</script>
 	
 {% endblock main_block %}
