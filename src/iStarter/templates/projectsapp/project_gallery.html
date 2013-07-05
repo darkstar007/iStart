@@ -41,41 +41,96 @@
   			var new_href = $('#tag_filter').attr('href', a_href);
     		}
   		
-
+		// Retrieves URL parameter values for name (key)
+  		function getURLParameter(name) {
+  		    return decodeURI(
+  		        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+  		    );
+  		}
+  		
 	  	// Set the sortlist
   		function toggleSortOrder(el) {
-	  		alert(el.id);
-	  		var direction = $("#" + el.id).attr('direction');
-	  		alert(direction);
+	  		alert('ID '+el.id);
 	  		
-	  		if (direction==-1) {
-	  			alert('hello');
-	  			$("#" + el.id).attr('direction', 1);
-	  			alert($("#" + el.id).attr('direction'));
-	  			var href_in = $("#" + el.id).attr('href');
-		  		href_out = href_in.replace('-'+el.id, el.id);
-		  		var new_href = $("#"+el.id).attr('href', href_out);
-	  		}
+	  		//var s_href = $('#location').attr('href');
+	  		var s_href = window.location;
+	  		alert('shref '+s_href);
 	  		
-	  		else  {
-	  			alert('else');
-	  			var new_direction = $("#" + el.id).attr('direction', -1);
-	  			alert($("#" + el.id).attr('direction'));
-	  			var href_in = $("#" + el.id).attr('href');
-		  		href_out = href_in.replace(el.id, '-'+el.id);
-		  		var new_href = $("#"+el.id).attr('href', href_out);
-	  		}
-
-	  	}
-
-	  	// Set the sortlist
-  		function setSortList() {}
-
-  		
-	  	// Set the sortlist
-  		function setSortList() {}
+	  		var field = getURLParameter('sort');
+	  		
+	  		if (el.id == field || el.id == String("-")+String(field)) {
 	  			
-  		
+	  			alert('field ' + field);
+	  			
+	  			if (field.indexOf('-') == -1) {
+	  				var newField = String('-') + String(field);
+	  				alert(newField);
+	  				var new_href = String(s_href).replace(String(field), newField);
+	  				$('body').load(new_href);
+	  				$("#"+el.id).attr("href", new_href);
+	  				alert(new_href);
+	  				
+	  			}
+	  			else {
+	  				alert('in else');
+	  				var newField = String(field);
+	  				alert(newField);
+	  				var new_href = String(s_href).replace(String(field), newField);
+	  				alert(new_href);
+	  				$('body').load(new_href);
+	  				$("#"+el.id).attr("href", new_href);
+	  				alert(new_href);
+	  			}
+	  			
+	  		}
+	  		else {
+	  			
+	  			alert('field is null');
+	  		}
+	  	}
+	  		
+	  		
+	  		
+	  		
+	  		/*
+	  		if (direction==0) {
+	  			// If its the first time, sort the results and set the direction
+	  			alert("from 0 to 1" + "    " + s_href);
+	  			$.get(s_href, function(data,status) {
+	  							// Write the entire document content out
+	  							$('body').load(data);
+	  							},'html');
+	  			$('#' + el.id).attr('direction', 1);
+	  			}
+			  	// Change the direction in the page for this el to 1	
+	  			
+				
+	  		
+	  		else if (direction==1) {
+	  			// If it is already sorted by this field, 
+
+	  			s_href = s_href.replace(el.id, '-'+el.id);
+	  			alert("from 1 to -1" + "    " + s_href);
+	  			$.get(s_href, function(data,status) {
+	  								$('body').load(data);
+	  							},'html');
+	  			$('#' + el.id).attr('direction', -1);
+	  			}
+				
+
+	  		else  {
+				// Toggle to normal sort
+	  			s_href = s_href.replace('-'+el.id, el.id);
+	  			alert("from -1 to 1" + "    " + s_href);
+	  			$.get(s_href, function(data,status) {
+	  				$('body').load(data);
+					},'html');
+	  			$('#' + el.id).attr('direction', 1);
+	  			}
+				
+			*/
+	
+
 	  		
   	</script>
 {% endblock extra_js %} 
@@ -106,7 +161,7 @@
             	<!-- The actual sorts -->
             	{% for sort_item in sorts_and_filters.sort_items %}
            		<li>
-           			<a onclick="toggleSortOrder(this)" direction= "{{ sort_item.direction }}" id="{{ sort_item.id }}" href="/projects/gallery_filtered/{{ sort_item.url }}"> {{ sort_item.display_name }} </a>
+           			<a onclick="toggleSortOrder(this)" direction= "{{ sort_item.direction }}" id="{{ sort_item.id }}" href="{{ sort_item.url }}"> {{ sort_item.display_name }} </a>
            		</li>
             	{% endfor %}
               	

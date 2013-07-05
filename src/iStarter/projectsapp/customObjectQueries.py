@@ -161,7 +161,7 @@ def buildSingleSortAndFilterItems():
         # For positive sorts
         li = {'url'          : buildSingleSortUrl(key),
               'display_name' : val,
-              'direction'    : 1,
+              'direction'    : 0,
               'id'           : "%s" %(key)}
         sortItems.append(li)
         # For negative sorts
