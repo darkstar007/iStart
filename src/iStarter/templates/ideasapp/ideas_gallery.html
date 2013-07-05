@@ -39,43 +39,67 @@
 				{% if forloop.counter0|divisibleby:"3" %}
 					<div class="row-fluid">
 				{% endif %}
-				{% for cell in row.cells %}
                             {% if row.perc_likes > 80 %}
         					<li class="span4">
-        						<div class="thumbnail" style="height:auto;border: 2px solid green;">
-        							<div class="caption">		
-                                                <!--<div class="alert alert-success">-->			
-        								<h4>{{ cell.title }}</h4>
-                                                <!--</div>-->
-                            				<p> {{ cell.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}       							
+        						<div class="thumbnail" style="height:200px;border: 2px solid green;">
+        							<div class="caption">				
+        								<h4>{{ row.title }}
+                                                    </h4>
+                            				<p> {{ row.description }} </p>
+        								<p><i class="icon-thumbs-up"></i> {{row.likes}} <i class="icon-thumbs-down"></i> {{row.dislikes}}   <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button></p> 
+                                                    {% if row.linked_projects %}
+                                                        <p>Linked Projects:
+                                                        {% for proj in row.linked_projects %}
+                                                            <a href="/projects/project_detail/{{proj}}">{{proj}},</a>
+                                                        {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p>No Linked Projects</p>
+                                                    {% endif %}                                                    
                                             </div>
         						</div>
         					</li>
                             {% elif row.perc_dislikes > 80 %}
                                 <li class="span4">
-        						<div class="thumbnail" style="height:auto;border: 2px solid red;">
-        							<div class="caption">		
-                                                <!--<div class="alert alert-danger">-->			
-        								<h4>{{ cell.title }}</h4>
-                                                <!--</div>-->
-        								<p> {{ cell.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+        						<div class="thumbnail" style="height:200px;border: 2px solid red;">
+        							<div class="caption">				
+        								<h4>{{ row.title }}
+                                                    </h4>
+        								<p> {{ row.description }} </p>
+        								<p><i class="icon-thumbs-up"></i> {{row.likes}} <i class="icon-thumbs-down"></i> {{row.dislikes}}  <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button></p>	
+                                                    {% if row.linked_projects %}
+                                                        <p>Linked Projects:
+                                                        {% for proj in row.linked_projects %}
+                                                            <a href="/projects/project_detail/{{proj}}">{{proj}},</a>
+                                                        {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p>No Linked Projects</p>
+                                                    {% endif %}     
                                             </div>
         						</div>
         					</li>
                             {% else %}
                                 <li class="span4">
-        						<div class="thumbnail" style="height:auto;">
+        						<div class="thumbnail" style="height:200px;">
         							<div class="caption">					
-        								<h4>{{ cell.title }}</h4>
-        								<p> {{ cell.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+        								<h4>{{ row.title }}
+                                                    </h4>
+        								<p> {{ row.description }} </p>
+        								<p><i class="icon-thumbs-up"></i> {{row.likes}} <i class="icon-thumbs-down"></i> {{row.dislikes}}  <button class="btn btn-mini btn-warning" href="#" onclick="javascript:window.location='mailto:?subject=Check out this iStarter Project&body=Title:{{row.title}}   Description:{{row.description}}'">Share</button></p>
+                                                    {% if row.linked_projects %}
+                                                        <p>Linked Projects:
+                                                        {% for proj in row.linked_projects %}
+                                                            <a href="/projects/project_detail/{{proj}}">{{proj}},</a>
+                                                        {% endfor %}
+                                                        </p>
+                                                    {% else %}
+                                                        <p>No Linked Projects</p>
+                                                    {% endif %}     
                                             </div>
         						</div>
         					</li>
                             {% endif %}
-				{% endfor %}
 				{% if forloop.counter|divisibleby:"3" %}	
 					</div><!--/row-->
 				{% endif %}
