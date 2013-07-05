@@ -36,10 +36,10 @@
   		// Assign the hidden tags field to the tags array
   		function setTagsList(el) {
   			var tagArr = inputTags.join(",");
-  			alert(tagArr);
+  			//alert(tagArr);
   			var a_href = $('#tag_filter').attr('href');
   			a_href += tagArr;
-  			alert(a_href);
+  			//alert(a_href);
   			$("#"+el.id).attr("href", a_href);
   			$('body').load(a_href);
   			//window.location = a_href;

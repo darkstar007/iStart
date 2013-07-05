@@ -9,6 +9,14 @@ logging.getLogger(__name__)
 
 def validateQueryParams(params):
     ''' Checks the query parameters against a known list in app-level settings.py '''
+
+    # Extend the current valid_filter_params to include reverses
+    valid_filter_params = []
+    for key in settings.VALID_SORT_FIELDS.keys():
+        valid_filter_params.append(key)
+        valid_filter_params.append('-'+key)
+    
+    settings.VALID_FILTER_PARAMS[settings.SORT_URL_KEY_NAME] = valid_filter_params
     
     safeParams = {}
     # Loop through our url parameters
@@ -78,7 +86,6 @@ def sortedResults(resultSet, params):
     ''' Returns results sorted by a URL parameter.
         This does accept multiple fields to do its sorting by.
     '''
-    print params
     # Get the field user has requested to sort on
     sortValue = params[settings.SORT_URL_KEY_NAME]
     
@@ -110,13 +117,13 @@ def filteredRetrieval(targetModel, params):
     # FILTERING
     validFlds = settings.VALID_FILTERS
     paramFlds = params.keys()
-     
     # Are any of the URL parameter fields in the list of valid filter fields?
     # An empty list evaluates to False.
     if bool([i for i in validFlds if i in paramFlds]) == True:
         resultSet = exactMatchFilter(resultSet, params)
 
     # MULTI-FIELD SORTING
+
     if settings.SORT_URL_KEY_NAME in params.keys():
         resultSet = sortedResults(resultSet, params)
     

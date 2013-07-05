@@ -49,6 +49,7 @@ VALID_SORT_FIELDS = {'pub_date'         : 'Published Date',
                      'effort'           : 'Effort',
                      'resource'         : 'Resource'}
                      #'active'           : 'Active or Inactive'}
+    
 
 # These are the fields you might want to filter on - typically more discrete values               
 VALID_FILTERS =      {'classification' : [i[0] for i in CLASSIFICATIONS],
