@@ -35,10 +35,18 @@
   			idx = inputTags.indexOf(value);
   			inputTags.splice( idx, 5 );
   		}
-  		
+
   		// Assign the hidden tags field to the tags array
-  		function setTagsList() {
-  			document.getElementById("id_existing_tags").value = inputTags;
+  		function submitNewProjectForm() {
+                    var form = document.getElementById('project_submit_form');
+
+                    document.getElementById('id_importance_level').value = $('#starimportance').raty('score');
+                    document.getElementById('id_effort_level').value = $('#stareffort').raty('score');
+                    document.getElementById('id_resource_level').value = $('#starresource').raty('score');
+
+                    form.submit();
+
+  		    document.getElementById("id_existing_tags").value = inputTags;
   		}
 
   		
@@ -58,7 +66,7 @@
 
 {% block main_block %}
 
-	<form action="." method="POST">{% csrf_token %}
+	<form id="project_submit_form" action="." method="POST">{% csrf_token %}
 
 		<div class="row-fluid">
 			<div class="span3 offset1">
@@ -87,7 +95,7 @@
 					</div>
 					<div class="span4">
 						<div id="starimportance" data-score="3"></div>
-						<!--{{ form.importance_level }}-->
+						{{ form.importance_level }}
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -97,7 +105,7 @@
 					</div>
 					<div class="span4">
 						<div id="stareffort" data-score="3"></div>
-						<!--{{ form.effort_level }}-->
+						{{ form.effort_level }}
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -107,7 +115,7 @@
 					</div>
 					<div class="span4">
 						<div id="starresource" data-score="3"></div>
-						<!--{{ form.resource_level }}-->
+						{{ form.resource_level }}
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -148,7 +156,7 @@
 							{{ form.cls }}
 						</div>
 						<div class="span4">
-							<input onclick="setTagList()" class="btn btn-primary" style="float:right; padding:0px auto; margin:0px auto;" type="submit" value="Send"/>
+							<button onclick="submitNewProjectForm()" class="btn btn-primary" style="float:right; padding:0px auto; margin:0px auto;" type="button">Send</button>
 						</div>
 					</div>
 				</div>

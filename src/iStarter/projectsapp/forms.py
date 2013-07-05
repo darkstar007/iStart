@@ -37,10 +37,15 @@ class projectForm(forms.Form):
     existing_tags = forms.CharField(required=False, widget=forms.HiddenInput)
     
     # To enable project scoring metrics
-    importance_level = forms.IntegerField(widget=forms.Select(attrs={'style':'center-align:true;'},
-                                                              choices=get_rating_levels()), required=True)
-    effort_level     = forms.IntegerField(widget=forms.Select(choices=get_rating_levels()), required=True)
-    resource_level   = forms.IntegerField(widget=forms.Select(choices=get_rating_levels()), required=True)
+    #importance_level = forms.IntegerField(widget=forms.Select(attrs={'style':'center-align:true;'},
+    #                                                          choices=get_rating_levels()), required=True)
+    #effort_level     = forms.IntegerField(widget=forms.Select(choices=get_rating_levels()), required=True)
+    #resource_level   = forms.IntegerField(widget=forms.Select(choices=get_rating_levels()), required=True)
+
+    # This creates the input which we'll fill in when we call our submit js function
+    importance_level = forms.IntegerField(widget=forms.HiddenInput())
+    effort_level     = forms.IntegerField(widget=forms.HiddenInput())
+    resource_level   = forms.IntegerField(widget=forms.HiddenInput())
 
 class backForm(forms.Form):
     def __init__(self, *args, **kwargs):
