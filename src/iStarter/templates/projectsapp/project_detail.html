@@ -55,7 +55,7 @@
                         {% endfor %}                    
                     </h5>
                     <h5><em>Backed by {{ data.num_backers }} of required {{ data.backersRequired }} ({{data.backPercentage}}%)</em></h5>
-                    {% if cell.backPercentage < 33 %} 
+                    {% if data.backPercentage < 33 %} 
                         {% if data.active %}
                             <div class="progress progress-info progress-striped active">
                                 <div class="bar" style="width: {{data.backPercentage}}%;"></div>
@@ -66,7 +66,7 @@
                             </div>
                         {% endif %}
                     {% elif data.backPercentage < 66 %}
-                        {% if cell.active %}
+                        {% if data.active %}
                             <div class="progress progress-info progress-striped active">
                                 <div class="bar" style="width: {{data.backPercentage}}%;"></div>
                             </div>
