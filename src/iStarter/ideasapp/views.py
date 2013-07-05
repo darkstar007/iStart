@@ -203,7 +203,7 @@ def unlike(request, ideaid):
  
             #Now record this in the db
             iData = ideaModel.objects.filter(id=idea_id)[0]
-            oldLike = likesModel.objects.filter(title=iData, vote_type = choice).order_by('vote_date')[0]
+            oldLike = likesModel.objects.filter(title=iData, vote_type = choice).order_by('-vote_date')[0]
             print 'Found one at', oldLike.vote_date
             if choice == 'like':
                 iData.likes -= 1
