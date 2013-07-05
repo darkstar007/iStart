@@ -232,28 +232,11 @@ def ideas_gallery(request):
     c = {"classification":"unclassified","page_title":"iStarter Ideas Gallery"}
     c.update(csrf(request))
     pData = ideaModel.objects.values_list('title','pub_date','description', 'pk', 'likes', 'dislikes', 'id')
-    '''
-    #Get the average for likes and dislikes
-    avg_likes = ideaModel.objects.all().aggregate(Avg('likes'))
-    print avg_likes
-    avg_dislikes = ideaModel.objects.all().aggregate(Avg('dislikes'))
-    print avg_dislikes
-    '''
+
     max_likes = ideaModel.objects.all().aggregate(Max('likes'))
     #print max_likes
     max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
     #print max_dislikes
-    '''
-    #Template for model outputs
-    template_headings = [{'db':'title', 'pretty':'Idea Title'}, 
-                         {'db':'pub_date', 'pretty':'Date Published'},
-                        {'db':'description', 'pretty':'Idea Description'},
-                        {'db':'pk','pretty':'Project Id'},
-                        {'db':'likes', 'pretty':'Likes'},
-                        {'db':'dislikes', 'pretty':'Disikes'},
-                        {'db':'linked_projects','pretty':'Linked Projects'},
-                        ]
-     '''
 
     outdict = {'title':'','pub_date':'','description':'','likes':0,'dislikes':0, 'perc_likes':0,'perc_dislikes':0, 'linked_projects':[]}
     out = []
@@ -262,12 +245,12 @@ def ideas_gallery(request):
         outdict['title']=row[0][:15]
         outdict['pub_date']=row[1]
         outdict['description']=row[2][:100]
-        outdict['likes']=int(row[3])
-        outdict['dislikes']=int(row[4])
+        outdict['likes']=int(row[4])
+        outdict['dislikes']=int(row[5])
         outdict['perc_likes']=100*outdict['likes']/max_likes['likes__max']
         outdict['perc_dislikes']=100*outdict['dislikes']/max_dislikes['dislikes__max']
         outdict['id'] = row[6]
-        projs = projectModel.objects.filter(ideas_derived_from=row[5])
+        projs = projectModel.objects.filter(ideas_derived_from=row[3])
         if projs:
             for proj in projs:
                 outdict['linked_projects'].append(proj.id)
