@@ -237,11 +237,6 @@ def ideas_gallery(request):
     c.update(csrf(request))
     pData = ideaModel.objects.values_list('title','pub_date','description', 'pk', 'likes', 'dislikes', 'id')
 
-    max_likes = ideaModel.objects.all().aggregate(Max('likes'))
-    #print max_likes
-    max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
-    #print max_dislikes
-
     outdict = {'title':'','pub_date':'','description':'','likes':0,'dislikes':0, 'perc_likes':0,'perc_dislikes':0, 'linked_projects':[]}
     out = []
     #Simpler
@@ -255,6 +250,7 @@ def ideas_gallery(request):
         outdict['perc_dislikes']=100*outdict['dislikes']/max_dislikes['dislikes__max']
         outdict['id'] = row[6]
         projs = projectModel.objects.filter(ideas_derived_from=row[3])
+
         if projs:
             for proj in projs:
                 outdict['linked_projects'].append(proj.id)
@@ -264,6 +260,7 @@ def ideas_gallery(request):
         #c['headings'] = template_headings
         c['tableData'] = out       
         
+
     return render_to_response("ideasapp/ideas_gallery.html", c)	          
             
 #----------------------------------------------------------------------------------------
