@@ -139,6 +139,38 @@ def loadTestData():
     
     fh.close()
     '''
+    
+#------------------------------------------------------------------------
+
+def getMaxClassification(results):
+    ''' Gets the maximum classification of the objects returned. '''
+
+    classificationRank = [c[0].lower() for c in settings.CLASSIFICATIONS]
+    
+    maxClass = classificationRank[-1]
+    maxClassIdx = 0
+    if len(results) == 0:
+        maxClass = 'unclassified'
+    
+    # Get the results
+    for res in results:
+        
+        try:
+            cls = res.classification.lower()
+        except:
+            continue
+        
+        # Ensure it matches our known set, get it's index in the ranked scale
+        if cls in classificationRank:
+            classIdx = classificationRank.index(cls)
+            
+            # If it's higher than the highest so far, reset the highest so far
+            if classIdx > maxClassIdx:
+                maxClassIdx = classIdx
+                maxClass    = cls
+        
+    return maxClass    
+    
 
 
 

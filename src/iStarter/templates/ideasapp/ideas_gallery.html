@@ -39,16 +39,15 @@
 				{% if forloop.counter0|divisibleby:"3" %}
 					<div class="row-fluid">
 				{% endif %}
-				{% for cell in row.cells %}
-                            {% if row.perc_likes > 80 %}
+				            {% if row.perc_likes > 80 %}
         					<li class="span4">
         						<div class="thumbnail" style="height:auto;border: 2px solid green;">
         							<div class="caption">		
                                                 <!--<div class="alert alert-success">-->			
-        								<h4>{{ cell.title }}</h4>
+        								<h4>{{ row.title }}</h4>
                                                 <!--</div>-->
-                            				<p> {{ cell.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}       							
+                            				<p> {{ row.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{row.likes}} <i class="icon-thumbs-down"></i> {{row.dislikes}}       							
                                             </div>
         						</div>
         					</li>
@@ -57,10 +56,10 @@
         						<div class="thumbnail" style="height:auto;border: 2px solid red;">
         							<div class="caption">		
                                                 <!--<div class="alert alert-danger">-->			
-        								<h4>{{ cell.title }}</h4>
+        								<h4>{{ row.title }}</h4>
                                                 <!--</div>-->
-        								<p> {{ cell.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+        								<p> {{ row.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{row.likes}} <i class="icon-thumbs-down"></i> {{row.dislikes}}      							
                                             </div>
         						</div>
         					</li>
@@ -68,14 +67,13 @@
                                 <li class="span4">
         						<div class="thumbnail" style="height:auto;">
         							<div class="caption">					
-        								<h4>{{ cell.title }}</h4>
-        								<p> {{ cell.description }} </p>
-        								<i class="icon-thumbs-up"></i> {{cell.likes}} <i class="icon-thumbs-down"></i> {{cell.dislikes}}      							
+        								<h4>{{ row.title }}</h4>
+        								<p> {{ row.description }} </p>
+        								<i class="icon-thumbs-up"></i> {{row.likes}} <i class="icon-thumbs-down"></i> {{row.dislikes}}      							
                                             </div>
         						</div>
         					</li>
                             {% endif %}
-				{% endfor %}
 				{% if forloop.counter|divisibleby:"3" %}	
 					</div><!--/row-->
 				{% endif %}

@@ -309,16 +309,19 @@ def project_gallery_filtered(request):
     # Now get a list containing each row stored as a dict
     data = resultSet.values(*flds)
     
-    # Add in backer info in place.
+    allRows = []
+    rowList = []
+    i = 0
     for row in data:
         row['id'] = row['pk']
         backersRequired = brAlg(row[settings.EFFORT_FIELD], row[settings.IMPORTANCE_FIELD], row[settings.RESOURCE_FIELD])        
         backPercentage  = 100 * row[settings.NUM_BACKERS] / backersRequired    
         row['backPercentage'] = int(backPercentage)
         row['backersRequired'] = backersRequired
-        
+        rowList.append(row)
+    
     # Now whack it into another list for good measure - never have enough ;)
-    c['tableData'] = [data]
+    c['tableData'] = rowList
     
     return render_to_response("projectsapp/project_gallery.html", c)    
 

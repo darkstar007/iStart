@@ -25,6 +25,7 @@ for root, subFolders, files in os.walk(appRoot):
 #============================================================================================
 
 #FOSS
+import ideasapp.settings as settings 
 from ideasapp.forms import ideaForm
 from ideasapp.models import idea as ideaModel
 from projectsapp.models import project as projectModel
@@ -32,6 +33,9 @@ from ideasapp.models import ideaLikes as likesModel
 from code import formatSubmitterEmail, formatHttpHeaders, ideasCloud, getDate, saveIdea
 from code import saveTags, distinctTagsSortedAlpha
 from django.db.models import Avg, Max
+
+from customObjectQueries import filteredRetrieval, validateQueryParams, buildSingleSortAndFilterItems
+from code import getMaxClassification
 
 logging.getLogger(__name__)
 
@@ -313,6 +317,54 @@ def ideas_gallery(request):
 	
     return render_to_response("ideasapp/ideas_gallery.html", c)	          
             
-            
+#----------------------------------------------------------------------------------------
+
+def ideas_gallery_filtered(request):
+    ''' Display some of the projects, depending on filter parameters'''
+    
+    c = {"page_title":"iStarter Ideas Gallery"}
+    
+    # Get the headings data
+    c['headings'] = settings.TEMPLATE_HEADINGS
+
+    # Get max likes and dislikes
+    max_likes = ideaModel.objects.all().aggregate(Max('likes'))
+    max_dislikes = ideaModel.objects.all().aggregate(Max('dislikes'))
+
+    # Get the request parameters from the url - into a dictionary
+    params = request.GET.dict()
+    safeParams = validateQueryParams(params)
+
+    # Get the data, having handled the sorting and filtering 
+    resultSet = filteredRetrieval(ideaModel, safeParams)
+
+    # Get the project max classification
+    c['classification'] = getMaxClassification(resultSet) or 'unknown'
+    
+    # Create the tag list for selecting by user
+    c['known_tags'] = distinctTagsSortedAlpha()
+
+    # Get the urls needed to filter the results when someone clicks on them
+    c['sorts_and_filters'] = buildSingleSortAndFilterItems()
+    
+    # Get the fields we want out into a list
+    flds = [f['db'] for f in settings.TEMPLATE_HEADINGS]
+    print flds
+    # Now get a list containing each row stored as a dict
+    data = resultSet.values(*flds)
+    
+    # Add in backer info in place.
+    rowList = []
+    for row in data:
+        row['id'] = row['pk']
+        row['perc_likes']=100*row['likes']/max_likes['likes__max']
+        row['perc_dislikes']=100*row['dislikes']/max_dislikes['dislikes__max']
+        rowList.append(row)
+
+    # Now whack it into another list for good measure - never have enough ;)
+    c['tableData'] = rowList
+    
+    return render_to_response("ideasapp/ideas_gallery.html", c)    
+        
             
             

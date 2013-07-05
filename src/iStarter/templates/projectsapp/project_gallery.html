@@ -142,86 +142,84 @@
 				{% if forloop.counter0|divisibleby:"3" %}
 					<div class="row-fluid">
 				{% endif %}
-				{% for cell in row %}
 					<li class="span4">
 						<div class="thumbnail" style="height:450px;">
-							{% if cell.backPercentage < 33 %} 
-								{% if cell.active %}
+							{% if row.backPercentage < 33 %} 
+								{% if row.active %}
 									<div class="progress progress-info progress-striped active">
-										<div class="bar" style="width: {{cell.backPercentage}}%;" 
+										<div class="bar" style="width: {{row.backPercentage}}%;" 
 											rel="popover" 
-											title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
-												data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+											title="<p class=&quot;text-info&quot;><em>{{row.title}}</em></p>" id="blah"
+												data-content="<em>Backed by {{row.num_backers}} of {{row.backersRequired}} ({{row.backPercentage}}%)</em>">
 										</div>
 									</div>
 								{% else %}
 									<div class="progress progress-danger">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"
+										<div class="bar" style="width: {{row.backPercentage}}%;"
 											rel="popover" 
-											title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
-											data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+											title="<p class=&quot;text-info&quot;><em>{{row.title}}</em></p>" id="blah"
+											data-content="<em>Backed by {{row.num_backers}} of {{row.backersRequired}} ({{row.backPercentage}}%)</em>">
 										</div>
 									</div>
 								{% endif %}
-							{% elif cell.backPercentage < 66 %}
-								{% if cell.active %}
+							{% elif row.backPercentage < 66 %}
+								{% if row.active %}
 									<div class="progress progress-info progress-striped active">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"
+										<div class="bar" style="width: {{row.backPercentage}}%;"
 											rel="popover" 
-											title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
-											data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+											title="<p class=&quot;text-info&quot;><em>{{row.title}}</em></p>" id="blah"
+											data-content="<em>Backed by {{row.num_backers}} of {{row.backersRequired}} ({{row.backPercentage}}%)</em>">
 										</div>
 									</div>
 								{% else %}
 									<div class="progress progress-warning">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"
+										<div class="bar" style="width: {{row.backPercentage}}%;"
 											rel="popover" 
-											title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
-											data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+											title="<p class=&quot;text-info&quot;><em>{{row.title}}</em></p>" id="blah"
+											data-content="<em>Backed by {{row.num_backers}} of {{row.backersRequired}} ({{row.backPercentage}}%)</em>">
 										</div>
 									</div>
 								{% endif %}
 							{% else %}
-								{% if cell.active %}
+								{% if row.active %}
 									<div class="progress progress-info progress-striped active">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"
+										<div class="bar" style="width: {{row.backPercentage}}%;"
 											rel="popover" 
-											title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
-											data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+											title="<p class=&quot;text-info&quot;><em>{{row.title}}</em></p>" id="blah"
+											data-content="<em>Backed by {{row.num_backers}} of {{row.backersRequired}} ({{row.backPercentage}}%)</em>">
 										</div>
 									</div>
 								{% else %}
 									<div class="progress progress-success">
-										<div class="bar" style="width: {{cell.backPercentage}}%;"
+										<div class="bar" style="width: {{row.backPercentage}}%;"
 											rel="popover" 
-											title="<p class=&quot;text-info&quot;><em>{{cell.title}}</em></p>" id="blah"
-											data-content="<em>Backed by {{cell.num_backers}} of {{cell.backersRequired}} ({{cell.backPercentage}}%)</em>">
+											title="<p class=&quot;text-info&quot;><em>{{row.title}}</em></p>" id="blah"
+											data-content="<em>Backed by {{row.num_backers}} of {{row.backersRequired}} ({{row.backPercentage}}%)</em>">
 										</div>
 									</div>
 								{% endif %}
 							{% endif %}
 							<p class="text-info"rel="popover" title="Project Details" data-content="<em>How many people have backed, liked or disliked this project. (click thumbs to vote)">
-								<i class="icon-user"></i>{{cell.num_backers }}
-									<i class="icon-thumbs-up" id="like_{{cell.id}}" onclick="loadFeedbackXMLDoc('Like', 'projects', this.id,'celllike_', 'celldislike_');"></i>
-									<span id="celllike_{{cell.id}}">{{cell.num_likes|floatformat:"0" }}</span>
-								<i class="icon-thumbs-down"id="dislike_{{cell.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'projects', this.id,'celldislike_', 'celllike_');"></i>
-									<span id="celldislike_{{cell.id}}">{{cell.num_dislikes|floatformat:"0" }}</span>
+								<i class="icon-user"></i>{{row.num_backers }}
+									<i class="icon-thumbs-up" id="like_{{row.id}}" onclick="loadFeedbackXMLDoc('Like', 'projects', this.id,'celllike_', 'celldislike_');"></i>
+									<span id="celllike_{{row.id}}">{{row.num_likes|floatformat:"0" }}</span>
+								<i class="icon-thumbs-down"id="dislike_{{row.id}}" onclick="loadFeedbackXMLDoc('Dislike', 'projects', this.id,'celldislike_', 'celllike_');"></i>
+									<span id="celldislike_{{row.id}}">{{row.num_dislikes|floatformat:"0" }}</span>
 							</p>
 							<center>
-								<a href="/projects/project_detail/{{ cell.id }}"><img src="/static/images/300x200.png"></a>
+								<a href="/projects/project_detail/{{ row.id }}"><img src="/static/images/300x200.png"></a>
 							</center>
 							<div class="caption">					
-								<h4>{{ cell.title }}</h4>
-								<p> {{ cell.description }} </p>
+								<h4>{{ row.title }}</h4>
+								<p> {{ row.description|truncatewords:20 }} </p>
 							</div>
 						</div>
 					</li>
-				{% endfor %}
 				{% if forloop.counter|divisibleby:"3" %}	
 					</div><!--/row-->
+					</br>
 				{% endif %}
 			{% endfor %}
-
 
     </div><!--/.fluid-container-->
     <hr>
