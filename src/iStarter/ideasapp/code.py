@@ -65,7 +65,7 @@ def saveIdea(ideaTitle, ideaText, ideaClassification, ideaHeaders):
     #pdb.set_trace()    
 
     out = ideaModel(title = ideaTitle, pub_date = getDate(), description = ideaText, num_backers = 1,
-                    classification = ideaClassification, headers = ideaHeaders)
+                    classification = ideaClassification, headers = ideaHeaders, likes = 1, dislikes = 0)
     out.save()
     return out
 

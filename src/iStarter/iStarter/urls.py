@@ -6,11 +6,11 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
 
-    #url(r'^accounts/',   include('accountsapp.urls')),    # For authentication
+    #url(r'^accounts/',   include('accountsapp.urls')),    	# For authentication
 
-    url(r'^$',   include('ideasapp.urls')),    # For ideas
-    url(r'^ideas/',   include('ideasapp.urls')),    # For ideas
-    url(r'^projects/',   include('projectsapp.urls')),    # For ideas
+    url(r'^$',   include('projectsapp.urls')),    			# Site landing is passed to projectsapp
+    url(r'^ideas/',   include('ideasapp.urls')),    		# krazee ideas for R&D
+    url(r'^projects/',   include('projectsapp.urls')),  	# project looking for backing or in development
 
 )
 
