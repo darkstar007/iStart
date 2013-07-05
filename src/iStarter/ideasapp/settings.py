@@ -24,8 +24,8 @@ TAG_URL_KEY_NAME = 'tags'
 # These are the valid sort fields and their pretty names - typically continuous values
 VALID_SORT_FIELDS = {'pub_date'         : 'Published Date',
                      'title'            : 'Title',
-                     'num_likes'        : 'Likes',
-                     'num_dislikes'     : 'Dislikes'}    
+                     'likes'        : 'Likes',
+                     'dislikes'     : 'Dislikes'}    
 
 # These are the fields you might want to filter on - typically more discrete values               
 VALID_FILTERS =      {'classification' : [i[0] for i in CLASSIFICATIONS]}
