@@ -12,6 +12,11 @@ CLASSIFICATIONS = ([
 # Start of range is hard coded at 1 in forms.py
 PROJECT_RATING_LEVELS = 6 
 
+EFFORT_FIELD = 'effort'
+IMPORTANCE_FIELD = 'importance'
+RESOURCE_FIELD = 'resource'
+NUM_BACKERS = 'num_backers'
+
 #RB: No longer being used by custom retrieval code
 VALUES_FIELD = ['title','pub_date','description', 'num_backers', 'pk', 'classification']
 
