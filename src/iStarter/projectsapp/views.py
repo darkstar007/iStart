@@ -281,7 +281,7 @@ def project_gallery_filtered(request):
     ''' Display some of the projects, depending on filter parameters'''
     
     #TODO: Update this classification dynamically based on highest value in data
-    c = {"page_title":"iSTARter Project Gallery"}
+    c = {"page_title":"iStarter Project Gallery"}
     
     # Get the headings data
     c['headings'] = settings.TEMPLATE_HEADINGS
@@ -317,6 +317,14 @@ def project_gallery_filtered(request):
         backPercentage  = 100 * row[settings.NUM_BACKERS] / backersRequired    
         row['backPercentage'] = int(backPercentage)
         row['backersRequired'] = backersRequired
+        # A quick hack to only show some projects active. Otherwise a random (usually large) number 
+        # are marked as active and it looks a bit crap. This will be changed when we have management
+        # view that assigns a project to be active 
+        if i == 2 or i == 10 :
+        	row['actvive'] = 1
+        else :
+        	row['active']= 0 # row[headingidx]
+        i = i+1
         rowList.append(row)
     
     # Now whack it into another list for good measure - never have enough ;)
